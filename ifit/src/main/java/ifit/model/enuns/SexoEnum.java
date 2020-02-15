@@ -1,5 +1,5 @@
 package ifit.model.enuns;
 
-public enum EnumSexo {
+public enum SexoEnum {
 	MASCULINO, FEMININO;
 }
