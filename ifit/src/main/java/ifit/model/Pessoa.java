@@ -1,12 +1,14 @@
-package ifit.model.dto;
+package ifit.model;
 
-import ifit.model.enuns.EnumSexo;
+import ifit.model.endereco.Endereco;
+import ifit.model.enuns.SexoEnum;
 
 public class Pessoa {
+	
 	private String nome;
 	private String cpf;
 	private String telefone;
-	private EnumSexo sexo;
+	private SexoEnum sexo;
 	private Endereco endereco;
 	
 	public String getNome() {
@@ -27,10 +29,10 @@ public class Pessoa {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	public EnumSexo getSexo() {
+	public SexoEnum getSexo() {
 		return sexo;
 	}
-	public void setSexo(EnumSexo sexo) {
+	public void setSexo(SexoEnum sexo) {
 		this.sexo = sexo;
 	}
 	public Endereco getEndereco() {
@@ -40,5 +42,4 @@ public class Pessoa {
 		this.endereco = endereco;
 	}
 
-	
 }
