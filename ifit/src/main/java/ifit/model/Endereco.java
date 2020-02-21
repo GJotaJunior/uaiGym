@@ -1,6 +1,6 @@
-package ifit.model.endereco;
+package ifit.model;
 
-import ifit.model.endereco.enuns.EstadoEnum;
+import ifit.model.enuns.EstadoEnum;
 
 public class Endereco {
 	
