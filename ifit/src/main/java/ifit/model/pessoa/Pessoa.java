@@ -1,9 +1,9 @@
-package ifit.model;
+package ifit.model.pessoa;
 
-import ifit.model.endereco.Endereco;
+import ifit.model.Endereco;
 import ifit.model.enuns.SexoEnum;
 
-public class Pessoa {
+public abstract class Pessoa {
 	
 	private String nome;
 	private String cpf;
