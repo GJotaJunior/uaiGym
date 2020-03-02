@@ -1,5 +1,7 @@
 package ifit.service;
 
+import java.util.List;
+
 /**
 * Authentication Control
 * 
@@ -15,6 +17,7 @@ public class AuthService {
 
 	private HttpSession authenticator;
 	private boolean isValid;
+	private List<String> messages;
 	
 	public AuthService(HttpSession session) {
 		authenticator = session;
@@ -28,30 +31,37 @@ public class AuthService {
 		return isValid;
 	}
 	
-	public boolean login(String user, String password) {
-		if (loginWithEmail(user, password) || loginWithUser(user, password)) {
-			isValid = true;
-		}
-		return isValid;
+	public List<String> getMessages() {
+		return messages;
 	}
 	
-	public boolean loginWithUser(String user, String password) {
+	public void login(String user, String password) {
+		if (loginWithEmail(user, password) || loginWithUser(user, password)) {
+			isValid = true;
+			messages.add("Login efetuado com sucesso!");
+		}
+		
+		// TODO
+		messages.add("As informações de login não foram inseridas corretamente!");
+	}
+	
+	private boolean loginWithUser(String user, String password) {
 		// TODO
 		return false;
 	}
 
-	public boolean loginWithEmail(String email, String password) {
+	private boolean loginWithEmail(String email, String password) {
 		// TODO
 		return false;
 	}
 
-	public String register(String email, String user, String password, String passwordConfirm) {
+	public void register(String email, String user, String password, String passwordConfirm) {
 		if (!password.equals(passwordConfirm)) 
-			return "As senhas não são iguais!";
+			messages.add("As senhas não são iguais!");
 		
 		// TODO
 		isValid = true;
-		return "Cadastrado com sucesso!";
+		messages.add("Cadastrado com sucesso!");
 	}
 	
 	public void logout() {
