@@ -1,4 +1,4 @@
-package ifit.service;
+package uaiGym.service;
 
 import java.util.List;
 

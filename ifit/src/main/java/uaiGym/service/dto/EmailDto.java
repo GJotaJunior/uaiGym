@@ -1,4 +1,4 @@
-package ifit.service.dto;
+package uaiGym.service.dto;
 
 /**
 * DTO of email attributes
