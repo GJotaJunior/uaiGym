@@ -1,6 +1,6 @@
-package ifit.model;
+package uaiGym.model;
 
-import ifit.model.enuns.EstadoEnum;
+import uaiGym.model.enuns.EstadoEnum;
 
 public class Endereco {
 	

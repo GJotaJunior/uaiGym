@@ -1,4 +1,4 @@
-package ifit.service;
+package uaiGym.service;
 
 /**
 * Class for sending e-mail
@@ -20,7 +20,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import ifit.service.dto.EmailDto;
+import uaiGym.service.dto.EmailDto;
 
 public class EmailSender {
 
@@ -33,7 +33,7 @@ public class EmailSender {
 			prop.load(getClass().getClassLoader().getResourceAsStream("email.properties"));
 			return prop.getProperty(propName);
 		} catch (IOException e) {
-			System.out.println("Não foi possível ler o arquivo \"email.properties\"!");
+			System.out.println("Nï¿½o foi possï¿½vel ler o arquivo \"email.properties\"!");
 			e.printStackTrace();
 			return null;
 		}
@@ -44,7 +44,7 @@ public class EmailSender {
 		
 		Properties props = new Properties();
 
-		// Configurações do SMTP do Gmail
+		// Configuraï¿½ï¿½es do SMTP do Gmail
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -70,7 +70,7 @@ public class EmailSender {
 			return true;
 
 		} catch (MessagingException e) {
-			System.out.println("Não foi possível enviar o email " + resumoLog + " de " + email.getSender() + " para " + email.getReceiver());
+			System.out.println("Nï¿½o foi possï¿½vel enviar o email " + resumoLog + " de " + email.getSender() + " para " + email.getReceiver());
 			e.printStackTrace();
 			return false;
 		}

@@ -1,7 +1,7 @@
-package ifit.model.pessoa;
+package uaiGym.model.pessoa;
 
-import ifit.model.Endereco;
-import ifit.model.enuns.SexoEnum;
+import uaiGym.model.Endereco;
+import uaiGym.model.enuns.SexoEnum;
 
 public abstract class Pessoa {
 	
