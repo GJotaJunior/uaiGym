@@ -1,37 +1,43 @@
 package uaiGym.model.pessoa;
 
+import java.util.Calendar;
 import java.util.Date;
 
-public class Funcionario extends Pessoa {
-	
-	private int codigoFuncional;
-	private int numeroContrato;
-	private Date admissao;
-	private Date demissao;
-	
+import uaiGym.model.Endereco;
+import uaiGym.model.enuns.SexoEnum;
+
+public abstract class Funcionario extends Pessoa {
+
+	private final int codigoFuncional;
+	private final int numeroContrato;
+	private final Calendar admissao;
+	private Calendar demissao;
+
+	public Funcionario(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco, int codigoFuncional, int numeroContrato, Calendar admissao) {
+		super(nome, cpf, nascimento, telefone, sexo, endereco);
+		this.codigoFuncional = codigoFuncional;
+		this.numeroContrato = numeroContrato;
+		this.admissao = admissao;
+	}
+
+	public Calendar getDemissao() {
+		return demissao;
+	}
+
+	public void setDemissao(Calendar demissao) {
+		this.demissao = demissao;
+	}
+
 	public int getCodigoFuncional() {
 		return codigoFuncional;
 	}
-	public void setCodigoFuncional(int codigoFuncional) {
-		this.codigoFuncional = codigoFuncional;
-	}
+
 	public int getNumeroContrato() {
 		return numeroContrato;
 	}
-	public void setNumeroContrato(int numeroContrato) {
-		this.numeroContrato = numeroContrato;
-	}
-	public Date getAdmissao() {
+
+	public Calendar getAdmissao() {
 		return admissao;
 	}
-	public void setAdmissao(Date admissao) {
-		this.admissao = admissao;
-	}
-	public Date getDemissao() {
-		return demissao;
-	}
-	public void setDemissao(Date demissao) {
-		this.demissao = demissao;
-	}
-	
+
 }

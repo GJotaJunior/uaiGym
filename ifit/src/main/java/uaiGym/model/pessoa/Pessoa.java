@@ -1,5 +1,7 @@
 package uaiGym.model.pessoa;
 
+import java.util.Date;
+
 import uaiGym.model.Endereco;
 import uaiGym.model.enuns.SexoEnum;
 
@@ -7,9 +9,19 @@ public abstract class Pessoa {
 	
 	private String nome;
 	private String cpf;
+	private Date nascimento;
 	private String telefone;
 	private SexoEnum sexo;
 	private Endereco endereco;
+	
+	public Pessoa(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.nascimento = nascimento;
+		this.telefone = telefone;
+		this.sexo = sexo;
+		this.endereco = endereco;
+	}
 	
 	public String getNome() {
 		return nome;
@@ -22,6 +34,12 @@ public abstract class Pessoa {
 	}
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	public Date getNascimento() {
+		return nascimento;
+	}
+	public void setNascimento(Date nascimento) {
+		this.nascimento = nascimento;
 	}
 	public String getTelefone() {
 		return telefone;
