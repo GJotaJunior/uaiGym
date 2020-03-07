@@ -14,7 +14,7 @@ public abstract class Pessoa {
     private String nome;
     private String cpf;
     private Date nascimento;
-    private List<String> telefone;
+    private List<String> telefones;
     private SexoEnum sexo;
     private Endereco endereco;
     private PerfilEnum perfil;
@@ -25,8 +25,8 @@ public abstract class Pessoa {
 	this.nome = nome;
 	this.cpf = cpf;
 	this.nascimento = nascimento;
-	this.telefone = new ArrayList<String>();
-	this.telefone.add(telefone);
+	this.telefones = new ArrayList<String>();
+	this.telefones.add(telefone);
 	this.sexo = sexo;
 	this.endereco = endereco;
 	this.perfil = perfil;
@@ -50,11 +50,11 @@ public abstract class Pessoa {
     }
 
     public List<String> getTelefone() {
-	return telefone;
+	return telefones;
     }
 
     public void setTelefone(String telefone) {
-	this.telefone.add(telefone);
+	this.telefones.add(telefone);
     }
 
     public SexoEnum getSexo() {
