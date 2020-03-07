@@ -6,6 +6,7 @@ public class Endereco {
 
     private String rua;
     private Integer numero;
+    private String complemento;
     private String bairro;
     private String cep;
     private EstadoEnum estado;
@@ -48,5 +49,13 @@ public class Endereco {
 
     public void setEstado(EstadoEnum estado) {
 	this.estado = estado;
+    }
+
+    public String getComplemento() {
+	return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+	this.complemento = complemento;
     }
 }
