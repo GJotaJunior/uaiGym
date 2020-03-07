@@ -1,4 +1,4 @@
-package uaiGym.model.pessoa;
+package uaiGym.model;
 
 public class ContatoDeEmergencia {
 	
