@@ -1,4 +1,4 @@
-package uaiGym.model.pessoa;
+package uaiGym.model;
 
 import java.util.ArrayList;
 import java.util.List;
