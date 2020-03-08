@@ -1,13 +1,20 @@
 package uaiGym.model.pessoa;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class Gerente {
+import uaiGym.model.Endereco;
+import uaiGym.model.enuns.PerfilEnum;
+import uaiGym.model.enuns.SexoEnum;
+
+public class Gerente extends Pessoa {
     List<Instrutor> instrutores;
     List<Secretaria> secretariado;
 
-    public Gerente() {
+    public Gerente(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
+	    PerfilEnum perfil) {
+	super(nome, cpf, nascimento, telefone, sexo, endereco, perfil);
 	instrutores = new ArrayList<>();
 	secretariado = new ArrayList<>();
     }
