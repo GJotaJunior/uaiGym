@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import uaiGym.model.Endereco;
+import uaiGym.model.Equipamento;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
@@ -37,12 +38,12 @@ public class Gerente extends Pessoa {
 
     public List<Equipamento> listaEquipamentos() {
 	List<Equipamento> equipamentos = new ArrayList<>();
-	for (Secretaria secretaria : this.secretariado) {
-	    for (int i = 0; i < secretaria.getEquipamentos().size(); i++) {
-		if (!equipamentos.contains(secretaria.getEquipamentos().get(i)))
-		    equipamentos.add(secretaria.getEquipamentos().get(i));
-	    }
-	}
+//	for (Secretaria secretaria : this.secretariado) {
+//	    for (int i = 0; i < secretaria.getEquipamentos().size(); i++) {
+//		if (!equipamentos.contains(secretaria.getEquipamentos().get(i)))
+//		    equipamentos.add(secretaria.getEquipamentos().get(i));
+//	    }
+//	}
 	return equipamentos;
     }
 
