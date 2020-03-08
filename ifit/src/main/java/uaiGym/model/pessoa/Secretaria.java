@@ -13,7 +13,7 @@ import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
 public class Secretaria extends Funcionario {
-	
+
 	private Set<Aluno> alunos;
 	private Set<Equipamento> equipamentos;
 	private Map<Aluno, Instrutor> ligacaoAlunoInstrutor;
