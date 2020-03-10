@@ -14,6 +14,7 @@ public class Aluno extends Pessoa {
 	private final int numeroMatricula;
 	private Instrutor instrutor;
 	private List<AvaliacaoFisica> avaliacao;
+	private boolean estaAtivo;
 
 	public Aluno(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
 			int numeroMatricula, Instrutor instrutor, PerfilEnum perfil) {
@@ -21,6 +22,7 @@ public class Aluno extends Pessoa {
 		this.numeroMatricula = numeroMatricula;
 		this.instrutor = instrutor;
 		avaliacao = new ArrayList<AvaliacaoFisica>();
+		estaAtivo = true;
 	}
 
 	public int getNumeroMatricula() {
@@ -65,4 +67,12 @@ public class Aluno extends Pessoa {
 		return true;
 	}
 
+	public boolean isEstaAtivo() {
+		return estaAtivo;
+	}
+
+	public void setEstaAtivo(boolean estaAtivo) {
+		this.estaAtivo = estaAtivo;
+	}
+	
 }
