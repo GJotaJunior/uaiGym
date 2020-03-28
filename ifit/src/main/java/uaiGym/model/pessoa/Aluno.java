@@ -9,7 +9,7 @@ import uaiGym.model.Endereco;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
-public class Aluno extends Pessoa {
+public class Aluno extends Usuario {
 
 	private final int numeroMatricula;
 	private Instrutor instrutor;

@@ -10,7 +10,7 @@ import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.service.CPFValidator;
 
-public abstract class Pessoa {
+public abstract class Usuario {
 
 	private String nome;
 	private String cpf;
@@ -21,7 +21,7 @@ public abstract class Pessoa {
 	private PerfilEnum perfil;
 	private Set<ContatoDeEmergencia> contatosDeEmergencia;
 
-	public Pessoa(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
+	public Usuario(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
 			PerfilEnum perfil) {
 		this.nome = nome;
 		if (CPFValidator.validarCPF(cpf))
@@ -106,7 +106,7 @@ public abstract class Pessoa {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pessoa other = (Pessoa) obj;
+		Usuario other = (Usuario) obj;
 		if (cpf == null) {
 			if (other.cpf != null)
 				return false;

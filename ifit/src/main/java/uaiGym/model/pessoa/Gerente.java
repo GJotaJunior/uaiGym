@@ -9,7 +9,7 @@ import uaiGym.model.Equipamento;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
-public class Gerente extends Pessoa {
+public class Gerente extends Usuario {
 	List<Instrutor> instrutores;
 	List<Secretaria> secretariado;
 

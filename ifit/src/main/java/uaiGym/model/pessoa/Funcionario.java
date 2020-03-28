@@ -7,7 +7,7 @@ import uaiGym.model.Endereco;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
-public abstract class Funcionario extends Pessoa {
+public abstract class Funcionario extends Usuario {
 
 	private final int codigoFuncional;
 	private final int numeroContrato;
