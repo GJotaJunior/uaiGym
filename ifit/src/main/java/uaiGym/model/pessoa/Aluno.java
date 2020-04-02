@@ -22,7 +22,7 @@ public class Aluno extends Usuario {
 		super(nome, cpf, nascimento, telefone, sexo, endereco, perfil);
 		this.numeroMatricula = numeroMatricula;
 		this.instrutor = instrutor;
-		avaliacao = new ArrayList<AvaliacaoFisica>();
+		avaliacoes = new ArrayList<AvaliacaoFisica>();
 		estaAtivo = true;
 	}
 
@@ -39,11 +39,11 @@ public class Aluno extends Usuario {
 	}
 
 	public List<AvaliacaoFisica> getAvaliacao() {
-		return avaliacao;
+		return avaliacoes;
 	}
 
 	public void addAvaliacaoFisica(AvaliacaoFisica avaliacao) {
-		this.avaliacao.add(avaliacao);
+		this.avaliacoes.add(avaliacao);
 	}
 
 	public List<Treino> getTreinos() {
