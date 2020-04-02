@@ -1,10 +1,15 @@
 package uaiGym.dao;
 
+import java.sql.Connection;
 import java.util.List;
 
 import uaiGym.model.pessoa.Funcionario;
 
-public class FuncionarioDAO implements Dao<Funcionario> {
+public class FuncionarioDAO extends Dao<Funcionario> {
+
+	public FuncionarioDAO(Connection connection) {
+		super(connection);
+	}
 
 	@Override
 	public Funcionario recuperarPorId(int id) {
