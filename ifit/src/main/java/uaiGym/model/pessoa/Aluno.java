@@ -6,6 +6,7 @@ import java.util.List;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.Endereco;
+import uaiGym.model.Exercicio;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
@@ -14,6 +15,7 @@ public class Aluno extends Usuario {
 	private final int numeroMatricula;
 	private Instrutor instrutor;
 	private List<AvaliacaoFisica> avaliacao;
+	private List<Treino> treinos;
 	private boolean estaAtivo;
 
 	public Aluno(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,

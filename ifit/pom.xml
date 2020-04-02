@@ -21,7 +21,7 @@
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- EMAIL -->
 		<dependency>
 			<groupId>com.sun.mail</groupId>
@@ -33,12 +33,17 @@
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.6.0</version>
 		</dependency>
-	
+
 		<!-- BANCO DE DADOS -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.19</version>
+		</dependency>
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
 		</dependency>
 	</dependencies>
 	<properties>
