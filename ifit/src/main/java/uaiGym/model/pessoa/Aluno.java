@@ -6,7 +6,6 @@ import java.util.List;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.Endereco;
-import uaiGym.model.Exercicio;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
@@ -14,7 +13,7 @@ public class Aluno extends Usuario {
 
 	private final int numeroMatricula;
 	private Instrutor instrutor;
-	private List<AvaliacaoFisica> avaliacao;
+	private List<AvaliacaoFisica> avaliacoes;
 	private List<Treino> treinos;
 	private boolean estaAtivo;
 
@@ -47,6 +46,22 @@ public class Aluno extends Usuario {
 		this.avaliacao.add(avaliacao);
 	}
 
+	public List<Treino> getTreinos() {
+		return treinos;
+	}
+	
+	public void addTreino(Treino treino) {
+		this.treinos.add(treino);
+	}
+
+	public boolean isEstaAtivo() {
+		return estaAtivo;
+	}
+
+	public void setEstaAtivo(boolean estaAtivo) {
+		this.estaAtivo = estaAtivo;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,7 +69,7 @@ public class Aluno extends Usuario {
 		result = prime * result + numeroMatricula;
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -67,14 +82,6 @@ public class Aluno extends Usuario {
 		if (numeroMatricula != other.numeroMatricula)
 			return false;
 		return true;
-	}
-
-	public boolean isEstaAtivo() {
-		return estaAtivo;
-	}
-
-	public void setEstaAtivo(boolean estaAtivo) {
-		this.estaAtivo = estaAtivo;
 	}
 	
 }
