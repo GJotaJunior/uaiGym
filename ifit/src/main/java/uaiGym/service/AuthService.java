@@ -1,6 +1,9 @@
 package uaiGym.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,7 +45,9 @@ public class AuthService {
 		return messages;
 	}
 
-	public Integer login(String user, String password) throws SQLException, IOException {
+	public Integer login(String user, String password) throws SQLException, IOException, NoSuchAlgorithmException {
+		password = securityPassword(password);
+		
 		Connection connection = new ConnectionFactory().recuperarConexao();
 		String sql = "SELECT idUsuario FROM Usuario WHERE email = ? and senha = ? or cpf = ? and senha = ?";
 		try (PreparedStatement pstm = connection.prepareStatement(sql)) {
@@ -74,5 +79,15 @@ public class AuthService {
 	public void logout() {
 		authenticator.invalidate();
 	}
+	
+	public String securityPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+		byte messageDigest[] = algorithm.digest(password.getBytes("UTF-8"));
 
+		StringBuffer result = new StringBuffer();
+		for (byte b : messageDigest) {
+			result.append(b);
+		}
+		return result.toString();
+	}
 }
