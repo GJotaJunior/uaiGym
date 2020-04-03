@@ -40,7 +40,12 @@ public class LoginServlet extends HttpServlet {
 	String usuario = request.getParameter("usuario");
 	String senha = request.getParameter("senha");
 
-	authenticator.login(usuario, senha);
+	try {
+		authenticator.login(usuario, senha);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
 	request.setAttribute("mensagem", authenticator.getMessages());
 
 	dispatcher = request.getRequestDispatcher("/");
