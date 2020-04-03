@@ -1,5 +1,10 @@
 package uaiGym.service;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -12,60 +17,62 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import uaiGym.DataBase.ConnectionFactory;
+
 // implementar os metodos com "TODO" quando aprendermos conectar com o banco
 public class AuthService {
 
-    private HttpSession authenticator;
-    private boolean isValid;
-    private List<String> messages;
+	private HttpSession authenticator;
+	private boolean isValid;
+	private List<String> messages;
 
-    public AuthService(HttpSession session) {
-	authenticator = session;
-    }
-
-    public HttpSession getAuthenticator() {
-	return authenticator;
-    }
-
-    public boolean isValid() {
-	return isValid;
-    }
-
-    public List<String> getMessages() {
-	return messages;
-    }
-
-    public void login(String user, String password) {
-	if (loginWithEmail(user, password) || loginWithUser(user, password)) {
-	    isValid = true;
-	    messages.add("Login efetuado com sucesso!");
+	public AuthService(HttpSession session) {
+		authenticator = session;
 	}
 
-	// TODO
-	messages.add("As informações de login não foram inseridas corretamente!");
-    }
+	public HttpSession getAuthenticator() {
+		return authenticator;
+	}
 
-    private boolean loginWithUser(String user, String password) {
-	// TODO
-	return false;
-    }
+	public boolean isValid() {
+		return isValid;
+	}
 
-    private boolean loginWithEmail(String email, String password) {
-	// TODO
-	return false;
-    }
+	public List<String> getMessages() {
+		return messages;
+	}
 
-    public void register(String email, String user, String password, String passwordConfirm) {
-	if (!password.equals(passwordConfirm))
-	    messages.add("As senhas não são iguais!");
+	public Integer login(String user, String password) throws SQLException, IOException {
+		Connection connection = new ConnectionFactory().recuperarConexao();
+		String sql = "SELECT idUsuario FROM Usuario WHERE email = ? and senha = ? or cpf = ? and senha = ?";
+		try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+			pstm.setString(1, user);
+			pstm.setString(2, password);
+			pstm.setString(3, user);
+			pstm.setString(4, password);
+			pstm.execute();
 
-	// TODO
-	isValid = true;
-	messages.add("Cadastrado com sucesso!");
-    }
+			try (ResultSet rst = pstm.getResultSet()) {
+				if (rst.next()) {
+					return rst.getInt(1);
+				}
+			}
+		}
+		messages.add("As informações de login não foram inseridas corretamente!");
+		return null;
+	}
 
-    public void logout() {
-	authenticator.invalidate();
-    }
+	public void register(String email, String user, String password, String passwordConfirm) {
+		if (!password.equals(passwordConfirm))
+			messages.add("As senhas não são iguais!");
+
+		// TODO
+		isValid = true;
+		messages.add("Cadastrado com sucesso!");
+	}
+
+	public void logout() {
+		authenticator.invalidate();
+	}
 
 }
