@@ -45,7 +45,7 @@ CREATE TABLE Contato(
 	idContato INT AUTO_INCREMENT PRIMARY KEY,
 	idAluno INT,
 	nome VARCHAR(255) NOT NULL,
-	telefone VARCHAR(20),
+	telefone VARCHAR(15),
 	parentesco VARCHAR(15),
 	FOREIGN KEY(idAluno) REFERENCES Aluno (idAluno));
 	
