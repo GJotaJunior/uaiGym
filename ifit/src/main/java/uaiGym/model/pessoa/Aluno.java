@@ -2,9 +2,12 @@ package uaiGym.model.pessoa;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import uaiGym.model.AvaliacaoFisica;
+import uaiGym.model.ContatoDeEmergencia;
 import uaiGym.model.Endereco;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
@@ -16,6 +19,7 @@ public class Aluno extends Usuario {
 	private List<AvaliacaoFisica> avaliacoes;
 	private List<Treino> treinos;
 	private boolean estaAtivo;
+	private Set<ContatoDeEmergencia> contatosDeEmergencia;
 
 	public Aluno(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
 			int numeroMatricula, Instrutor instrutor, PerfilEnum perfil) {
@@ -24,6 +28,7 @@ public class Aluno extends Usuario {
 		this.instrutor = instrutor;
 		avaliacoes = new ArrayList<AvaliacaoFisica>();
 		estaAtivo = true;
+		this.contatosDeEmergencia = new HashSet<ContatoDeEmergencia>();
 	}
 
 	public int getNumeroMatricula() {
@@ -60,6 +65,14 @@ public class Aluno extends Usuario {
 
 	public void setEstaAtivo(boolean estaAtivo) {
 		this.estaAtivo = estaAtivo;
+	}
+	
+	public Set<ContatoDeEmergencia> getContatosDeEmergencia() {
+		return contatosDeEmergencia;
+	}
+
+	public void addContatoDeEmergencia(ContatoDeEmergencia contatoDeEmergencia) {
+		contatosDeEmergencia.add(contatoDeEmergencia);
 	}
 
 	@Override

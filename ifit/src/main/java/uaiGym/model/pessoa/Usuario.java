@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import uaiGym.model.ContatoDeEmergencia;
 import uaiGym.model.Endereco;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
@@ -19,7 +18,6 @@ public abstract class Usuario {
 	private SexoEnum sexo;
 	private Endereco endereco;
 	private PerfilEnum perfil;
-	private Set<ContatoDeEmergencia> contatosDeEmergencia;
 
 	public Usuario(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
 			PerfilEnum perfil) {
@@ -34,7 +32,6 @@ public abstract class Usuario {
 		this.sexo = sexo;
 		this.endereco = endereco;
 		this.perfil = perfil;
-		this.contatosDeEmergencia = new HashSet<ContatoDeEmergencia>();
 	}
 
 	public String getNome() {
@@ -79,14 +76,6 @@ public abstract class Usuario {
 
 	public void setPerfil(PerfilEnum perfil) {
 		this.perfil = perfil;
-	}
-
-	public Set<ContatoDeEmergencia> getContatosDeEmergencia() {
-		return contatosDeEmergencia;
-	}
-
-	public void addContatoDeEmergencia(ContatoDeEmergencia contatoDeEmergencia) {
-		contatosDeEmergencia.add(contatoDeEmergencia);
 	}
 
 	@Override
