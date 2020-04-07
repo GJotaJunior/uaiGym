@@ -8,7 +8,7 @@ BEGIN
 	
 	CALL sp_inserirUsuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
 	
-	SET _idUsuario = SELECT @_idUsuario;
+	SET _idUsuario = @_idUsuario;
 
 	INSERT INTO Aluno(idUsuario, matricula, status) VALUES (_idUsuario, _matricula, _status);
 
