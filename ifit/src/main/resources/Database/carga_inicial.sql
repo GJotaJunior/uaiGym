@@ -6,10 +6,10 @@ CALL FUNCIONARIO('INSTRUTOR', 'Paulo Roberto', 19162233344, '2002-12-15', 'M', '
 CALL FUNCIONARIO('INSTRUTOR', 'Kléber Jacinto Pinto', 69162233345, '1991-01-04', 'M', 'kleberpinto@teste.com', '123456', 'contrato5', '2020-01-10', null, 'Avenida Rondon Pacheco', 9403, 'Edifício Paula Dantas', 'Altamira', 'Uberlândia', 'MG', '38404563');
 
 #CALL ALUNO(perfil, nome, cpf, dtNascimento, sexo, email, senha, matricula, status, logradouro, numero, complemento, bairro, cidade, uf, cep);
-CALL ALUNO('ALUNO', 'Nawan Soares', 12362233345, '1999-09-04', 'M', 'nawan@teste.com', '123456', 'mat1', 'ATIVO', 'Avenida da secretária', 12, null, 'Planalto', 'Uberlândia', 'MG', '38404565');
-CALL ALUNO('ALUNO', 'Wanderson Gutemberg Silva', 12362233388, '1992-02-03', 'M', 'wands@teste.com', '123456', 'mat2', 'INATIVO', 'Rua Monte Carmelo', 15, 'a mais bonita da rua', 'Martins', 'Uberlândia', 'MG', '38404561');
-CALL ALUNO('ALUNO', 'Gledson Júnior', 57362233388, '2000-08-01', 'M', 'gledin@teste.com', '123456', 'mat3', 'ATIVO', 'Travessa aqui', 24, '', 'Alvorada', 'Uberlândia', 'MG', '38404560');
-CALL ALUNO('ALUNO', 'Yure yure', 57362233308, '2001-04-24', 'M', 'yurelindao@teste.com', '123456', 'mat4', 'ATIVO', 'Pç Borges da Fonseca', 17, '', 'Cruzeiro dos Peixotos', 'Uberlândia', 'MG', '38404562');
+CALL sp_inserirAluno('ALUNO', 'Nawan Soares', 12362233345, '1999-09-04', 'M', 'nawan@teste.com', '123456', 'mat1', 'ATIVO', 'Avenida da secretária', 12, null, 'Planalto', 'Uberlândia', 'MG', '38404565');
+CALL sp_inserirAluno('ALUNO', 'Wanderson Gutemberg Silva', 12362233388, '1992-02-03', 'M', 'wands@teste.com', '123456', 'mat2', 'INATIVO', 'Rua Monte Carmelo', 15, 'a mais bonita da rua', 'Martins', 'Uberlândia', 'MG', '38404561');
+CALL sp_inserirAluno('ALUNO', 'Gledson Júnior', 57362233388, '2000-08-01', 'M', 'gledin@teste.com', '123456', 'mat3', 'ATIVO', 'Travessa aqui', 24, '', 'Alvorada', 'Uberlândia', 'MG', '38404560');
+CALL sp_inserirAluno('ALUNO', 'Yure yure', 57362233308, '2001-04-24', 'M', 'yurelindao@teste.com', '123456', 'mat4', 'ATIVO', 'Pç Borges da Fonseca', 17, '', 'Cruzeiro dos Peixotos', 'Uberlândia', 'MG', '38404562');
 
 #CALL EQUIPAMENTO(nome)
 CALL EQUIPAMENTO('Halter Oxer Bola Revestido');
