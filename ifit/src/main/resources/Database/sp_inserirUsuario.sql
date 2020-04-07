@@ -4,10 +4,14 @@ CREATE PROCEDURE `sp_inserirUsuario`(IN _perfil ENUM('ALUNO', 'INSTRUTOR', 'RECE
 _senha VARCHAR(255), _logradouro VARCHAR(255), _numero CHAR(6), _complemento VARCHAR(100), _bairro VARCHAR(50), _cidade VARCHAR(80), _uf CHAR(2), _cep CHAR(8))
 
 BEGIN
-
+	
+	DECLARE _idUsuario INT;
+	
 	INSERT INTO Usuario(perfil, nome, cpf, dtNascimento, sexo, email, senha) VALUES (_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha);
 	
-	CALL sp_inserirEndereco(@idUsuario, @_logradouro, @_numero, @_complemento, 
-                                   @_bairro, @_cidade, @_uf, @_cep);
+	_idUsuario = SELECT LAST_INSERT_ID();
+	
+	CALL sp_inserirEndereco(_idUsuario, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep);
+
 END $$
 DELIMITER ;
