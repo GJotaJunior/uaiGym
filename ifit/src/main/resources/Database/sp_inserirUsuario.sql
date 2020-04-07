@@ -9,7 +9,7 @@ BEGIN
 	
 	INSERT INTO Usuario(perfil, nome, cpf, dtNascimento, sexo, email, senha) VALUES (_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha);
 	
-	_idUsuario = SELECT LAST_INSERT_ID();
+	_idUsuario = LAST_INSERT_ID();
 	
 	CALL sp_inserirEndereco(_idUsuario, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep);
 
