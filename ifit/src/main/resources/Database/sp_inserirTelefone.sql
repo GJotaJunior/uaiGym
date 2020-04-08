@@ -1,6 +1,6 @@
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirContato`(_idUsuario INT, _telefone VARCHAR(15))
+CREATE PROCEDURE `sp_inserirTelefone`(_idUsuario INT, _telefone VARCHAR(15))
 
 BEGIN
 
