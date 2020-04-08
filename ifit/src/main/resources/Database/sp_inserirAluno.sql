@@ -7,7 +7,7 @@ _senha VARCHAR(255), _matricula VARCHAR(255), _status ENUM('ATIVO', 'INATIVO'), 
 BEGIN
 	DECLARE _idUsuario INT;
 	
-	SET _idUsuario = sp_inserirUsuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep);
+	CALL sp_inserirUsuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
 	
 	INSERT INTO Aluno(idUsuario, matricula, status) VALUES (_idUsuario, _matricula, _status);
 
