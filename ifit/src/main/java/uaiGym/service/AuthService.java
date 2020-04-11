@@ -51,7 +51,8 @@ public class AuthService {
 		return messages;
 	}
 
-	public boolean login(String emailOrCpf, String password) throws SQLException, IOException, NoSuchAlgorithmException {
+	public boolean login(String emailOrCpf, String password)
+			throws SQLException, IOException, NoSuchAlgorithmException {
 		password = securityPassword(password);
 
 		Connection connection = new ConnectionFactory().recuperarConexao();
@@ -89,7 +90,8 @@ public class AuthService {
 		}
 	}
 
-	public void register(String email, String user, String password, String passwordConfirm) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	public void register(String email, String user, String password, String passwordConfirm)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		if (!password.equals(passwordConfirm))
 			messages.add("As senhas não são iguais!");
 		password = securityPassword(password);
@@ -103,7 +105,8 @@ public class AuthService {
 		authenticator.invalidate();
 	}
 
-	public String securityPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	public static String securityPassword(String password)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
 		byte messageDigest[] = algorithm.digest(password.getBytes("UTF-8"));
 
@@ -112,5 +115,42 @@ public class AuthService {
 			result.append(b);
 		}
 		return result.toString();
+	}
+
+	public static void redefinePassword(String emailOrCpf) {
+		String sql = "SELECT idUsuario, email, nome FROM Usuario WHERE email = ? OR cpf = ?";
+
+		try (PreparedStatement pstm = new ConnectionFactory().recuperarConexao().prepareStatement(sql)) {
+			pstm.setString(1, emailOrCpf);
+			pstm.setString(2, emailOrCpf);
+			pstm.execute();
+			try (ResultSet rst = pstm.getResultSet()) {
+				if (rst.next()) {
+					Integer id = rst.getInt(1);
+					String email = rst.getString(2).trim();
+					String nome = rst.getString(3);
+					if (email != null && !email.isEmpty() && !email.isBlank()) {
+						String url = EncryptionService.linkGenerator(id);
+						// TODO criar metodo pra enviar email com o link
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void newPassword(Integer id, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		password = securityPassword(password);
+
+		String sql = "UPDATE Usuario SET senha = ? WHERE idUsuario = ?";
+
+		try (PreparedStatement pstm = new ConnectionFactory().recuperarConexao().prepareStatement(sql)) {
+			pstm.setInt(1, id);
+			pstm.setString(2, password);
+			pstm.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
