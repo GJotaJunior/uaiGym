@@ -14,14 +14,14 @@ public class Aluno extends Usuario {
 
 	private String matricula;
 	private Instrutor instrutor;
-	private List<AvaliacaoFisica> avaliacoes;
+	private Set<AvaliacaoFisica> avaliacoes;
 	private List<Treino> treinos;
 	private boolean estaAtivo;
 	private Set<ContatoDeEmergencia> contatosDeEmergencia;
 
 	public Aluno(Integer id, String email, String senha, String nome, String cpf, Date nascimento,
 			Set<String> telefones, SexoEnum sexo, Endereco endereco, String matricula,
-			Instrutor instrutor, List<AvaliacaoFisica> avaliacoes, List<Treino> treinos, boolean estaAtivo,
+			Instrutor instrutor, Set<AvaliacaoFisica> avaliacoes, List<Treino> treinos, boolean estaAtivo,
 			Set<ContatoDeEmergencia> contatosDeEmergencia) {
 		super(id, email, senha, nome, cpf, nascimento, telefones, sexo, endereco, PerfilEnum.ALUNO);
 		this.matricula = matricula;
@@ -44,10 +44,14 @@ public class Aluno extends Usuario {
 		this.instrutor = instrutor;
 	}
 
-	public List<AvaliacaoFisica> getAvaliacao() {
+	public Set<AvaliacaoFisica> getAvaliacao() {
 		return avaliacoes;
 	}
 
+	public void setAvaliacoes(Set<AvaliacaoFisica> avaliacoes) {
+		this.avaliacoes = avaliacoes;
+	}
+	
 	public void addAvaliacaoFisica(AvaliacaoFisica avaliacao) {
 		this.avaliacoes.add(avaliacao);
 	}

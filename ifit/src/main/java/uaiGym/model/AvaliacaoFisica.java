@@ -1,6 +1,6 @@
 package uaiGym.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import uaiGym.model.pessoa.Aluno;
 import uaiGym.model.pessoa.Instrutor;
@@ -9,10 +9,10 @@ public class AvaliacaoFisica {
 
 	private Aluno aluno;
 	private Instrutor instrutor;
-	private Calendar data;
+	private Date data;
 	private MedidasCorporais medidas;
 
-	public AvaliacaoFisica(Aluno aluno, Instrutor instrutor, Calendar data, MedidasCorporais medidas) {
+	public AvaliacaoFisica(Aluno aluno, Instrutor instrutor, Date data, MedidasCorporais medidas) {
 		this.aluno = aluno;
 		this.instrutor = instrutor;
 		this.data = data;
@@ -27,7 +27,7 @@ public class AvaliacaoFisica {
 		return instrutor;
 	}
 
-	public Calendar getData() {
+	public Date getData() {
 		return data;
 	}
 

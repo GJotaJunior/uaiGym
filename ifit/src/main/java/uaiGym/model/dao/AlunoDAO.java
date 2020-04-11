@@ -6,12 +6,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.ContatoDeEmergencia;
+import uaiGym.model.MedidasCorporais;
 import uaiGym.model.enuns.ParentescoEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
@@ -76,9 +78,29 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		return null;
 	}
 
-	private List<AvaliacaoFisica> getAvaliacoesPorId(int id) {
-		// TODO
-		return null;
+	private Set<AvaliacaoFisica> getAvaliacoesPorId(int id) {
+		Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
+		Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(id);
+
+		String sql = "SELECT ava.* FROM Avaliacao ava INNER JOIN Aluno a ON ava.idAluno = a.idAluno"
+				+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ?";
+
+		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+			pstm.setInt(1, id);
+			pstm.execute();
+			try (ResultSet rst = pstm.getResultSet()) {
+				while (rst.next()) {
+					avaliacoes.add(
+							new AvaliacaoFisica(aluno, new InstrutorDAO(getConnection()).recuperarPorId(rst.getInt(3)),
+									rst.getDate(4), new MedidasCorporais(rst.getFloat(5), rst.getFloat(6),
+											rst.getFloat(7), rst.getFloat(8), rst.getFloat(9))));
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return avaliacoes;
 	}
 
 	@Override
@@ -123,8 +145,28 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 
 	@Override
 	public List<Aluno> listarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Aluno> alunos = new ArrayList<Aluno>();
+		
+		String sql = "SELECT u.*, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario";
+
+		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+			pstm.execute();
+
+			try (ResultSet rst = pstm.getResultSet()) {
+				while (rst.next()) {
+					int id = rst.getInt(1);
+					alunos.add(new Aluno(id, rst.getString(7), rst.getString(8), rst.getString(3), rst.getString(4),
+							rst.getDate(5), getTelefonesPorId(id), SexoEnum.valueOf(rst.getString(6)),
+							getEnderecoPorId(id), rst.getString(9),
+							new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id), getAvaliacoesPorId(id),
+							getTreinosPorId(id), rst.getString(10).equals("ATIVO"), getContatosDeEmergenciaPorId(id)));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return alunos;
 	}
 
 }
