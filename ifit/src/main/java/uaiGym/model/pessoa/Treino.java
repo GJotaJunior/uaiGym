@@ -7,6 +7,10 @@ import uaiGym.model.Exercicio;
 public class Treino {
 	
 	private List<Exercicio> exercicios;
+	
+	public Treino(List<Exercicio> exercicios) {
+		this.exercicios = exercicios;
+	}
 
 	public List<Exercicio> getExercicios() {
 		return exercicios;

@@ -1,4 +1,4 @@
-package uaiGym.DataBase;
+package uaiGym.service.DataBase;
 
 import java.io.IOException;
 import java.sql.Connection;

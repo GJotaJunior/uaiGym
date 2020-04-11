@@ -1,6 +1,8 @@
 package uaiGym.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,7 +44,11 @@ public class CadastroServlet extends HttpServlet {
 	String senha = request.getParameter("senha");
 	String confirmarSenha = request.getParameter("confirmarSenha");
 
-	authenticator.register(email, usuario, senha, confirmarSenha);
+	try {
+		authenticator.register(email, usuario, senha, confirmarSenha);
+	} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+		e.printStackTrace();
+	}
 	request.setAttribute("mensagem", authenticator.getMessages());
 
 	if (authenticator.isValid()) {

@@ -1,9 +1,7 @@
 package uaiGym.model.pessoa;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,10 +14,11 @@ public class Instrutor extends Funcionario {
 
 	private Set<Aluno> alunos;
 
-	public Instrutor(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
-			int codigoFuncional, int numeroContrato, Calendar admissao, PerfilEnum perfil) {
-		super(nome, cpf, nascimento, telefone, sexo, endereco, codigoFuncional, numeroContrato, admissao, perfil);
-		alunos = new HashSet<Aluno>();
+	public Instrutor(Integer id, String email, String senha, String nome, String cpf, Date nascimento,
+			Set<String> telefones, SexoEnum sexo, Endereco endereco, PerfilEnum perfil, String contrato,
+			Date admissao, Date demissao, Set<Aluno> alunos) {
+		super(id, email, senha, nome, cpf, nascimento, telefones, sexo, endereco, perfil, contrato, admissao, demissao);
+		this.alunos = alunos;
 	}
 
 	public Set<Aluno> getAlunos() {

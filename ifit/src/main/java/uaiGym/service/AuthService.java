@@ -20,7 +20,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import uaiGym.DataBase.ConnectionFactory;
+import uaiGym.model.dao.AlunoDAO;
+import uaiGym.model.dao.GerenteDAO;
+import uaiGym.model.dao.InstrutorDAO;
+import uaiGym.model.dao.RecepcaoDAO;
+import uaiGym.model.enuns.PerfilEnum;
+import uaiGym.model.pessoa.Usuario;
+import uaiGym.service.DataBase.ConnectionFactory;
 
 // implementar os metodos com "TODO" quando aprendermos conectar com o banco
 public class AuthService {
@@ -45,33 +51,50 @@ public class AuthService {
 		return messages;
 	}
 
-	public Integer login(String user, String password) throws SQLException, IOException, NoSuchAlgorithmException {
+	public boolean login(String emailOrCpf, String password) throws SQLException, IOException, NoSuchAlgorithmException {
 		password = securityPassword(password);
-		
+
 		Connection connection = new ConnectionFactory().recuperarConexao();
-		String sql = "SELECT idUsuario FROM Usuario WHERE email = ? and senha = ? or cpf = ? and senha = ?";
+		String sql = "SELECT idUsuario, perfil FROM Usuario WHERE email = ? AND senha = ? OR CPF = ? AND senha = ?";
 		try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-			pstm.setString(1, user);
+			pstm.setString(1, emailOrCpf);
 			pstm.setString(2, password);
-			pstm.setString(3, user);
+			pstm.setString(3, emailOrCpf);
 			pstm.setString(4, password);
 			pstm.execute();
 
 			try (ResultSet rst = pstm.getResultSet()) {
+				Usuario usuario = null;
 				if (rst.next()) {
-					return rst.getInt(1);
+					String perfil = rst.getString(2);
+					Integer id = rst.getInt(1);
+					if (perfil.equals(PerfilEnum.ALUNO.toString())) {
+						usuario = new AlunoDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
+					} else if (perfil.equals(PerfilEnum.INSTRUTOR.toString())) {
+						usuario = new InstrutorDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
+					} else if (perfil.equals(PerfilEnum.RECEPCAO.toString())) {
+						usuario = new RecepcaoDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
+					} else if (perfil.equals(PerfilEnum.GERENCIA.toString())) {
+						usuario = new GerenteDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
+					}
+				}
+				if (usuario != null) {
+					authenticator.setAttribute("usuario", usuario);
+					return true;
+				} else {
+					messages.add("As informações de login não foram inseridas corretamente!");
+					return false;
 				}
 			}
 		}
-		messages.add("As informações de login não foram inseridas corretamente!");
-		return null;
 	}
 
-	public void register(String email, String user, String password, String passwordConfirm) {
+	public void register(String email, String user, String password, String passwordConfirm) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		if (!password.equals(passwordConfirm))
 			messages.add("As senhas não são iguais!");
+		password = securityPassword(password);
 
-		// TODO
+		// TODO verificar parametros e implementar o metodo
 		isValid = true;
 		messages.add("Cadastrado com sucesso!");
 	}
@@ -79,7 +102,7 @@ public class AuthService {
 	public void logout() {
 		authenticator.invalidate();
 	}
-	
+
 	public String securityPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
 		byte messageDigest[] = algorithm.digest(password.getBytes("UTF-8"));

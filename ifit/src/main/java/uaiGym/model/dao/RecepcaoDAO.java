@@ -1,24 +1,24 @@
-package uaiGym.dao;
+package uaiGym.model.dao;
 
 import java.sql.Connection;
 import java.util.List;
 
-import uaiGym.model.pessoa.Funcionario;
+import uaiGym.model.pessoa.Recepcao;
 
-public class FuncionarioDAO extends Dao<Funcionario> {
+public class RecepcaoDAO extends Dao<Recepcao> {
 
-	public FuncionarioDAO(Connection connection) {
+	public RecepcaoDAO(Connection connection) {
 		super(connection);
 	}
 
 	@Override
-	public Funcionario recuperarPorId(int id) {
+	public Recepcao recuperarPorId(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void salvar(Funcionario entidade) {
+	public void salvar(Recepcao entidade) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -30,7 +30,7 @@ public class FuncionarioDAO extends Dao<Funcionario> {
 	}
 
 	@Override
-	public List<Funcionario> listarTodos() {
+	public List<Recepcao> listarTodos() {
 		// TODO Auto-generated method stub
 		return null;
 	}

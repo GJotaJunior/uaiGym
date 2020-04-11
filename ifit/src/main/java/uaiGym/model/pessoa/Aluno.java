@@ -1,8 +1,6 @@
 package uaiGym.model.pessoa;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,25 +12,28 @@ import uaiGym.model.enuns.SexoEnum;
 
 public class Aluno extends Usuario {
 
-	private final int numeroMatricula;
+	private String matricula;
 	private Instrutor instrutor;
 	private List<AvaliacaoFisica> avaliacoes;
 	private List<Treino> treinos;
 	private boolean estaAtivo;
 	private Set<ContatoDeEmergencia> contatosDeEmergencia;
 
-	public Aluno(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
-			int numeroMatricula, Instrutor instrutor, PerfilEnum perfil) {
-		super(nome, cpf, nascimento, telefone, sexo, endereco, perfil);
-		this.numeroMatricula = numeroMatricula;
+	public Aluno(Integer id, String email, String senha, String nome, String cpf, Date nascimento,
+			Set<String> telefones, SexoEnum sexo, Endereco endereco, String matricula,
+			Instrutor instrutor, List<AvaliacaoFisica> avaliacoes, List<Treino> treinos, boolean estaAtivo,
+			Set<ContatoDeEmergencia> contatosDeEmergencia) {
+		super(id, email, senha, nome, cpf, nascimento, telefones, sexo, endereco, PerfilEnum.ALUNO);
+		this.matricula = matricula;
 		this.instrutor = instrutor;
-		avaliacoes = new ArrayList<AvaliacaoFisica>();
-		estaAtivo = true;
-		this.contatosDeEmergencia = new HashSet<ContatoDeEmergencia>();
+		this.avaliacoes = avaliacoes;
+		this.treinos = treinos;
+		this.estaAtivo = estaAtivo;
+		this.contatosDeEmergencia = contatosDeEmergencia;
 	}
 
-	public int getNumeroMatricula() {
-		return numeroMatricula;
+	public String getMatricula() {
+		return matricula;
 	}
 
 	public Instrutor getInstrutor() {
@@ -78,23 +79,26 @@ public class Aluno extends Usuario {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + numeroMatricula;
+		int result = super.hashCode();
+		result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Aluno other = (Aluno) obj;
-		if (numeroMatricula != other.numeroMatricula)
+		if (matricula == null) {
+			if (other.matricula != null)
+				return false;
+		} else if (!matricula.equals(other.matricula))
 			return false;
 		return true;
 	}
-	
+
 }

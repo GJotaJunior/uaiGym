@@ -1,15 +1,17 @@
 package uaiGym.model.pessoa;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import uaiGym.model.Endereco;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
-import uaiGym.service.CPFValidator;
 
 public abstract class Usuario {
+
+	private Integer id;
+	private String email;
+	private String senha;
 
 	private String nome;
 	private String cpf;
@@ -19,16 +21,16 @@ public abstract class Usuario {
 	private Endereco endereco;
 	private PerfilEnum perfil;
 
-	public Usuario(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
-			PerfilEnum perfil) {
+	public Usuario(Integer id, String email, String senha, String nome, String cpf, Date nascimento,
+			Set<String> telefones, SexoEnum sexo, Endereco endereco, PerfilEnum perfil) {
+
+		this.setId(id);
+		this.setEmail(email);
+		this.setSenha(senha);
 		this.nome = nome;
-		if (CPFValidator.validarCPF(cpf))
-			this.cpf = cpf;
-		else
-			throw new IllegalArgumentException();
+		this.cpf = cpf;
 		this.nascimento = nascimento;
-		this.telefones = new HashSet<String>();
-		this.telefones.add(telefone);
+		this.telefones = telefones;
 		this.sexo = sexo;
 		this.endereco = endereco;
 		this.perfil = perfil;
@@ -107,6 +109,30 @@ public abstract class Usuario {
 		} else if (!nascimento.equals(other.nascimento))
 			return false;
 		return true;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }

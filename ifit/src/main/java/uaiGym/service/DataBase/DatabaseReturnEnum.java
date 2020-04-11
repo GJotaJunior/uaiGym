@@ -1,4 +1,4 @@
-package uaiGym.DataBase;
+package uaiGym.service.DataBase;
 
 public enum DatabaseReturnEnum {
 
@@ -9,15 +9,15 @@ public enum DatabaseReturnEnum {
     SUCESSO(200),
 
     // RANGE 300 - Equipamento
-    // Possui exercício vinculado
+    // Possui exercï¿½cio vinculado
     ERROR_EQUIPAMENTO_EXERCICIO(301),
 
-    // RANGE 400 - Exercício
+    // RANGE 400 - Exercï¿½cio
     // Possui treino vinculado
     ERROR_EXERCICIO_TREINO(401),
 
     // RANGE 500 - Treino
-    // Possui exercício vinculado
+    // Possui exercï¿½cio vinculado
     ERROR_TREINO_EXERCICIO(501),
     // Possui aluno vinculado
     ERROR_TREINO_ALUNO(502);

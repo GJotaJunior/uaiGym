@@ -1,4 +1,4 @@
-package uaiGym.DataBase;
+package uaiGym.service.DataBase;
 
 public class DatabaseReturnErrorMessage {
 
@@ -17,25 +17,25 @@ public class DatabaseReturnErrorMessage {
 
 	switch (dbrn) {
 	case GENERAL_ERROR:
-	    mensagemErro = "Desculpe, mas não foi possível realizar esta ação. Tente novamente mais tarde ou procure o administrador do sistema!";
+	    mensagemErro = "Desculpe, mas nï¿½o foi possï¿½vel realizar esta aï¿½ï¿½o. Tente novamente mais tarde ou procure o administrador do sistema!";
 	    break;
 	case SUCESSO:
 	    mensagemErro = "Sucesso";
 	    break;
 	case ERROR_EQUIPAMENTO_EXERCICIO:
-	    mensagemErro = "Não é possível excluir o equipamento, pois existe(m) exercício(s) vinculado(s).";
+	    mensagemErro = "Nï¿½o ï¿½ possï¿½vel excluir o equipamento, pois existe(m) exercï¿½cio(s) vinculado(s).";
 	    break;
 	case ERROR_EXERCICIO_TREINO:
-	    mensagemErro = "Não é possível excluir o exercício, pois ele está vinculado a um ou mais treinos.";
+	    mensagemErro = "Nï¿½o ï¿½ possï¿½vel excluir o exercï¿½cio, pois ele estï¿½ vinculado a um ou mais treinos.";
 	    break;
 	case ERROR_TREINO_EXERCICIO:
-	    mensagemErro = "Não é possível excluir o treino, pois ele possui exercício(s) vinculado(s).";
+	    mensagemErro = "Nï¿½o ï¿½ possï¿½vel excluir o treino, pois ele possui exercï¿½cio(s) vinculado(s).";
 	    break;
 	case ERROR_TREINO_ALUNO:
-	    mensagemErro = "Não é possível excluir o treino, pois existe(m) aluno(s) realiando este treino.";
+	    mensagemErro = "Nï¿½o ï¿½ possï¿½vel excluir o treino, pois existe(m) aluno(s) realizando este treino.";
 	    break;
 	default:
-	    mensagemErro = "Desculpe, mas não foi possível realizar esta ação. Tente novamente mais tarde ou procure o administrador do sistema!";
+	    mensagemErro = "Desculpe, mas nï¿½o foi possï¿½vel realizar esta aï¿½ï¿½o. Tente novamente mais tarde ou procure o administrador do sistema!";
 	    break;
 
 	}

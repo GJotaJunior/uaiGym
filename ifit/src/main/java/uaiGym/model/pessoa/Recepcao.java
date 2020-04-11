@@ -1,9 +1,6 @@
 package uaiGym.model.pessoa;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,18 +9,20 @@ import uaiGym.model.Equipamento;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
-public class Secretaria extends Funcionario {
+public class Recepcao extends Funcionario {
 
 	private Set<Aluno> alunos;
 	private Set<Equipamento> equipamentos;
 	private Map<Aluno, Instrutor> ligacaoAlunoInstrutor;
 
-	public Secretaria(String nome, String cpf, Date nascimento, String telefone, SexoEnum sexo, Endereco endereco,
-			int codigoFuncional, int numeroContrato, Calendar admissao, PerfilEnum perfil) {
-		super(nome, cpf, nascimento, telefone, sexo, endereco, codigoFuncional, numeroContrato, admissao, perfil);
-		alunos = new HashSet<>();
-		equipamentos = new HashSet<>();
-		ligacaoAlunoInstrutor = new HashMap<>();
+	public Recepcao(Integer id, String email, String senha, String nome, String cpf, Date nascimento,
+			Set<String> telefones, SexoEnum sexo, Endereco endereco, PerfilEnum perfil, int codigoFuncional,
+			String contrato, Date admissao, Date demissao, Set<Aluno> alunos, Set<Equipamento> equipamentos,
+			Map<Aluno, Instrutor> ligacaoAlunoInstrutor) {
+		super(id, email, senha, nome, cpf, nascimento, telefones, sexo, endereco, perfil, contrato, admissao, demissao);
+		this.alunos = alunos;
+		this.equipamentos = equipamentos;
+		this.ligacaoAlunoInstrutor = ligacaoAlunoInstrutor;
 	}
 
 	public void cadastroAlunos(Aluno aluno) {
