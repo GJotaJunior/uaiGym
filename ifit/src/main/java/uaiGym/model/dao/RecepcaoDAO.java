@@ -5,7 +5,7 @@ import java.util.List;
 
 import uaiGym.model.pessoa.Recepcao;
 
-public class RecepcaoDAO extends Dao<Recepcao> {
+public class RecepcaoDAO extends UsuarioDAO<Recepcao> {
 
 	public RecepcaoDAO(Connection connection) {
 		super(connection);

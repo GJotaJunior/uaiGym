@@ -5,7 +5,7 @@ import java.util.List;
 
 import uaiGym.model.pessoa.Gerente;
 
-public class GerenteDAO extends Dao<Gerente> {
+public class GerenteDAO extends UsuarioDAO<Gerente> {
 
 	public GerenteDAO(Connection connection) {
 		super(connection);

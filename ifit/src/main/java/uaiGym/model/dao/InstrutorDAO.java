@@ -14,7 +14,7 @@ import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
 import uaiGym.model.pessoa.Instrutor;
 
-public class InstrutorDAO extends Dao<Instrutor> {
+public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 
 	public InstrutorDAO(Connection connection) {
 		super(connection);
