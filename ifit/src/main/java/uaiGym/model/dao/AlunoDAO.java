@@ -17,6 +17,7 @@ import uaiGym.model.MedidasCorporais;
 import uaiGym.model.enuns.ParentescoEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
+import uaiGym.model.pessoa.Instrutor;
 import uaiGym.model.pessoa.Treino;
 
 public class AlunoDAO extends UsuarioDAO<Aluno> {
@@ -37,11 +38,19 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 
 			try (ResultSet rst = pstm.getResultSet()) {
 				if (rst.next()) {
-					aluno = new Aluno(id, rst.getString(7), rst.getString(8), rst.getString(3), rst.getString(4),
-							rst.getDate(5), getTelefonesPorId(id), SexoEnum.valueOf(rst.getString(6)),
-							getEnderecoPorId(id), rst.getString(9),
-							new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id), getAvaliacoesPorId(id),
-							getTreinosPorId(id), rst.getString(10).equals("ATIVO"), getContatosDeEmergenciaPorId(id));
+					String email = rst.getString(7);
+					String senha = rst.getString(8);
+					String nome = rst.getString(3);
+					String cpf = rst.getString(4);
+					Date nascimento = rst.getDate(5);
+					SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
+					String matricula = rst.getString(9);
+					Instrutor instrutor = new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
+					boolean estaAtivo = rst.getString(10).equals("ATIVO");
+
+					aluno = new Aluno(id, email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
+							getEnderecoPorId(id), matricula, instrutor, getAvaliacoesPorId(id), getTreinosPorId(id),
+							estaAtivo, getContatosDeEmergenciaPorId(id));
 				}
 			}
 		} catch (SQLException e) {
@@ -62,8 +71,12 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 
 			try (ResultSet rst = pstm.getResultSet()) {
 				while (rst.next()) {
-					contatos.add(new ContatoDeEmergencia(rst.getString(3), rst.getString(4),
-							ParentescoEnum.valueOf(rst.getString(5))));
+					String nome = rst.getString(3);
+					String telefone = rst.getString(4);
+					ParentescoEnum parentesco = ParentescoEnum.valueOf(rst.getString(5));
+
+					ContatoDeEmergencia contatoDeEmergencia = new ContatoDeEmergencia(nome, telefone, parentesco);
+					contatos.add(contatoDeEmergencia);
 				}
 			}
 		} catch (SQLException e) {
@@ -90,10 +103,21 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 			pstm.execute();
 			try (ResultSet rst = pstm.getResultSet()) {
 				while (rst.next()) {
-					avaliacoes.add(
-							new AvaliacaoFisica(aluno, new InstrutorDAO(getConnection()).recuperarPorId(rst.getInt(3)),
-									rst.getDate(4), new MedidasCorporais(rst.getFloat(5), rst.getFloat(6),
-											rst.getFloat(7), rst.getFloat(8), rst.getFloat(9))));
+					int idInstrutor = rst.getInt(3);
+					Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
+					Date data = rst.getDate(4);
+					
+					float altura = rst.getFloat(5);
+					float peso = rst.getFloat(6);
+					float gorduraPercentual = rst.getFloat(7);
+					float residuosPercentual = rst.getFloat(8);
+					float musculoPercentual = rst.getFloat(9);
+					MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual,
+							residuosPercentual, musculoPercentual);
+					
+					AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica(aluno, instrutor, data, medidas);
+
+					avaliacoes.add(avaliacaoFisica);
 				}
 			}
 
@@ -146,7 +170,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 	@Override
 	public List<Aluno> listarTodos() {
 		List<Aluno> alunos = new ArrayList<Aluno>();
-		
+
 		String sql = "SELECT u.*, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario";
 
 		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
@@ -155,17 +179,27 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 			try (ResultSet rst = pstm.getResultSet()) {
 				while (rst.next()) {
 					int id = rst.getInt(1);
-					alunos.add(new Aluno(id, rst.getString(7), rst.getString(8), rst.getString(3), rst.getString(4),
-							rst.getDate(5), getTelefonesPorId(id), SexoEnum.valueOf(rst.getString(6)),
-							getEnderecoPorId(id), rst.getString(9),
-							new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id), getAvaliacoesPorId(id),
-							getTreinosPorId(id), rst.getString(10).equals("ATIVO"), getContatosDeEmergenciaPorId(id)));
+					String email = rst.getString(7);
+					String senha = rst.getString(8);
+					String nome = rst.getString(3);
+					String cpf = rst.getString(4);
+					Date nascimento = rst.getDate(5);
+					SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
+					String matricula = rst.getString(9);
+					Instrutor instrutor = new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
+					boolean estaAtivo = rst.getString(10).equals("ATIVO");
+
+					Aluno aluno = new Aluno(id, email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
+							getEnderecoPorId(id), matricula, instrutor, getAvaliacoesPorId(id), getTreinosPorId(id),
+							estaAtivo, getContatosDeEmergenciaPorId(id));
+					
+					alunos.add(aluno);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return alunos;
 	}
 

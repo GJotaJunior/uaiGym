@@ -26,8 +26,15 @@ public abstract class UsuarioDAO<E> extends Dao<E> {
 			pstm.execute();
 			try (ResultSet rst = pstm.getResultSet()) {
 				if (rst.next()) {
-					endereco = new Endereco(rst.getString(3), rst.getInt(4), rst.getString(5), rst.getString(6),
-							rst.getString(7), rst.getString(9), EstadoEnum.valueOf(rst.getString(8)));
+					String logradouro = rst.getString(3);
+					Integer numero = rst.getInt(4);
+					String complemento = rst.getString(5);
+					String bairro = rst.getString(6);
+					String cidade = rst.getString(7);
+					String cep = rst.getString(9);
+					EstadoEnum estado = EstadoEnum.valueOf(rst.getString(8));
+
+					endereco = new Endereco(logradouro, numero, complemento, bairro, cidade, cep, estado);
 				}
 			}
 		} catch (SQLException e) {
@@ -42,8 +49,10 @@ public abstract class UsuarioDAO<E> extends Dao<E> {
 		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 			pstm.execute();
 			try (ResultSet rst = pstm.getResultSet()) {
-				if (rst.next())
-					return rst.getInt(1);
+				if (rst.next()) {
+					int quantidadeUsuario = rst.getInt(1);
+					return quantidadeUsuario;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,7 +72,8 @@ public abstract class UsuarioDAO<E> extends Dao<E> {
 
 			try (ResultSet rst = pstm.getResultSet()) {
 				while (rst.next()) {
-					telefones.add(rst.getString(1));
+					String telefone = rst.getString(1);
+					telefones.add(telefone);
 				}
 			}
 		} catch (SQLException e) {

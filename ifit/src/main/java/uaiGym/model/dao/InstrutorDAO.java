@@ -32,10 +32,19 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 
 			try (ResultSet rst = pstm.getResultSet()) {
 				if (rst.next()) {
-					instrutor = new Instrutor(id, rst.getString(7), rst.getString(8), rst.getString(3),
-							rst.getString(4), (Date) rst.getDate(5), getTelefonesPorId(id),
-							SexoEnum.valueOf(rst.getString(6)), getEnderecoPorId(id), PerfilEnum.INSTRUTOR,
-							rst.getString(9), (Date) rst.getDate(10), (Date) rst.getDate(11),
+					String email = rst.getString(7);
+					String senha = rst.getString(8);
+					String nome = rst.getString(3);
+					String cpf = rst.getString(4);
+					Date nascimento = rst.getDate(5);
+					SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
+					PerfilEnum perfil = PerfilEnum.INSTRUTOR;
+					String contrato = rst.getString(9);
+					Date dataAdmissao = rst.getDate(10);
+					Date dataDemissao = rst.getDate(11);
+					
+					instrutor = new Instrutor(id, email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
+							getEnderecoPorId(id), perfil, contrato, dataAdmissao, dataDemissao,
 							getAlunosPorIdInstrutor(id));
 				}
 			}
@@ -58,7 +67,9 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 			pstm.execute();
 			try (ResultSet rst = pstm.getResultSet()) {
 				while (rst.next()) {
-					alunos.add(new AlunoDAO(getConnection()).recuperarPorId(rst.getInt(1)));
+					int idAluno = rst.getInt(1);
+					Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(idAluno);
+					alunos.add(aluno);
 				}
 			}
 		} catch (SQLException e) {
