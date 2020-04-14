@@ -31,7 +31,7 @@ public class EncryptionService {
 		return message.toString();
 	}
 	
-	private static String decrypt(String argument) {
+	public static String decrypt(String argument) {
 		byte[] message = null;
 		
 		try {
