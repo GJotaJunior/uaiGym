@@ -20,7 +20,7 @@ public class RedefinirSenhaServlet extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher dispatcher;
 
-		String id = (String) request.getParameter("id");
+		String id = request.getParameter("id");
 		if (id != null && !id.isEmpty()) {
 			System.out.println(EncryptionService.decrypt(id));
 		}
@@ -37,14 +37,11 @@ public class RedefinirSenhaServlet extends HttpServlet {
 
 		RequestDispatcher dispatcher;
 
-		String usuario = (String) request.getAttribute("usuario");
-		String contexto = request.getServletContext().getContextPath();
-		System.out.println(usuario + "\n" + contexto);
-		System.out.println(1);
-		AuthService.redefinePassword(usuario, contexto);
-		System.out.println(2);
+		String usuario = request.getParameter("usuario");
+		System.out.println(usuario);
+		AuthService.redefinePassword(usuario);
 		
-		dispatcher = request.getRequestDispatcher("/");
+		dispatcher = request.getRequestDispatcher("/WEB-INF/email-enviado.jsp");
 		dispatcher.forward(request, response);
 	}
 
