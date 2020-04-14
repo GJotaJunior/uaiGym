@@ -17,8 +17,9 @@ public class ConnectionFactory {
 	
 	public DataSource dataSource;
 
-	public ConnectionFactory() throws IOException {
+	public ConnectionFactory() throws IOException, ClassNotFoundException {
 		getProperties();
+		Class.forName("com.mysql.jdbc.Driver");
 		
 		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 		comboPooledDataSource.setJdbcUrl(url);
