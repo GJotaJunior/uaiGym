@@ -118,7 +118,7 @@ public class AuthService {
 		return result.toString();
 	}
 
-	public static void redefinePassword(String emailOrCpf, String context) {
+	public static void redefinePassword(String emailOrCpf) {
 		String sql = "SELECT idUsuario, email, nome FROM Usuario WHERE email = ? OR cpf = ?";
 
 		try (PreparedStatement pstm = new ConnectionFactory().recuperarConexao().prepareStatement(sql)) {
