@@ -53,7 +53,7 @@ public class AuthService {
 	}
 
 	public boolean login(String emailOrCpf, String password)
-			throws SQLException, IOException, NoSuchAlgorithmException {
+			throws SQLException, IOException, NoSuchAlgorithmException, ClassNotFoundException {
 		password = securityPassword(password);
 
 		Connection connection = new ConnectionFactory().recuperarConexao();
@@ -131,7 +131,7 @@ public class AuthService {
 					String email = rst.getString(2).trim();
 					String name = rst.getString(3);
 					if (email != null && !email.isEmpty() && !email.isBlank()) {
-						String url = "http://localhost:8080" + context + "/?id=" + EncryptionService.linkGenerator(id);
+						String url = "http://localhost:8080" + EncryptionService.linkGenerator(id);
 						sendEmailForRedefinePassword(url, email, name);
 					}
 				} else {

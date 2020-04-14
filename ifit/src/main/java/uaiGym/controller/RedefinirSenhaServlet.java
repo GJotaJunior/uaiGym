@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import uaiGym.service.AuthService;
+import uaiGym.service.EncryptionService;
 
 @WebServlet("/redefinir-senha")
 public class RedefinirSenhaServlet extends HttpServlet {
@@ -19,7 +20,10 @@ public class RedefinirSenhaServlet extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher dispatcher;
 
-		String id = (String) request.getAttribute("id");
+		String id = (String) request.getParameter("id");
+		if (id != null && !id.isEmpty()) {
+			System.out.println(EncryptionService.decrypt(id));
+		}
 		
 		dispatcher = (id == null || id.isEmpty() || id.isBlank())
 				? request.getRequestDispatcher("/WEB-INF/redefinir-senha.jsp")
@@ -33,11 +37,13 @@ public class RedefinirSenhaServlet extends HttpServlet {
 
 		RequestDispatcher dispatcher;
 
-		String usuario = request.getParameter("usuario");
+		String usuario = (String) request.getAttribute("usuario");
 		String contexto = request.getServletContext().getContextPath();
 		System.out.println(usuario + "\n" + contexto);
+		System.out.println(1);
 		AuthService.redefinePassword(usuario, contexto);
-
+		System.out.println(2);
+		
 		dispatcher = request.getRequestDispatcher("/");
 		dispatcher.forward(request, response);
 	}
