@@ -22,7 +22,7 @@ public class RedefinirSenhaServlet extends HttpServlet {
 
 		String id = request.getParameter("id");
 		if (id != null && !id.isEmpty()) {
-			System.out.println(EncryptionService.decrypt(id));
+			id = EncryptionService.decrypt(id);
 		}
 		
 		dispatcher = (id == null || id.isEmpty() || id.isBlank())
