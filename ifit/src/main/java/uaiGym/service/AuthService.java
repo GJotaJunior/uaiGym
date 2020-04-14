@@ -27,6 +27,7 @@ import uaiGym.model.dao.RecepcaoDAO;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.DataBase.ConnectionFactory;
+import uaiGym.service.dto.EmailDto;
 
 // implementar os metodos com "TODO" quando aprendermos conectar com o banco
 public class AuthService {
@@ -117,7 +118,7 @@ public class AuthService {
 		return result.toString();
 	}
 
-	public static void redefinePassword(String emailOrCpf) {
+	public static void redefinePassword(String emailOrCpf, String context) {
 		String sql = "SELECT idUsuario, email, nome FROM Usuario WHERE email = ? OR cpf = ?";
 
 		try (PreparedStatement pstm = new ConnectionFactory().recuperarConexao().prepareStatement(sql)) {
@@ -128,11 +129,13 @@ public class AuthService {
 				if (rst.next()) {
 					Integer id = rst.getInt(1);
 					String email = rst.getString(2).trim();
-					String nome = rst.getString(3);
+					String name = rst.getString(3);
 					if (email != null && !email.isEmpty() && !email.isBlank()) {
-						String url = EncryptionService.linkGenerator(id);
-						// TODO criar metodo pra enviar email com o link
+						String url = "http://localhost:8080" + context + "/?id=" + EncryptionService.linkGenerator(id);
+						sendEmailForRedefinePassword(url, email, name);
 					}
+				} else {
+					throw new Exception("O email informado não está cadastrado!");
 				}
 			}
 		} catch (Exception e) {
@@ -140,7 +143,17 @@ public class AuthService {
 		}
 	}
 
-	public static void newPassword(Integer id, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	public static void sendEmailForRedefinePassword(String url, String email, String name) {
+
+		String messageBody = "Olá " + name + "!\n Recebemos sua solicitação de redefinição de senha.\n"
+				+ "Para prosseguir, acesse o link abaixo: " + url;
+
+		EmailDto emailDTO = new EmailDto(email, "Solicitação de redefinição de senha!", messageBody);
+		new EmailSender().EnviarEmail(emailDTO, "Recuperação de senha enviada");
+	}
+
+	public static void newPassword(Integer id, String password)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		password = securityPassword(password);
 
 		String sql = "UPDATE Usuario SET senha = ? WHERE idUsuario = ?";

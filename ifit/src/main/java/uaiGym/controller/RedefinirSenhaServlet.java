@@ -34,8 +34,9 @@ public class RedefinirSenhaServlet extends HttpServlet {
 		RequestDispatcher dispatcher;
 
 		String usuario = request.getParameter("usuario");
-
-		AuthService.redefinePassword(usuario);
+		String contexto = request.getServletContext().getContextPath();
+		System.out.println(usuario + "\n" + contexto);
+		AuthService.redefinePassword(usuario, contexto);
 
 		dispatcher = request.getRequestDispatcher("/");
 		dispatcher.forward(request, response);
