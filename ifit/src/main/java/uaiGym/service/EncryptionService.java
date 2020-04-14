@@ -1,52 +1,24 @@
 package uaiGym.service;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class EncryptionService {
 
-	private static String symmetricKey = "012uai345Gym789+";
-	private static SecretKey key = new SecretKeySpec(symmetricKey.getBytes(), "AES");
-
-	public static String linkGenerator(Integer id) {
+	public static String linkGenerator(Integer id) throws UnsupportedEncodingException {
 		String url = "/redefinir-senha?id=" + encrypt(id.toString());
 
 		return url;
 	}
 
-	private static String encrypt(String argument) {
-		byte[] message = null;
-
-		try {
-			Cipher cipher = Cipher.getInstance("AES");
-
-			cipher.init(Cipher.ENCRYPT_MODE, key);
-			message = cipher.doFinal(argument.getBytes());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return message.toString();
+	private static String encrypt(String argument) throws UnsupportedEncodingException {
+		return URLEncoder.encode(argument, StandardCharsets.UTF_8.toString());
 	}
 	
-	public static String decrypt(String argument) {
-		byte[] message = null;
-		
-		try {
-			Cipher cipher = Cipher.getInstance("AES");
-			
-			cipher.init(Cipher.DECRYPT_MODE, key);
-			message = cipher.doFinal(argument.getBytes());
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return message.toString();
+	public static String decrypt(String argument) throws UnsupportedEncodingException {
+		return URLDecoder.decode(argument, StandardCharsets.UTF_8.toString());
 	}
 
 }
-
-//http://clubedosgeeks.com.br/programacao/java/java-criptografia-e-descriptografia-com-aes-chave-assimetrica
