@@ -23,12 +23,11 @@ public class RedefinirSenhaServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		if (id != null && !id.isEmpty()) {
 			id = EncryptionService.decrypt(id);
+			dispatcher = request.getRequestDispatcher("/WEB-INF/nova-senha.jsp");
+		} else {
+			dispatcher = request.getRequestDispatcher("/WEB-INF/redefinir-senha.jsp");
 		}
 		
-		dispatcher = (id == null || id.isEmpty())
-				? request.getRequestDispatcher("/WEB-INF/redefinir-senha.jsp")
-				: request.getRequestDispatcher("/WEB-INF/nova-senha.jsp");
-
 		dispatcher.forward(request, response);
 	}
 
