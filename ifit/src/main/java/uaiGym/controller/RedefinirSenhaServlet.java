@@ -25,7 +25,7 @@ public class RedefinirSenhaServlet extends HttpServlet {
 			id = EncryptionService.decrypt(id);
 		}
 		
-		dispatcher = (id == null || id.isEmpty() || id.isBlank())
+		dispatcher = (id == null || id.isEmpty())
 				? request.getRequestDispatcher("/WEB-INF/redefinir-senha.jsp")
 				: request.getRequestDispatcher("/WEB-INF/nova-senha.jsp");
 

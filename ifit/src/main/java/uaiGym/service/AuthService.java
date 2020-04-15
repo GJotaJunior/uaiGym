@@ -130,7 +130,7 @@ public class AuthService {
 					Integer id = rst.getInt(1);
 					String email = rst.getString(2).trim();
 					String name = rst.getString(3);
-					if (email != null && !email.isEmpty() && !email.isBlank()) {
+					if (email != null && !email.isEmpty()) {
 						String url = "http://localhost:8080" + EncryptionService.linkGenerator(id);
 						sendEmailForRedefinePassword(url, email, name);
 					}
