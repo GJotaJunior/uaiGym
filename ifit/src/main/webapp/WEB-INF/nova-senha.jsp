@@ -12,22 +12,10 @@
 
 <%
 	String id = request.getParameter("id");
-	id = EncryptionService.decrypt(id);
 	ConnectionFactory cf = new ConnectionFactory();
-	String sql = "SELECT nome FROM Usuario WHERE idUsuario = ?";
-	String primeiroNome = null;
-	try (PreparedStatement pstm = cf.recuperarConexao().prepareStatement(sql)) {
-		pstm.setInt(1, Integer.parseInt(id));
-		pstm.execute();
-		try (ResultSet rst = pstm.getResultSet()) {
-			if (rst.next()) {
-				String nome = rst.getString(1);
-				primeiroNome = nome.split(" ")[0];
-			}
-		}
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
+	AlunoDAO alunoDao = new AlunoDAO(cf.recuperarConexao());
+	String primeiroNome = alunoDao.getNomeByUrl(id);
+	
 %>
 
 <!DOCTYPE html>
@@ -38,7 +26,7 @@
 <title>Redefinir senha - UaiGym</title>
 </head>
 <body>
-	<p>Olá <%=primeiroNome%>!</p>
+	<p>Olá <%=primeiroNome %>!</p>
 	<p>Insira abaixo a sua nova senha:</p>
 	<form action="redefinir-senha-confirma" method="POST">
 		<label for="senha">Nova senha</label>
