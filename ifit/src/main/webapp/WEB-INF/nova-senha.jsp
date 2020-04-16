@@ -1,6 +1,7 @@
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.util.List" %>
 <%@page import="uaiGym.model.pessoa.Aluno"%>
 <%@page import="uaiGym.model.dao.UsuarioDAO"%>
 <%@page import="uaiGym.model.pessoa.Usuario"%>
@@ -14,8 +15,9 @@
 	String id = request.getParameter("id");
 	ConnectionFactory cf = new ConnectionFactory();
 	AlunoDAO alunoDao = new AlunoDAO(cf.recuperarConexao());
-	String primeiroNome = alunoDao.getNomeByUrl(id);
-	
+	List<String> nomeId = alunoDao.getNomeByUrl(id);
+	request.setAttribute("id", nomeId.get(0));
+	String primeiroNome = nomeId.get(1);
 %>
 
 <!DOCTYPE html>

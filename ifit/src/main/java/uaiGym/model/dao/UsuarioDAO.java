@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import uaiGym.model.Endereco;
@@ -84,23 +86,39 @@ public abstract class UsuarioDAO<E> extends Dao<E> {
 	return telefones;
     }
 
-    public String getNomeByUrl(String url) throws NumberFormatException, UnsupportedEncodingException {
-	String nome = null;
+    public List<String> getNomeByUrl(String url) throws NumberFormatException, UnsupportedEncodingException {
+	List<String> nomeId = new ArrayList<>();
 
 	String sql = "SELECT nome FROM Usuario WHERE idUsuario = ?";
 
 	Integer id = Integer.parseInt(EncryptionService.decrypt(url));
+	
+	nomeId.add(id.toString());
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
 	    pstm.execute();
 
-	    nome = String.valueOf(pstm.getResultSet());
+	    nomeId.add(String.valueOf(pstm.getResultSet()));
 
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
 
-	return nome;
+	return nomeId;
+    }
+    
+    public boolean updatePassword(Integer id, String password) {
+	String sql = "UPDATE Usuario SET senha = ? WHERE idUsuario = ?";
+	
+	try(PreparedStatement pstm = getConnection().prepareStatement(sql)){
+	    pstm.setString(1, password);
+	    pstm.setInt(2, id);
+	    pstm.execute();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	
+	return true;
     }
 }
