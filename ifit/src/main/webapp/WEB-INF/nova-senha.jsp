@@ -17,7 +17,7 @@
     AlunoDAO alunoDao = new AlunoDAO(cf.recuperarConexao());
     String nome = alunoDao.getNomeByUrl(url);
 
-    request.setAttribute("url", url);
+    session.setAttribute("url", url);
     String primeiroNome = nome;
 %>
 

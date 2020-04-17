@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import uaiGym.model.dao.AlunoDAO;
 import uaiGym.service.DataBase.ConnectionFactory;
@@ -19,10 +20,11 @@ public class RedefinirSenhaConfrmaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/erro.jsp");
 	    
-	    String idCriptografado = request.getAttribute("url").toString();
+	    String idCriptografado = (String) request.getSession().getAttribute("url");
 	    String senha = request.getParameter("senha");
+	    System.out.println(idCriptografado +" | "+senha);
 	    	
-	    if(!senha.isEmpty() && !senha.contentEquals(null)) {
+	    if(!senha.isEmpty() && senha != null) {
 		AlunoDAO aluno;
 		boolean sucesso = false;
 		try {
