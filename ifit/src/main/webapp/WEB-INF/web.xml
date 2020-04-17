@@ -10,8 +10,4 @@
   	<description></description>
   	<servlet-class>uaiGym.controller.RedefinirSenhaConfrma</servlet-class>
   </servlet>
-  <servlet-mapping>
-  	<servlet-name>RedefinirSenhaConfrma</servlet-name>
-  	<url-pattern>/redefinir-senha-confirma</url-pattern>
-  </servlet-mapping>
 </web-app>
