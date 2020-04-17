@@ -99,7 +99,10 @@ public abstract class UsuarioDAO<E> extends Dao<E> {
 	    pstm.setInt(1, id);
 	    pstm.execute();
 
-	    nomeId.add(String.valueOf(pstm.getResultSet()));
+	    try(ResultSet rst = pstm.getResultSet()){
+		if(rst.next())
+		    nomeId.add(rst.getString(1).split(" ")[0]);
+	    }
 
 	} catch (SQLException e) {
 	    e.printStackTrace();
