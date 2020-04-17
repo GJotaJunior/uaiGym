@@ -4,10 +4,4 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-  	<servlet-name>RedefinirSenhaConfrma</servlet-name>
-  	<display-name>RedefinirSenhaConfrma</display-name>
-  	<description></description>
-  	<servlet-class>uaiGym.controller.RedefinirSenhaConfrma</servlet-class>
-  </servlet>
 </web-app>
