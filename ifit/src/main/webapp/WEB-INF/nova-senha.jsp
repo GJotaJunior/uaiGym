@@ -1,7 +1,7 @@
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.util.List" %>
+<%@page import="java.util.List"%>
 <%@page import="uaiGym.model.pessoa.Aluno"%>
 <%@page import="uaiGym.model.dao.UsuarioDAO"%>
 <%@page import="uaiGym.model.pessoa.Usuario"%>
@@ -12,12 +12,13 @@
 	pageEncoding="UTF-8"%>
 
 <%
-	String id = request.getParameter("id");
-	ConnectionFactory cf = new ConnectionFactory();
-	AlunoDAO alunoDao = new AlunoDAO(cf.recuperarConexao());
-	List<String> nomeId = alunoDao.getNomeByUrl(id);
-	request.setAttribute("id", nomeId.get(0));
-	String primeiroNome = nomeId.get(1);
+    String url = request.getParameter("id");
+    ConnectionFactory cf = new ConnectionFactory();
+    AlunoDAO alunoDao = new AlunoDAO(cf.recuperarConexao());
+    String nome = alunoDao.getNomeByUrl(url);
+
+    request.setAttribute("url", url);
+    String primeiroNome = nome;
 %>
 
 <!DOCTYPE html>
@@ -28,15 +29,16 @@
 <title>Redefinir senha - UaiGym</title>
 </head>
 <body>
-	<p>Olá <%=primeiroNome %>!</p>
+	<p>
+		Olá
+		<%=primeiroNome%>!
+	</p>
 	<p>Insira abaixo a sua nova senha:</p>
 	<form action="redefinir-senha-confirma" method="POST">
-		<label for="senha">Nova senha</label>
-		<input type="text" name="senha" />
-		<br />
-		<label for="nova-senha">Confirme a nova senha</label>
-		<input type="text" name="nova-senha" />
-		<input type="submit" value="Redefinir" />
+		<label for="senha">Nova senha</label> <input type="text" name="senha" />
+		<br /> <label for="nova-senha">Confirme a nova senha</label> <input
+			type="text" name="nova-senha" /> <input type="submit"
+			value="Redefinir" />
 	</form>
 </body>
 </html>
