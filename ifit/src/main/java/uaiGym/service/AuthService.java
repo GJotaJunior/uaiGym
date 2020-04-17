@@ -29,7 +29,6 @@ import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.DataBase.ConnectionFactory;
 import uaiGym.service.dto.EmailDto;
 
-// implementar os metodos com "TODO" quando aprendermos conectar com o banco
 public class AuthService {
 
 	private HttpSession authenticator;
@@ -97,7 +96,6 @@ public class AuthService {
 			messages.add("As senhas não são iguais!");
 		password = securityPassword(password);
 
-		// TODO verificar parametros e implementar o metodo
 		isValid = true;
 		messages.add("Cadastrado com sucesso!");
 	}
