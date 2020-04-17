@@ -1,17 +1,17 @@
 package uaiGym.model.dao;
 
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import uaiGym.model.Endereco;
 import uaiGym.model.enuns.EstadoEnum;
+import uaiGym.service.AuthService;
 import uaiGym.service.EncryptionService;
 
 public abstract class UsuarioDAO<E> extends Dao<E> {
@@ -86,14 +86,12 @@ public abstract class UsuarioDAO<E> extends Dao<E> {
 	return telefones;
     }
 
-    public List<String> getNomeByUrl(String url) throws NumberFormatException, UnsupportedEncodingException {
-	List<String> nomeId = new ArrayList<>();
+    public String getNomeByUrl(String url) throws NumberFormatException, UnsupportedEncodingException {
+	String nome = null;
 
 	String sql = "SELECT nome FROM Usuario WHERE idUsuario = ?";
 
 	Integer id = Integer.parseInt(EncryptionService.decrypt(url));
-	
-	nomeId.add(id.toString());
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
@@ -101,21 +99,23 @@ public abstract class UsuarioDAO<E> extends Dao<E> {
 
 	    try(ResultSet rst = pstm.getResultSet()){
 		if(rst.next())
-		    nomeId.add(rst.getString(1).split(" ")[0]);
+		    nome = rst.getString(1).split(" ")[0];
 	    }
 
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
 
-	return nomeId;
+	return nome;
     }
     
-    public boolean updatePassword(Integer id, String password) {
+    public boolean updatePassword(String idCriptografado, String password) throws NumberFormatException, UnsupportedEncodingException, NoSuchAlgorithmException {
 	String sql = "UPDATE Usuario SET senha = ? WHERE idUsuario = ?";
 	
+	Integer id = Integer.parseInt(EncryptionService.decrypt(idCriptografado));
+	
 	try(PreparedStatement pstm = getConnection().prepareStatement(sql)){
-	    pstm.setString(1, password);
+	    pstm.setString(1, AuthService.securityPassword(password));
 	    pstm.setInt(2, id);
 	    pstm.execute();
 	} catch (SQLException e) {

@@ -13,13 +13,13 @@ import uaiGym.model.dao.AlunoDAO;
 import uaiGym.service.DataBase.ConnectionFactory;
 
 @WebServlet("/redefinir-senha-confirma")
-public class RedefinirSenhaConfrma extends HttpServlet {
+public class RedefinirSenhaConfrmaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/erro.jsp");
 	    
-	    Integer id = Integer.parseInt(request.getAttribute("id").toString());
+	    String idCriptografado = request.getAttribute("url").toString();
 	    String senha = request.getParameter("senha");
 	    	
 	    if(!senha.isEmpty() && !senha.contentEquals(null)) {
@@ -28,7 +28,7 @@ public class RedefinirSenhaConfrma extends HttpServlet {
 		try {
 		    ConnectionFactory cf = new ConnectionFactory();
 		    aluno = new AlunoDAO(cf.recuperarConexao());
-		    sucesso =  aluno.updatePassword(id, senha);
+		    sucesso =  aluno.updatePassword(idCriptografado, senha);
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
