@@ -12,7 +12,7 @@ BEGIN
 			IF((SELECT idTreino FROM alunotreino WHERE idTreino = _idTreino) is null )
             THEN
 				SET _status = 200;
-				DELETE FROM idTreino WHERE idTreino = _idTreino; 
+				DELETE FROM treino WHERE idTreino = _idTreino; 
 			ELSE
 				SET _status = 502;
             END IF;

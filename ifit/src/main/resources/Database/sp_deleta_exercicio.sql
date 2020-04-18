@@ -8,7 +8,7 @@ BEGIN
 		IF((SELECT idExercicio FROM exerciciostreino WHERE idExercicio = _idExercicio) is null )
         THEN
 			SET _status = 200;
-            DELETE FROM idExercicio WHERE idExercicio = _idExercicio; 
+            DELETE FROM exercicio WHERE idExercicio = _idExercicio; 
 		ELSE
 			SET _status = 401;
 		END IF;
