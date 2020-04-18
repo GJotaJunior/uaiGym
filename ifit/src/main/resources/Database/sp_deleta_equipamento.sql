@@ -1,18 +1,18 @@
 DELIMITER //
-CREATE PROCEDURE `sp_deleta_treino` (IN _idTreino INT, OUT _status INT)
+CREATE PROCEDURE `sp_deleta_equipamento` (IN _idEquipamento INT, OUT _status INT)
 BEGIN
-	IF((SELECT idTreino FROM treino WHERE idTreino = _idTreino) is null)
-    THEN
+	IF (SELECT idEquipamento FROM equipamento WHERE idEquipamento = _idEquipamento) is null
+	THEN
 		SET _status = 100;
 	ELSE
-		IF((SELECT idTreino FROM Exercicio  WHERE idTreino = _idTreino) is null )
-        THEN
-			SET _status = 200;
-            DELETE FROM idTreino WHERE idTreino = _idTreino; 
-		ELSE
-			SET _status = 301;
+		IF (SELECT idEquipamento FROM exercicio WHERE idEquipamento = _idEquipamento) is not null
+			THEN
+				SET _status = 301;
+			ELSE
+				SET _status = 200;
+                DELETE FROM equipamento WHERE idEquipamento = _idEquipamento;
+			END IF;
 		END IF;
-	END IF;
 END; //
 
 DELIMITER ;
