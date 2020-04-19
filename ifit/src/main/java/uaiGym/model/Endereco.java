@@ -5,14 +5,14 @@ import uaiGym.model.enuns.EstadoEnum;
 public class Endereco {
 
 	private String rua;
-	private Integer numero;
+	private String numero;
 	private String complemento;
 	private String bairro;
 	private String cidade;
 	private String cep;
 	private EstadoEnum estado;
 
-	public Endereco(String rua, Integer numero, String complemento, String bairro, String cidade, String cep,
+	public Endereco(String rua, String numero, String complemento, String bairro, String cidade, String cep,
 			EstadoEnum estado) {
 		this.rua = rua;
 		this.numero = numero;
@@ -31,11 +31,11 @@ public class Endereco {
 		this.rua = rua;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 

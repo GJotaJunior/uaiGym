@@ -2,6 +2,7 @@ package uaiGym.model.pessoa;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,32 +13,48 @@ import uaiGym.model.enuns.SexoEnum;
 
 public class Instrutor extends Funcionario {
 
-	private Set<Aluno> alunos;
+    private Set<Aluno> alunos;
 
-	public Instrutor(Integer id, String email, String senha, String nome, String cpf, Date nascimento,
-			Set<String> telefones, SexoEnum sexo, Endereco endereco, PerfilEnum perfil, String contrato,
-			Date admissao, Date demissao, Set<Aluno> alunos) {
-		super(id, email, senha, nome, cpf, nascimento, telefones, sexo, endereco, perfil, contrato, admissao, demissao);
-		this.alunos = alunos;
+    public Instrutor() {
+	alunos = new HashSet<Aluno>();
+    }
+
+    public Instrutor(String email, String senha, String nome, String cpf, Date nascimento, Set<String> telefones,
+	    SexoEnum sexo, Endereco endereco, PerfilEnum perfil, String contrato, Date admissao, Date demissao,
+	    Set<Aluno> alunos) {
+	super(email, senha, nome, cpf, nascimento, telefones, sexo, endereco, perfil, contrato, admissao, demissao);
+	alunos = alunos;
+    }
+
+    public Set<Aluno> getAlunos() {
+	return alunos;
+    }
+    
+    public void setAlunos(Set<Aluno> a) {
+	this.alunos = a;
+    }
+
+    public List<Aluno> getAlunosPorNome(String nome) {
+	List<Aluno> alunosComONome = new ArrayList<Aluno>();
+	for (Aluno aluno : alunos) {
+	    if (aluno.getNome().contains(nome))
+		alunosComONome.add(aluno);
 	}
+	return alunosComONome;
 
-	public Set<Aluno> getAlunos() {
-		return alunos;
-	}
+    }
 
-	public List<Aluno> getAlunosPorNome(String nome) {
-		List<Aluno> alunosComONome = new ArrayList<Aluno>();
-		for (Aluno aluno : alunos) {
-			if (aluno.getNome().contains(nome))
-				alunosComONome.add(aluno);
-		}
-		return alunosComONome;
+    public void cadastrarAvaliacaoAluno(AvaliacaoFisica avaliacao) {
+	Aluno aluno = avaliacao.getAluno();
+	aluno.addAvaliacaoFisica(avaliacao);
+	alunos.add(aluno);
+    }
 
-	}
-
-	public void cadastrarAvaliacaoAluno(AvaliacaoFisica avaliacao) {
-		Aluno aluno = avaliacao.getAluno();
-		aluno.addAvaliacaoFisica(avaliacao);
-		alunos.add(aluno);
-	}
+    @Override
+    public String toString() {
+	super.toString();
+	return "Instrutor [alunos=" + alunos + "]";
+    }
+    
+    
 }

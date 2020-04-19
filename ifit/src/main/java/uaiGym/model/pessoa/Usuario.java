@@ -9,130 +9,153 @@ import uaiGym.model.enuns.SexoEnum;
 
 public abstract class Usuario {
 
-	private Integer id;
-	private String email;
-	private String senha;
+    private Integer id;
+    private String email;
+    private String senha;
 
-	private String nome;
-	private String cpf;
-	private Date nascimento;
-	private Set<String> telefones;
-	private SexoEnum sexo;
-	private Endereco endereco;
-	private PerfilEnum perfil;
+    private String nome;
+    private String cpf;
+    private Date dtNascimento;
+    private Set<String> telefones;
+    private SexoEnum sexo;
+    private Endereco endereco;
+    private PerfilEnum perfil;
 
-	public Usuario(Integer id, String email, String senha, String nome, String cpf, Date nascimento,
-			Set<String> telefones, SexoEnum sexo, Endereco endereco, PerfilEnum perfil) {
+    public Usuario() {
+    }
 
-		this.setId(id);
-		this.setEmail(email);
-		this.setSenha(senha);
-		this.nome = nome;
-		this.cpf = cpf;
-		this.nascimento = nascimento;
-		this.telefones = telefones;
-		this.sexo = sexo;
-		this.endereco = endereco;
-		this.perfil = perfil;
-	}
+    public Usuario(String email, String senha, String nome, String cpf, Date dtNascimento, Set<String> telefones,
+	    SexoEnum sexo, Endereco endereco, PerfilEnum perfil) {
 
-	public String getNome() {
-		return nome;
-	}
+	this.setEmail(email);
+	this.setSenha(senha);
+	this.nome = nome;
+	this.cpf = cpf;
+	this.dtNascimento = dtNascimento;
+	this.telefones = telefones;
+	this.sexo = sexo;
+	this.endereco = endereco;
+	this.perfil = perfil;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String getNome() {
+	return nome;
+    }
 
-	public String getCpf() {
-		return cpf;
-	}
+    public void setNome(String nome) {
+	this.nome = nome;
+    }
 
-	public Date getNascimento() {
-		return nascimento;
-	}
+    public String getCpf() {
+	return cpf;
+    }
+    
+    public void setCpf(String cpf) {
+	this.cpf = cpf;
+    }
 
-	public Set<String> getTelefone() {
-		return telefones;
-	}
+    public Date getDtNascimento() {
+	return dtNascimento;
+    }
+    
+    public void setDtNascimento(Date dtNascimento) {
+	this.dtNascimento = dtNascimento;
+    }
 
-	public void setTelefone(String telefone) {
-		this.telefones.add(telefone);
-	}
+    public Set<String> getTelefone() {
+	return telefones;
+    }
 
-	public SexoEnum getSexo() {
-		return sexo;
-	}
+    public void setTelefone(String telefone) {
+	this.telefones.add(telefone);
+    }
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+    public SexoEnum getSexo() {
+	return sexo;
+    }
+    
+    public void setSexo(SexoEnum se) {
+	this.sexo = se;
+    }
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
+    public Endereco getEndereco() {
+	return endereco;
+    }
 
-	public PerfilEnum getPerfil() {
-		return perfil;
-	}
+    public void setEndereco(Endereco endereco) {
+	this.endereco = endereco;
+    }
 
-	public void setPerfil(PerfilEnum perfil) {
-		this.perfil = perfil;
-	}
+    public PerfilEnum getPerfil() {
+	return perfil;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		result = prime * result + ((nascimento == null) ? 0 : nascimento.hashCode());
-		return result;
-	}
+    public void setPerfil(PerfilEnum perfil) {
+	this.perfil = perfil;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		if (nascimento == null) {
-			if (other.nascimento != null)
-				return false;
-		} else if (!nascimento.equals(other.nascimento))
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+	result = prime * result + ((dtNascimento == null) ? 0 : dtNascimento.hashCode());
+	return result;
+    }
 
-	public int getId() {
-		return id;
-	}
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Usuario other = (Usuario) obj;
+	if (cpf == null) {
+	    if (other.cpf != null)
+		return false;
+	} else if (!cpf.equals(other.cpf))
+	    return false;
+	if (dtNascimento == null) {
+	    if (other.dtNascimento != null)
+		return false;
+	} else if (!dtNascimento.equals(other.dtNascimento))
+	    return false;
+	return true;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public String getSenha() {
-		return senha;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+    public String getSenha() {
+	return senha;
+    }
+
+    public void setSenha(String senha) {
+	this.senha = senha;
+    }
+
+    @Override
+    public String toString() {
+	return "Usuario [id=" + id + ", email=" + email + ", senha=" + senha + ", nome=" + nome + ", cpf=" + cpf
+		+ ", dtNascimento=" + dtNascimento + ", telefones=" + telefones + ", sexo=" + sexo + ", endereco="
+		+ endereco + ", perfil=" + perfil + "]";
+    }
+    
+    
 
 }

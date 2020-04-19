@@ -22,185 +22,185 @@ import uaiGym.model.pessoa.Treino;
 
 public class AlunoDAO extends UsuarioDAO<Aluno> {
 
-	public AlunoDAO(Connection connection) {
-		super(connection);
-	}
+    public AlunoDAO(Connection connection) {
+	super(connection);
+    }
 
-	@Override
-	public Aluno recuperarPorId(int id) {
-		Aluno aluno = null;
+    @Override
+    public Aluno recuperarPorId(int id) {
+	Aluno aluno = null;
 
-		String sql = "SELECT u.*, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE a.idUsuario = ?";
+	String sql = "SELECT u.*, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE a.idUsuario = ?";
 
-		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
-			pstm.setInt(1, id);
-			pstm.execute();
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.setInt(1, id);
+	    pstm.execute();
 
-			try (ResultSet rst = pstm.getResultSet()) {
-				if (rst.next()) {
-					String email = rst.getString(7);
-					String senha = rst.getString(8);
-					String nome = rst.getString(3);
-					String cpf = rst.getString(4);
-					Date nascimento = rst.getDate(5);
-					SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
-					String matricula = rst.getString(9);
-					Instrutor instrutor = new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
-					boolean estaAtivo = rst.getString(10).equals("ATIVO");
+	    try (ResultSet rst = pstm.getResultSet()) {
+		if (rst.next()) {
+		    String email = rst.getString(7);
+		    String senha = rst.getString(8);
+		    String nome = rst.getString(3);
+		    String cpf = rst.getString(4);
+		    Date nascimento = rst.getDate(5);
+		    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
+		    String matricula = rst.getString(9);
+		    Instrutor instrutor = new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
+		    boolean estaAtivo = rst.getString(10).equals("ATIVO");
 
-					aluno = new Aluno(id, email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
-							getEnderecoPorId(id), matricula, instrutor, getAvaliacoesPorId(id), getTreinosPorId(id),
-							estaAtivo, getContatosDeEmergenciaPorId(id));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		    aluno = new Aluno(email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
+			    getEnderecoPorId(id), matricula, instrutor, getAvaliacoesPorId(id), getTreinosPorId(id),
+			    estaAtivo, getContatosDeEmergenciaPorId(id));
 		}
-
-		return aluno;
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
 	}
 
-	private Set<ContatoDeEmergencia> getContatosDeEmergenciaPorId(int id) {
-		Set<ContatoDeEmergencia> contatos = new HashSet<ContatoDeEmergencia>();
+	return aluno;
+    }
 
-		String sql = "SELECT c.* FROM Contato c INNER JOIN Aluno a ON c.idAluno = a.idAluno WHERE a.idUsuario = ?";
+    private Set<ContatoDeEmergencia> getContatosDeEmergenciaPorId(int id) {
+	Set<ContatoDeEmergencia> contatos = new HashSet<ContatoDeEmergencia>();
 
-		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
-			pstm.setInt(1, id);
-			pstm.execute();
+	String sql = "SELECT c.* FROM Contato c INNER JOIN Aluno a ON c.idAluno = a.idAluno WHERE a.idUsuario = ?";
 
-			try (ResultSet rst = pstm.getResultSet()) {
-				while (rst.next()) {
-					String nome = rst.getString(3);
-					String telefone = rst.getString(4);
-					ParentescoEnum parentesco = ParentescoEnum.valueOf(rst.getString(5));
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.setInt(1, id);
+	    pstm.execute();
 
-					ContatoDeEmergencia contatoDeEmergencia = new ContatoDeEmergencia(nome, telefone, parentesco);
-					contatos.add(contatoDeEmergencia);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+	    try (ResultSet rst = pstm.getResultSet()) {
+		while (rst.next()) {
+		    String nome = rst.getString(3);
+		    String telefone = rst.getString(4);
+		    ParentescoEnum parentesco = ParentescoEnum.valueOf(rst.getString(5));
+
+		    ContatoDeEmergencia contatoDeEmergencia = new ContatoDeEmergencia(nome, telefone, parentesco);
+		    contatos.add(contatoDeEmergencia);
 		}
-
-		return contatos;
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
 	}
 
-	private List<Treino> getTreinosPorId(Integer id) {
-		// TODO
-		return null;
-	}
+	return contatos;
+    }
 
-	private Set<AvaliacaoFisica> getAvaliacoesPorId(int id) {
-		Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
-		Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(id);
+    private List<Treino> getTreinosPorId(Integer id) {
+	// TODO
+	return null;
+    }
 
-		String sql = "SELECT ava.* FROM Avaliacao ava INNER JOIN Aluno a ON ava.idAluno = a.idAluno"
-				+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ?";
+    private Set<AvaliacaoFisica> getAvaliacoesPorId(int id) {
+	Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
+	Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(id);
 
-		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
-			pstm.setInt(1, id);
-			pstm.execute();
-			try (ResultSet rst = pstm.getResultSet()) {
-				while (rst.next()) {
-					int idInstrutor = rst.getInt(3);
-					Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
-					Date data = rst.getDate(4);
-					
-					float altura = rst.getFloat(5);
-					float peso = rst.getFloat(6);
-					float gorduraPercentual = rst.getFloat(7);
-					float residuosPercentual = rst.getFloat(8);
-					float musculoPercentual = rst.getFloat(9);
-					MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual,
-							residuosPercentual, musculoPercentual);
-					
-					AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica(aluno, instrutor, data, medidas);
+	String sql = "SELECT ava.* FROM Avaliacao ava INNER JOIN Aluno a ON ava.idAluno = a.idAluno"
+		+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ?";
 
-					avaliacoes.add(avaliacaoFisica);
-				}
-			}
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.setInt(1, id);
+	    pstm.execute();
+	    try (ResultSet rst = pstm.getResultSet()) {
+		while (rst.next()) {
+		    int idInstrutor = rst.getInt(3);
+		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
+		    Date data = rst.getDate(4);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		    float altura = rst.getFloat(5);
+		    float peso = rst.getFloat(6);
+		    float gorduraPercentual = rst.getFloat(7);
+		    float residuosPercentual = rst.getFloat(8);
+		    float musculoPercentual = rst.getFloat(9);
+		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
+			    musculoPercentual);
+
+		    AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica(aluno, instrutor, data, medidas);
+
+		    avaliacoes.add(avaliacaoFisica);
 		}
-		return avaliacoes;
+	    }
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	return avaliacoes;
+    }
+
+    @Override
+    public void salvar(Aluno entidade) {
+	// Exemplo de como seria a chamada da procedure de listagem de aluno por Id
+	// Tutorial que me ajudou
+	// https://www.mysqltutorial.org/calling-mysql-stored-procedures-from-jdbc/W
+
+	String sql = "{CALL sp_atualiza_aluno(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+	try (CallableStatement stms = getConnection().prepareCall(sql)) {
+	    stms.setInt(1, entidade.getId());
+	    stms.setString(2, entidade.getPerfil().toString());
+	    stms.setString(3, entidade.getNome());
+	    stms.setString(4, entidade.getCpf());
+	    stms.setDate(5, (Date) entidade.getDtNascimento());
+	    stms.setString(6, entidade.getSexo().toString());
+	    stms.setString(7, entidade.getEmail());
+	    stms.setString(8, entidade.getSenha());
+	    stms.setString(9, entidade.getMatricula());
+	    stms.setString(10, (entidade.isEstaAtivo()) ? "ATIVO" : "INATIVO");
+	    stms.setString(11, entidade.getEndereco().getRua());
+	    stms.setString(12, entidade.getEndereco().getNumero().toString());
+	    stms.setString(13, entidade.getEndereco().getComplemento());
+	    stms.setString(14, entidade.getEndereco().getBairro());
+	    stms.setString(15, entidade.getEndereco().getCidade());
+	    stms.setString(16, entidade.getEndereco().getEstado().toString());
+	    stms.setString(17, entidade.getEndereco().getCep());
+
+	    stms.executeQuery();
+	} catch (SQLException e) {
+	    e.printStackTrace();
 	}
 
-	@Override
-	public void salvar(Aluno entidade) {
-		// Exemplo de como seria a chamada da procedure de listagem de aluno por Id
-		// Tutorial que me ajudou
-		// https://www.mysqltutorial.org/calling-mysql-stored-procedures-from-jdbc/W
+    }
 
-		String sql = "{CALL sp_atualiza_aluno(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+    @Override
+    public void excluir(int id) {
+	// TODO Auto-generated method stub
 
-		try (CallableStatement stms = getConnection().prepareCall(sql)) {
-			stms.setInt(1, entidade.getId());
-			stms.setString(2, entidade.getPerfil().toString());
-			stms.setString(3, entidade.getNome());
-			stms.setString(4, entidade.getCpf());
-			stms.setDate(5, (Date) entidade.getNascimento());
-			stms.setString(6, entidade.getSexo().toString());
-			stms.setString(7, entidade.getEmail());
-			stms.setString(8, entidade.getSenha());
-			stms.setString(9, entidade.getMatricula());
-			stms.setString(10, (entidade.isEstaAtivo()) ? "ATIVO" : "INATIVO");
-			stms.setString(11, entidade.getEndereco().getRua());
-			stms.setString(12, entidade.getEndereco().getNumero().toString());
-			stms.setString(13, entidade.getEndereco().getComplemento());
-			stms.setString(14, entidade.getEndereco().getBairro());
-			stms.setString(15, entidade.getEndereco().getCidade());
-			stms.setString(16, entidade.getEndereco().getEstado().toString());
-			stms.setString(17, entidade.getEndereco().getCep());
+    }
 
-			stms.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
+    @Override
+    public List<Aluno> listarTodos() {
+	List<Aluno> alunos = new ArrayList<Aluno>();
+
+	String sql = "SELECT u.*, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario";
+
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.execute();
+
+	    try (ResultSet rst = pstm.getResultSet()) {
+		while (rst.next()) {
+		    int id = rst.getInt(1);
+		    String email = rst.getString(7);
+		    String senha = rst.getString(8);
+		    String nome = rst.getString(3);
+		    String cpf = rst.getString(4);
+		    Date nascimento = rst.getDate(5);
+		    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
+		    String matricula = rst.getString(9);
+		    Instrutor instrutor = new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
+		    boolean estaAtivo = rst.getString(10).equals("ATIVO");
+
+		    Aluno aluno = new Aluno(email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
+			    getEnderecoPorId(id), matricula, instrutor, getAvaliacoesPorId(id), getTreinosPorId(id),
+			    estaAtivo, getContatosDeEmergenciaPorId(id));
+
+		    alunos.add(aluno);
 		}
-
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
 	}
 
-	@Override
-	public void excluir(int id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<Aluno> listarTodos() {
-		List<Aluno> alunos = new ArrayList<Aluno>();
-
-		String sql = "SELECT u.*, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario";
-
-		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
-			pstm.execute();
-
-			try (ResultSet rst = pstm.getResultSet()) {
-				while (rst.next()) {
-					int id = rst.getInt(1);
-					String email = rst.getString(7);
-					String senha = rst.getString(8);
-					String nome = rst.getString(3);
-					String cpf = rst.getString(4);
-					Date nascimento = rst.getDate(5);
-					SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
-					String matricula = rst.getString(9);
-					Instrutor instrutor = new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
-					boolean estaAtivo = rst.getString(10).equals("ATIVO");
-
-					Aluno aluno = new Aluno(id, email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
-							getEnderecoPorId(id), matricula, instrutor, getAvaliacoesPorId(id), getTreinosPorId(id),
-							estaAtivo, getContatosDeEmergenciaPorId(id));
-					
-					alunos.add(aluno);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return alunos;
-	}
+	return alunos;
+    }
 
 }
