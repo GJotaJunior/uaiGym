@@ -44,12 +44,6 @@ public class Instrutor extends Funcionario {
 
     }
 
-    public void cadastrarAvaliacaoAluno(AvaliacaoFisica avaliacao) {
-	Aluno aluno = avaliacao.getAluno();
-	aluno.addAvaliacaoFisica(avaliacao);
-	alunos.add(aluno);
-    }
-
     @Override
     public String toString() {
 	super.toString();
