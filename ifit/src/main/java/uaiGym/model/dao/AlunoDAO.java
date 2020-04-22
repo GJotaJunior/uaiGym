@@ -13,12 +13,12 @@ import java.util.Set;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.ContatoDeEmergencia;
-import uaiGym.model.MedidasCorporais;
+import uaiGym.model.Exercicio;
+import uaiGym.model.Treino;
 import uaiGym.model.enuns.ParentescoEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
 import uaiGym.model.pessoa.Instrutor;
-import uaiGym.model.pessoa.Treino;
 
 public class AlunoDAO extends UsuarioDAO<Aluno> {
 
@@ -87,8 +87,61 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
     }
 
     private List<Treino> getTreinosPorId(Integer id) {
-	// TODO
-	return null;
+	List<Treino> treinos = new ArrayList<>();
+
+	String sql = "SELECT at.dtTreino, t.nome, et.qtSerie, et.qtRepeticao, e.nome, equip.nome"
+		+ " FROM AlunoTreino at" + " INNER JOIN Aluno a ON a.idAluno = at.idAluno"
+		+ " INNER JOIN Treino t ON t.idTreino = at.idTreino"
+		+ " INNER JOIN ExerciciosTreino et ON et.idTreino = t.idTreino"
+		+ " INNER JOIN Exercicio e ON e.idExercicio = et.idExercicio"
+		+ " INNER JOIN Equipamento equip ON equip.idEquipamento = e.idEquipamento" + " WHERE a.idUsuario = ?";
+
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.setInt(1, id);
+	    pstm.execute();
+
+	    try (ResultSet rs = pstm.getResultSet()) {
+		String nomeTreino = "";
+		Treino treino = new Treino();
+		Integer currentIndex = 0;
+		Exercicio ex = new Exercicio();
+		
+		while (rs.next()) {
+		   if(nomeTreino.equals(rs.getString(2))) {
+		       ex.setNomeExercico(rs.getString(5));
+		       ex.setNomeEquipamento(rs.getString(6));
+		       ex.setQtRepeticao(rs.getInt(4));
+		       ex.setQtSerie(rs.getInt(3));
+		       
+		       treino.addExercicio(ex);
+		       
+		       treinos.set(currentIndex, treino);
+		   }
+		   else{
+		       nomeTreino = rs.getString(2);
+		       
+		       treino.setNomeTreino(nomeTreino);
+		       
+		       ex.setNomeExercico(rs.getString(5));
+		       ex.setNomeEquipamento(rs.getString(6));
+		       ex.setQtRepeticao(rs.getInt(4));
+		       ex.setQtSerie(rs.getInt(3));
+		       
+		       treino.addExercicio(ex);
+		       
+		       treino.setDtTreino(rs.getDate(1));
+		       
+		       treinos.add(treino);
+		       currentIndex++;
+		   }
+		}
+	    }
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+
+	return treinos;
     }
 
     private Set<AvaliacaoFisica> getAvaliacoesPorId(int id) {
@@ -166,8 +219,15 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 
     @Override
     public void excluir(int id) {
-	// TODO Auto-generated method stub
+	String sql = "{CALL sp_atualiza_aluno(?)}";
 
+	try (CallableStatement clst = getConnection().prepareCall(sql)) {
+	    clst.setInt(1, id);
+
+	    clst.executeQuery();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
     }
 
     @Override
