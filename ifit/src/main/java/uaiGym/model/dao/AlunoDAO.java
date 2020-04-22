@@ -224,10 +224,10 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
     public void excluir(int id) {
 	String sql = "{CALL sp_atualiza_aluno(?)}";
 
-	try (CallableStatement clst = getConnection().prepareCall(sql)) {
-	    clst.setInt(1, id);
+	try (CallableStatement stms = getConnection().prepareCall(sql)) {
+	    stms.setInt(1, id);
 
-	    clst.executeQuery();
+	    stms.executeQuery();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
