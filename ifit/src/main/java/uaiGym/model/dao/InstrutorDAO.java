@@ -115,7 +115,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 	return instrutor;
     }
 
-    public Set<Aluno> getAlunosPorIdInstrutor(int id) {
+    private Set<Aluno> getAlunosPorIdInstrutor(int id) {
 	Set<Aluno> alunos = new HashSet<Aluno>();
 
 	String sql = "SELECT a.idAluno " 

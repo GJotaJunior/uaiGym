@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.dao.InstrutorDAO;
 import uaiGym.model.pessoa.Aluno;
@@ -62,8 +63,7 @@ public class TesteDao extends HttpServlet {
 	    System.out.println(aluno.getNome());
 
 	    //Teste 4
-	    /*
-	    Set<Aluno> alunos = new HashSet<Aluno>(); //alunos =
+	    /*Set<Aluno> alunos = new HashSet<Aluno>(); //alunos =
 	    alunos = instDao.getAlunosPorIdInstrutor(5); //System.out.println(alunos.toString());
 	     
 	    System.out.println("inicio loop");

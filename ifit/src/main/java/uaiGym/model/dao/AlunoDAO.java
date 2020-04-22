@@ -45,12 +45,25 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		    Date nascimento = rst.getDate(5);
 		    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
 		    String matricula = rst.getString(9);
-		    Instrutor instrutor = null;//new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
+		    Instrutor instrutor = new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
 		    boolean estaAtivo = rst.getString(10).equals("ATIVO");
 
-		    aluno = new Aluno(email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
-			    getEnderecoPorId(id), matricula, instrutor, getAvaliacoesPorId(id), getTreinosPorId(id),
-			    estaAtivo, getContatosDeEmergenciaPorId(id));
+		    aluno = new Aluno(
+			    	email, 
+			    	senha, 
+			    	nome, 
+			    	cpf, 
+			    	nascimento, 
+			    	getTelefonesPorId(id), 
+			    	sexo,
+			    	getEnderecoPorId(id), 
+			    	matricula, 
+			    	instrutor, 
+			    	getAvaliacoesPorId(id), 
+			    	getTreinosPorId(id),
+			    	estaAtivo, 
+			    	getContatosDeEmergenciaPorId(id)
+			    );
 		}
 	    }
 	} catch (SQLException e) {
@@ -92,23 +105,25 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
     }
 
     private Set<AvaliacaoFisica> getAvaliacoesPorId(int id) {
-	return null;
-	/*
-	Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
-	Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(id);
 
-	String sql = "SELECT ava.* FROM Avaliacao ava INNER JOIN Aluno a ON ava.idAluno = a.idAluno"
+	Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
+
+	String sql = "SELECT ava.* "
+		+ "FROM Avaliacao ava "
+		+ "INNER JOIN Aluno a ON ava.idAluno = a.idAluno "
 		+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ?";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+
 	    pstm.setInt(1, id);
 	    pstm.execute();
+	    
 	    try (ResultSet rst = pstm.getResultSet()) {
+
 		while (rst.next()) {
 		    int idInstrutor = rst.getInt(3);
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
 		    Date data = rst.getDate(4);
-
 		    float altura = rst.getFloat(5);
 		    float peso = rst.getFloat(6);
 		    float gorduraPercentual = rst.getFloat(7);
@@ -117,7 +132,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
 
-		    AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica(aluno, instrutor, data, medidas);
+		    AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica(instrutor, data, medidas);
 
 		    avaliacoes.add(avaliacaoFisica);
 		}
@@ -127,7 +142,6 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 	    e.printStackTrace();
 	}
 	return avaliacoes;
-	*/
     }
 
     @Override
