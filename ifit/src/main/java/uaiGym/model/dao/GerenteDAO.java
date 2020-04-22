@@ -46,18 +46,19 @@ public class GerenteDAO extends UsuarioDAO<Gerente> {
 			    Date dataAdmissao = rst.getDate(10);
 			    Date dataDemissao = rst.getDate(11);
 
-			    gerente = new Gerente();
+//			    gerente = new Gerente();
+			    gerente = new Gerente(email, senha, nome, cpf, nascimento, null, sexo, null, perfil, contrato, dataAdmissao, dataDemissao);
 
-			    gerente.setEmail(email);
-			    gerente.setSenha(senha);
-			    gerente.setNome(nome);
-			    gerente.setCpf(cpf);
-			    gerente.setDtNascimento(nascimento);
-			    gerente.setSexo(sexo);
-			    gerente.setPerfil(perfil);
-			    gerente.setContrato(contrato);
-			    gerente.setAdmissao(dataAdmissao);
-			    gerente.setDemissao(dataDemissao);
+//			    gerente.setEmail(email);
+//			    gerente.setSenha(senha);
+//			    gerente.setNome(nome);
+//			    gerente.setCpf(cpf);
+//			    gerente.setDtNascimento(nascimento);
+//			    gerente.setSexo(sexo);
+//			    gerente.setPerfil(perfil);
+//			    gerente.setContrato(contrato);
+//			    gerente.setAdmissao(dataAdmissao);
+//			    gerente.setDemissao(dataDemissao);
 			    
 			}
 		    }
@@ -135,18 +136,19 @@ public class GerenteDAO extends UsuarioDAO<Gerente> {
 			    Date dataAdmissao = rs.getDate(10);
 			    Date dataDemissao = rs.getDate(11);
 
-			    Gerente gerente = new Gerente();
+//			    Gerente gerente = new Gerente();
+			    Gerente gerente = new Gerente(email, senha, nome, cpf, nascimento, null, sexo, null, perfil, contrato, dataAdmissao, dataDemissao);
 
-			    gerente.setEmail(email);
-			    gerente.setSenha(senha);
-			    gerente.setNome(nome);
-			    gerente.setCpf(cpf);
-			    gerente.setDtNascimento(nascimento);
-			    gerente.setSexo(sexo);
-			    gerente.setPerfil(perfil);
-			    gerente.setContrato(contrato);
-			    gerente.setAdmissao(dataAdmissao);
-			    gerente.setDemissao(dataDemissao);
+//			    gerente.setEmail(email);
+//			    gerente.setSenha(senha);
+//			    gerente.setNome(nome);
+//			    gerente.setCpf(cpf);
+//			    gerente.setDtNascimento(nascimento);
+//			    gerente.setSexo(sexo);
+//			    gerente.setPerfil(perfil);
+//			    gerente.setContrato(contrato);
+//			    gerente.setAdmissao(dataAdmissao);
+//			    gerente.setDemissao(dataDemissao);
 			    
 			    gerentes.add(gerente);
 			}
