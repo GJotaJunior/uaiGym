@@ -7,6 +7,7 @@ import java.util.Set;
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.ContatoDeEmergencia;
 import uaiGym.model.Endereco;
+import uaiGym.model.Treino;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
