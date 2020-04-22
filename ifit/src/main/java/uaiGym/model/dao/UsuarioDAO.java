@@ -31,7 +31,7 @@ public abstract class UsuarioDAO<E> extends Dao<E> {
 	    try (ResultSet rst = pstm.getResultSet()) {
 		if (rst.next()) {
 		    String logradouro = rst.getString(3);
-		    Integer numero = rst.getInt(4);
+		    String numero = rst.getString(4);
 		    String complemento = rst.getString(5);
 		    String bairro = rst.getString(6);
 		    String cidade = rst.getString(7);
