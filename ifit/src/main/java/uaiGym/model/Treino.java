@@ -1,5 +1,6 @@
 package uaiGym.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,10 @@ public class Treino {
     private String nomeTreino;
     private List<Exercicio> exercicios;
     private Date dtTreino;
+    
+    public Treino() {
+	exercicios = new ArrayList<Exercicio>();
+    }
 
     public String getNomeTreino() {
 	return nomeTreino;

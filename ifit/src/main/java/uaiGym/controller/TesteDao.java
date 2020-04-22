@@ -1,8 +1,8 @@
 package uaiGym.controller;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uaiGym.model.AvaliacaoFisica;
+import uaiGym.model.Exercicio;
+import uaiGym.model.Treino;
 import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.dao.InstrutorDAO;
-import uaiGym.model.pessoa.Aluno;
 import uaiGym.service.DataBase.ConnectionFactory;
 
 @WebServlet("/teste-dao")
@@ -59,8 +59,8 @@ public class TesteDao extends HttpServlet {
 	    //System.out.println(instrutor.getNome());
 
 	    // Teste 3
-	    Aluno aluno = ad.recuperarPorId(6);
-	    System.out.println(aluno.getNome());
+	    //Aluno aluno = ad.recuperarPorId(6);
+	    //System.out.println(aluno.getNome());
 
 	    //Teste 4
 	    /*Set<Aluno> alunos = new HashSet<Aluno>(); //alunos =
@@ -71,7 +71,19 @@ public class TesteDao extends HttpServlet {
 		System.out.println(aluno.getNome());
 	    }
 	    System.out.println("fim loop");
-	      */
+	    */
+	    
+	    //Teste 5
+	    List<Treino> treinos = new ArrayList<Treino>();
+	    treinos = ad.getTreinosPorId(6);
+	    System.out.println("inicio loop");
+	    for (Treino treino : treinos) {
+		System.out.println("Treino:" + treino.getNomeTreino());
+		for (Exercicio ex : treino.getExercicios()) {
+		    System.out.println("Exec: " + ex.getNomeExercico());
+		}
+	    }
+	    System.out.println("fim loop");
 	     
 	     
 	     System.out.println("THE END!!!");

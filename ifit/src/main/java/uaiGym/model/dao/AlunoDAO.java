@@ -100,7 +100,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 	return contatos;
     }
 
-    private List<Treino> getTreinosPorId(Integer id) {
+    public List<Treino> getTreinosPorId(Integer id) {
 	List<Treino> treinos = new ArrayList<>();
 
 	String sql = "SELECT at.dtTreino, t.nome, et.qtSerie, et.qtRepeticao, e.nome, equip.nome"
@@ -121,7 +121,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		Exercicio ex = new Exercicio();
 		
 		while (rs.next()) {
-		   if(nomeTreino.equals(rs.getString(2))) {
+		   /*if(nomeTreino.equals(rs.getString(2))) {
 		       ex.setNomeExercico(rs.getString(5));
 		       ex.setNomeEquipamento(rs.getString(6));
 		       ex.setQtRepeticao(rs.getInt(4));
@@ -131,7 +131,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		       
 		       treinos.set(currentIndex, treino);
 		   }
-		   else{
+		   else{*/
 		       nomeTreino = rs.getString(2);
 		       
 		       treino.setNomeTreino(nomeTreino);
@@ -147,7 +147,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		       
 		       treinos.add(treino);
 		       currentIndex++;
-		   }
+		   //}
 		}
 	    }
 
