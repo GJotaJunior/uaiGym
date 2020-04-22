@@ -22,5 +22,7 @@ public abstract class Dao<E> {
 	public abstract void excluir(int id);
 
 	public abstract List<E> listarTodos();
+	
+	public abstract void atualizar(E entidade);
 
 }
