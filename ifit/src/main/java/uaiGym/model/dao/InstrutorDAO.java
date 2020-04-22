@@ -115,7 +115,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 	return instrutor;
     }
 
-    private Set<Aluno> getAlunosPorIdInstrutor(int id) {
+    public Set<Aluno> getAlunosPorIdInstrutor(int id) {
 	Set<Aluno> alunos = new HashSet<Aluno>();
 
 	String sql = "SELECT a.idAluno " 
@@ -156,11 +156,14 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
     public Instrutor getInstrutorPorIdDoAluno(Integer idAluno) {
 	Integer idInstrutor = null;
 
-	String sql = "SELECT f.idUsuario"
-		+ "FROM AlunoTreino alt INNER JOIN Funcionario f ON alt.idFuncionario = f.idFuncionario"
-		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno" + "WHERE a.idUsuario = ?";
+	String sql = "SELECT f.idUsuario "
+		+ "FROM AlunoTreino alt "
+		+ "INNER JOIN Funcionario f ON alt.idFuncionario = f.idFuncionario "
+		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno " 
+		+ "WHERE a.idUsuario = ?";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.setInt(1, idAluno);
 	    pstm.execute();
 	    try (ResultSet rst = pstm.getResultSet()) {
 		if (rst.next()) {
