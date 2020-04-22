@@ -26,8 +26,8 @@ public class Treino {
 	return exercicios;
     }
 
-    public void addExercicio(Exercicio exercicio) {
-	this.exercicios.add(exercicio);
+    public void setExercicios(List<Exercicio> exercicios) {
+	this.exercicios = exercicios;
     }
 
     public Date getDtTreino() {

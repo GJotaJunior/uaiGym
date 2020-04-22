@@ -49,22 +49,9 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
 		    boolean estaAtivo = rst.getString(10).equals("ATIVO");
 
-		    aluno = new Aluno(
-			    	email, 
-			    	senha, 
-			    	nome, 
-			    	cpf, 
-			    	nascimento, 
-			    	getTelefonesPorId(id), 
-			    	sexo,
-			    	getEnderecoPorId(id), 
-			    	matricula, 
-			    	instrutor, 
-			    	getAvaliacoesPorId(id), 
-			    	getTreinosPorId(id),
-			    	estaAtivo, 
-			    	getContatosDeEmergenciaPorId(id)
-			    );
+		    aluno = new Aluno(email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
+			    getEnderecoPorId(id), matricula, instrutor, getAvaliacoesPorId(id), getTreinosPorId(id),
+			    estaAtivo, getContatosDeEmergenciaPorId(id));
 		}
 	    }
 	} catch (SQLException e) {
@@ -100,54 +87,25 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 	return contatos;
     }
 
-    public List<Treino> getTreinosPorId(Integer id) {
+    private List<Treino> getTreinosPorId(Integer id) {
 	List<Treino> treinos = new ArrayList<>();
 
-	String sql = "SELECT at.dtTreino, t.nome, et.qtSerie, et.qtRepeticao, e.nome, equip.nome"
-		+ " FROM AlunoTreino at" + " INNER JOIN Aluno a ON a.idAluno = at.idAluno"
-		+ " INNER JOIN Treino t ON t.idTreino = at.idTreino"
-		+ " INNER JOIN ExerciciosTreino et ON et.idTreino = t.idTreino"
-		+ " INNER JOIN Exercicio e ON e.idExercicio = et.idExercicio"
-		+ " INNER JOIN Equipamento equip ON equip.idEquipamento = e.idEquipamento" + " WHERE a.idUsuario = ?";
+	String sql = "SELECT at.dtTreino, t.nome, t.idTreino" + " FROM AlunoTreino at"
+		+ " INNER JOIN Aluno a ON a.idAluno = at.idAluno" + " INNER JOIN Treino t ON t.idTreino = at.idTreino"
+		+ " WHERE a.idUsuario = ?";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
 	    pstm.execute();
 
 	    try (ResultSet rs = pstm.getResultSet()) {
-		String nomeTreino = "";
-		Treino treino = new Treino();
-		Integer currentIndex = 0;
-		Exercicio ex = new Exercicio();
-		
 		while (rs.next()) {
-		   /*if(nomeTreino.equals(rs.getString(2))) {
-		       ex.setNomeExercico(rs.getString(5));
-		       ex.setNomeEquipamento(rs.getString(6));
-		       ex.setQtRepeticao(rs.getInt(4));
-		       ex.setQtSerie(rs.getInt(3));
-		       
-		       treino.addExercicio(ex);
-		       
-		       treinos.set(currentIndex, treino);
-		   }
-		   else{*/
-		       nomeTreino = rs.getString(2);
-		       
-		       treino.setNomeTreino(nomeTreino);
-		       
-		       ex.setNomeExercico(rs.getString(5));
-		       ex.setNomeEquipamento(rs.getString(6));
-		       ex.setQtRepeticao(rs.getInt(4));
-		       ex.setQtSerie(rs.getInt(3));
-		       
-		       treino.addExercicio(ex);
-		       
-		       treino.setDtTreino(rs.getDate(1));
-		       
-		       treinos.add(treino);
-		       currentIndex++;
-		   //}
+		    Treino treino = new Treino();
+		    treino.setNomeTreino(rs.getString(2));
+		    treino.setExercicios(getExerciciosTreino(rs.getInt(3)));
+		    treino.setDtTreino(rs.getDate(1));
+
+		    treinos.add(treino);
 		}
 	    }
 
@@ -158,20 +116,50 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 	return treinos;
     }
 
+    private List<Exercicio> getExerciciosTreino(Integer id) {
+	List<Exercicio> exercicios = new ArrayList<>();
+	
+	String sql = "SELECT et.qtRepeticao, et.qtSerie, e.nome, equip.nome "
+		+ "FROM ExerciciosTreino et "
+		+ "INNER JOIN Exercicio e ON e.idExercicio = et.idExercicio "
+		+ "INNER JOIN Equipamento equip ON equip.idEquipamento = e.idEquipamento "
+		+ "WHERE et.idTreino = ?";
+	
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.setInt(1, id);
+	    pstm.execute();
+	    
+	    try (ResultSet rs = pstm.getResultSet()) {
+		while(rs.next()) {
+		    Exercicio exercicio = new Exercicio();
+		    exercicio.setNomeEquipamento(rs.getString(4));
+		    exercicio.setNomeExercico(rs.getString(3));
+		    exercicio.setQtSerie(rs.getInt(2));
+		    exercicio.setQtRepeticao(rs.getInt(1));
+		    
+		    exercicios.add(exercicio);
+		}
+	    }
+	    
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+
+	return exercicios;
+    }
+
     private Set<AvaliacaoFisica> getAvaliacoesPorId(int id) {
 
 	Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
 
-	String sql = "SELECT ava.* "
-		+ "FROM Avaliacao ava "
-		+ "INNER JOIN Aluno a ON ava.idAluno = a.idAluno "
+	String sql = "SELECT ava.* " + "FROM Avaliacao ava " + "INNER JOIN Aluno a ON ava.idAluno = a.idAluno "
 		+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ?";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 
 	    pstm.setInt(1, id);
 	    pstm.execute();
-	    
+
 	    try (ResultSet rst = pstm.getResultSet()) {
 
 		while (rst.next()) {
