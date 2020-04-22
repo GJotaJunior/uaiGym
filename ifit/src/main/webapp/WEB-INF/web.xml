@@ -4,14 +4,4 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-  	<servlet-name>TesteDao</servlet-name>
-  	<display-name>TesteDao</display-name>
-  	<description></description>
-  	<servlet-class>uaiGym.controller.TesteDao</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>TesteDao</servlet-name>
-  	<url-pattern>/TesteDao</url-pattern>
-  </servlet-mapping>
 </web-app>
