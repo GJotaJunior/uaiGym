@@ -1,8 +1,6 @@
 package uaiGym.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uaiGym.model.Exercicio;
-import uaiGym.model.Treino;
 import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.dao.InstrutorDAO;
 import uaiGym.service.DataBase.ConnectionFactory;
@@ -74,7 +70,7 @@ public class TesteDao extends HttpServlet {
 	    */
 	    
 	    //Teste 5
-	    List<Treino> treinos = new ArrayList<Treino>();
+	    /*List<Treino> treinos = new ArrayList<Treino>();
 	    treinos = ad.getTreinosPorId(6);
 	    System.out.println("inicio loop");
 	    for (Treino treino : treinos) {
@@ -84,6 +80,7 @@ public class TesteDao extends HttpServlet {
 		}
 	    }
 	    System.out.println("fim loop");
+	    */
 	     
 	     
 	     System.out.println("THE END!!!");
