@@ -127,6 +127,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
 	    pstm.execute();
+
 	    try (ResultSet rst = pstm.getResultSet()) {
 		while (rst.next()) {
 		    int idAluno = rst.getInt(1);

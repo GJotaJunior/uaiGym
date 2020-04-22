@@ -45,7 +45,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		    Date nascimento = rst.getDate(5);
 		    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
 		    String matricula = rst.getString(9);
-		    Instrutor instrutor = new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
+		    Instrutor instrutor = null;//new InstrutorDAO(getConnection()).getInstrutorPorIdDoAluno(id);
 		    boolean estaAtivo = rst.getString(10).equals("ATIVO");
 
 		    aluno = new Aluno(email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
@@ -92,6 +92,8 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
     }
 
     private Set<AvaliacaoFisica> getAvaliacoesPorId(int id) {
+	return null;
+	/*
 	Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
 	Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(id);
 
@@ -125,6 +127,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 	    e.printStackTrace();
 	}
 	return avaliacoes;
+	*/
     }
 
     @Override

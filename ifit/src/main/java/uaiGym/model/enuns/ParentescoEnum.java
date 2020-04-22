@@ -1,5 +1,5 @@
 package uaiGym.model.enuns;
 
 public enum ParentescoEnum {
-	PAI, MAE, FILHO_A, AVO, CONJUGE, NAMORADO_A, AMIGO_A, OUTRO;
+	PAI, MAE, FILHO_A, AVO, CONJUGE, NAMORADO_A, AMIGO_A, OUTRO, TIO_A;
 }
