@@ -24,8 +24,6 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
     @Override
     public void salvar(Instrutor entidade) {
 
-	System.out.println("Salvar inicio");
-
 	String sql = "{CALL sp_inserirFuncionario(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
@@ -54,7 +52,43 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 
 	    stms.executeQuery();
 
-	    System.out.println("Salvar fim");
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+
+    }
+
+    @Override
+    public void atualizar(Instrutor entidade) {
+
+	String sql = "{CALL sp_atualia_funcionario(?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+	try (CallableStatement stms = getConnection().prepareCall(sql)) {
+
+	    stms.setInt(1, entidade.getId());
+	    stms.setString(2, entidade.getPerfil().toString());
+	    stms.setString(3, entidade.getNome());
+	    stms.setString(4, entidade.getCpf());
+	    stms.setDate(5,
+		    (entidade.getDtNascimento() != null) ? new java.sql.Date(entidade.getDtNascimento().getTime())
+			    : null);
+	    stms.setString(6, entidade.getSexo().toString());
+	    stms.setString(7, entidade.getEmail());
+	    stms.setString(8, entidade.getSenha());
+	    stms.setString(9, entidade.getContrato());
+	    stms.setDate(10,
+		    (entidade.getAdmissao() != null) ? new java.sql.Date(entidade.getAdmissao().getTime()) : null);
+	    stms.setDate(11,
+		    (entidade.getDemissao() != null) ? new java.sql.Date(entidade.getDemissao().getTime()) : null);
+	    stms.setString(12, entidade.getEndereco().getRua());
+	    stms.setString(13, entidade.getEndereco().getNumero());
+	    stms.setString(14, entidade.getEndereco().getComplemento());
+	    stms.setString(15, entidade.getEndereco().getBairro());
+	    stms.setString(16, entidade.getEndereco().getCidade());
+	    stms.setString(17, entidade.getEndereco().getEstado().toString());
+	    stms.setString(18, entidade.getEndereco().getCep());
+
+	    stms.executeQuery();
 
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -102,9 +136,9 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 		    instrutor.setContrato(contrato);
 		    instrutor.setAdmissao(dataAdmissao);
 		    instrutor.setDemissao(dataDemissao);
-		    
+
 		    Set<Aluno> alunos = getAlunosPorIdInstrutor(id);
-		    
+
 		    instrutor.setAlunos(alunos);
 		}
 	    }
@@ -118,11 +152,9 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
     private Set<Aluno> getAlunosPorIdInstrutor(int id) {
 	Set<Aluno> alunos = new HashSet<Aluno>();
 
-	String sql = "SELECT a.idAluno " 
-		+ "FROM AlunoTreino alt "
+	String sql = "SELECT a.idAluno " + "FROM AlunoTreino alt "
 		+ "INNER JOIN Funcionario f ON alt.idFuncionario = f.idFuncionario "
-		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno " 
-		+ "WHERE f.idUsuario = ?";
+		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno " + "WHERE f.idUsuario = ?";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
@@ -144,8 +176,18 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 
     @Override
     public void excluir(int id) {
-	// TODO Auto-generated method stub
 
+	String sql = "{CALL sp_desativa_funcionario(?)}";
+
+	try (CallableStatement stms = getConnection().prepareCall(sql)) {
+
+	    stms.setInt(1, id);
+
+	    stms.executeQuery();
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
     }
 
     @Override
@@ -157,11 +199,9 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
     public Instrutor getInstrutorPorIdDoAluno(Integer idAluno) {
 	Integer idInstrutor = null;
 
-	String sql = "SELECT f.idUsuario "
-		+ "FROM AlunoTreino alt "
+	String sql = "SELECT f.idUsuario " + "FROM AlunoTreino alt "
 		+ "INNER JOIN Funcionario f ON alt.idFuncionario = f.idFuncionario "
-		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno " 
-		+ "WHERE a.idUsuario = ?";
+		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno " + "WHERE a.idUsuario = ?";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, idAluno);
