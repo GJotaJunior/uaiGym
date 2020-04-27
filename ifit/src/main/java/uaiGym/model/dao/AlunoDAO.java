@@ -20,6 +20,7 @@ import uaiGym.model.enuns.ParentescoEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
 import uaiGym.model.pessoa.Instrutor;
+import uaiGym.service.DataBase.DatabaseUtils;
 
 public class AlunoDAO extends UsuarioDAO<Aluno> {
 
@@ -192,26 +193,25 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 	// Tutorial que me ajudou
 	// https://www.mysqltutorial.org/calling-mysql-stored-procedures-from-jdbc/W
 
-	String sql = "{CALL sp_atualiza_aluno(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	String sql = "{CALL sp_inserirAluno(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
-	    stms.setInt(1, entidade.getId());
-	    stms.setString(2, entidade.getPerfil().toString());
-	    stms.setString(3, entidade.getNome());
-	    stms.setString(4, entidade.getCpf());
-	    stms.setDate(5, (Date) entidade.getDtNascimento());
-	    stms.setString(6, entidade.getSexo().toString());
-	    stms.setString(7, entidade.getEmail());
-	    stms.setString(8, entidade.getSenha());
-	    stms.setString(9, entidade.getMatricula());
-	    stms.setString(10, (entidade.isEstaAtivo()) ? "ATIVO" : "INATIVO");
-	    stms.setString(11, entidade.getEndereco().getRua());
-	    stms.setString(12, entidade.getEndereco().getNumero().toString());
-	    stms.setString(13, entidade.getEndereco().getComplemento());
-	    stms.setString(14, entidade.getEndereco().getBairro());
-	    stms.setString(15, entidade.getEndereco().getCidade());
-	    stms.setString(16, entidade.getEndereco().getEstado().toString());
-	    stms.setString(17, entidade.getEndereco().getCep());
+	    stms.setString(1, entidade.getPerfil().toString());
+	    stms.setString(2, entidade.getNome());
+	    stms.setString(3, entidade.getCpf());
+	    stms.setDate(4,  DatabaseUtils.converteData(entidade.getDtNascimento()));
+	    stms.setString(5, entidade.getSexo().toString());
+	    stms.setString(6, entidade.getEmail());
+	    stms.setString(7, entidade.getSenha());
+	    stms.setString(8, entidade.getMatricula());
+	    stms.setString(9, (entidade.isEstaAtivo()) ? "ATIVO" : "INATIVO");
+	    stms.setString(10, entidade.getEndereco().getRua());
+	    stms.setString(11, entidade.getEndereco().getNumero().toString());
+	    stms.setString(12, entidade.getEndereco().getComplemento());
+	    stms.setString(13, entidade.getEndereco().getBairro());
+	    stms.setString(14, entidade.getEndereco().getCidade());
+	    stms.setString(15, entidade.getEndereco().getEstado().toString());
+	    stms.setString(16, entidade.getEndereco().getCep());
 
 	    stms.executeQuery();
 	} catch (SQLException e) {
@@ -267,6 +267,36 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 	}
 
 	return alunos;
+    }
+
+    @Override
+    public void atualizar(Aluno entidade) {
+	String sql = "{CALL sp_atualiza_aluno(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+	try (CallableStatement stms = getConnection().prepareCall(sql)) {
+	    stms.setInt(1, entidade.getId());
+	    stms.setString(2, entidade.getPerfil().toString());
+	    stms.setString(3, entidade.getNome());
+	    stms.setString(4, entidade.getCpf());
+	    stms.setDate(5, DatabaseUtils.converteData(entidade.getDtNascimento()));
+	    stms.setString(6, entidade.getSexo().toString());
+	    stms.setString(7, entidade.getEmail());
+	    stms.setString(8, entidade.getSenha());
+	    stms.setString(9, entidade.getMatricula());
+	    stms.setString(10, (entidade.isEstaAtivo()) ? "ATIVO" : "INATIVO");
+	    stms.setString(11, entidade.getEndereco().getRua());
+	    stms.setString(12, entidade.getEndereco().getNumero().toString());
+	    stms.setString(13, entidade.getEndereco().getComplemento());
+	    stms.setString(14, entidade.getEndereco().getBairro());
+	    stms.setString(15, entidade.getEndereco().getCidade());
+	    stms.setString(16, entidade.getEndereco().getEstado().toString());
+	    stms.setString(17, entidade.getEndereco().getCep());
+
+	    stms.executeQuery();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	
     }
 
 }

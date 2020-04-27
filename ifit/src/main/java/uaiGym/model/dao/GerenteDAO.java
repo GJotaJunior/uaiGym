@@ -12,6 +12,7 @@ import java.util.List;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Gerente;
+import uaiGym.service.DataBase.DatabaseUtils;
 
 public class GerenteDAO extends UsuarioDAO<Gerente> {
 
@@ -72,27 +73,26 @@ public class GerenteDAO extends UsuarioDAO<Gerente> {
 	@Override
 	public void salvar(Gerente entidade) {
 	    
-	    String sql = "{CALL sp_inserirFuncionario(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	    String sql = "{CALL sp_inserirFuncionario(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
 		try (CallableStatement stms = getConnection().prepareCall(sql)) {
-		    stms.setInt(1, entidade.getId());
-		    stms.setString(2, entidade.getPerfil().toString());
-		    stms.setString(3, entidade.getNome());
-		    stms.setString(4, entidade.getCpf());
-		    stms.setDate(5, (java.sql.Date) entidade.getDtNascimento());
-		    stms.setString(6, entidade.getSexo().toString());
-		    stms.setString(7, entidade.getEmail());
-		    stms.setString(8, entidade.getSenha());
-		    stms.setString(9, entidade.getContrato());
-		    stms.setDate(10, (java.sql.Date) entidade.getAdmissao());
-		    stms.setDate(11, (java.sql.Date) entidade.getDemissao());
-		    stms.setString(12, entidade.getEndereco().getRua());
-		    stms.setString(13, entidade.getEndereco().getNumero().toString());
-		    stms.setString(14, entidade.getEndereco().getComplemento());
-		    stms.setString(15, entidade.getEndereco().getBairro());
-		    stms.setString(16, entidade.getEndereco().getCidade());
-		    stms.setString(17, entidade.getEndereco().getEstado().toString());
-		    stms.setString(18, entidade.getEndereco().getCep());
+		    stms.setString(1, entidade.getPerfil().toString());
+		    stms.setString(2, entidade.getNome());
+		    stms.setString(3, entidade.getCpf());
+		    stms.setDate(4, DatabaseUtils.converteData(entidade.getDtNascimento()));
+		    stms.setString(5, entidade.getSexo().toString());
+		    stms.setString(6, entidade.getEmail());
+		    stms.setString(7, entidade.getSenha());
+		    stms.setString(8, entidade.getContrato());
+		    stms.setDate(9, DatabaseUtils.converteData(entidade.getAdmissao()));
+		    stms.setDate(10, DatabaseUtils.converteData(entidade.getDemissao()));
+		    stms.setString(11, entidade.getEndereco().getRua());
+		    stms.setString(12, entidade.getEndereco().getNumero().toString());
+		    stms.setString(13, entidade.getEndereco().getComplemento());
+		    stms.setString(14, entidade.getEndereco().getBairro());
+		    stms.setString(15, entidade.getEndereco().getCidade());
+		    stms.setString(16, entidade.getEndereco().getEstado().toString());
+		    stms.setString(17, entidade.getEndereco().getCep());
 
 		    stms.executeQuery();
 		} catch (SQLException e) {
@@ -159,6 +159,38 @@ public class GerenteDAO extends UsuarioDAO<Gerente> {
 		}
 		
 		return gerentes;
+	}
+
+	@Override
+	public void atualizar(Gerente entidade) {
+	    String sql = "{CALL sp_atualiza_funcionario(?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+		try (CallableStatement stms = getConnection().prepareCall(sql)) {
+
+		    stms.setInt(1, entidade.getId());
+		    stms.setString(2, entidade.getPerfil().toString());
+		    stms.setString(3, entidade.getNome());
+		    stms.setString(4, entidade.getCpf());
+		    stms.setDate(5, DatabaseUtils.converteData(entidade.getDtNascimento()));
+		    stms.setString(6, entidade.getSexo().toString());
+		    stms.setString(7, entidade.getEmail());
+		    stms.setString(8, entidade.getSenha());
+		    stms.setString(9, entidade.getContrato());
+		    stms.setDate(10, DatabaseUtils.converteData(entidade.getAdmissao()));
+		    stms.setDate(11, DatabaseUtils.converteData(entidade.getDemissao()));
+		    stms.setString(12, entidade.getEndereco().getRua());
+		    stms.setString(13, entidade.getEndereco().getNumero());
+		    stms.setString(14, entidade.getEndereco().getComplemento());
+		    stms.setString(15, entidade.getEndereco().getBairro());
+		    stms.setString(16, entidade.getEndereco().getCidade());
+		    stms.setString(17, entidade.getEndereco().getEstado().toString());
+		    stms.setString(18, entidade.getEndereco().getCep());
+
+		    stms.executeQuery();
+
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		}
 	}
 
 }
