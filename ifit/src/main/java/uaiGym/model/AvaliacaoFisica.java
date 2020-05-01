@@ -16,6 +16,13 @@ public class AvaliacaoFisica {
 		this.data = data;
 		this.medidas = medidas;
 	}
+	
+	public AvaliacaoFisica(Integer id, Instrutor instrutor, Date data, MedidasCorporais medidas) {
+	    	this.id = id;
+		this.instrutor = instrutor;
+		this.data = data;
+		this.medidas = medidas;
+	}
 
 
 	public Instrutor getInstrutor() {

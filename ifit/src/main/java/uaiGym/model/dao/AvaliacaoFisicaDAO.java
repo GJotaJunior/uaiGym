@@ -14,7 +14,7 @@ import uaiGym.model.MedidasCorporais;
 import uaiGym.model.pessoa.Instrutor;
 import uaiGym.service.DataBase.DatabaseUtils;
 
-public class AvaliacaoFisicaDAO extends UsuarioDAO<AvaliacaoFisica> {
+public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 
     public AvaliacaoFisicaDAO(Connection connection) {
 	super(connection);
@@ -36,6 +36,7 @@ public class AvaliacaoFisicaDAO extends UsuarioDAO<AvaliacaoFisica> {
 
 		if (rst.next()) {
 
+		    Integer idAva = rst.getInt(1);
 		    Date dtAvaliacao = rst.getDate(4);
 		    float altura = rst.getFloat(5);
 		    float peso = rst.getFloat(6);
@@ -49,7 +50,7 @@ public class AvaliacaoFisicaDAO extends UsuarioDAO<AvaliacaoFisica> {
 			    musculoPercentual);
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idUsuario);
 
-		    avaliacao = new AvaliacaoFisica(instrutor, dtAvaliacao, medidas);
+		    avaliacao = new AvaliacaoFisica(idAva, instrutor, dtAvaliacao, medidas);
 
 		}
 	    }
@@ -100,6 +101,7 @@ public class AvaliacaoFisicaDAO extends UsuarioDAO<AvaliacaoFisica> {
 	    try (ResultSet rst = pstm.getResultSet()) {
 		while (rst.next()) {
 
+		    Integer idAva = rst.getInt(1);
 		    Date dtAvaliacao = rst.getDate(4);
 		    float altura = rst.getFloat(5);
 		    float peso = rst.getFloat(6);
@@ -113,7 +115,7 @@ public class AvaliacaoFisicaDAO extends UsuarioDAO<AvaliacaoFisica> {
 			    musculoPercentual);
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idUsuario);
 
-		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(instrutor, dtAvaliacao, medidas);
+		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, instrutor, dtAvaliacao, medidas);
 
 		    listaAvaliacao.add(avaliacao);
 
