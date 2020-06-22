@@ -13,36 +13,43 @@ import uaiGym.service.AuthService;
 
 @WebServlet("/")
 public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher dispatcher;
-		AuthService authenticator = new AuthService(request.getSession());
-		
-		if (authenticator.isValid()) {
-			dispatcher = request.getRequestDispatcher("/WEB-INF/menu.jsp");
-		} else {
-			request.setAttribute("mensagem", authenticator.getMessages());
-			dispatcher = request.getRequestDispatcher("index.jsp");
-		}
-		
-		dispatcher.forward(request, response);
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+
+	RequestDispatcher dispatcher;
+	AuthService authenticator = new AuthService(request.getSession());
+
+	if (authenticator.isValid()) {
+	    dispatcher = request.getRequestDispatcher("/WEB-INF/menu.jsp");
+	} else {
+	    request.setAttribute("mensagem", authenticator.getMessages());
+	    dispatcher = request.getRequestDispatcher("index.jsp");
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher dispatcher;
-		AuthService authenticator = new AuthService(request.getSession());
-		
-		String usuario = request.getParameter("usuario");
-		String senha = request.getParameter("senha");
-		
+	dispatcher.forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+
+	RequestDispatcher dispatcher;
+	AuthService authenticator = new AuthService(request.getSession());
+
+	String usuario = request.getParameter("usuario");
+	String senha = request.getParameter("senha");
+
+	try {
 		authenticator.login(usuario, senha);
-		request.setAttribute("mensagem", authenticator.getMessages());
-		
-		dispatcher = request.getRequestDispatcher("/");
-		dispatcher.forward(request, response);
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
+
+	request.setAttribute("mensagem", authenticator.getMessages());
+
+	dispatcher = request.getRequestDispatcher("/");
+	dispatcher.forward(request, response);
+    }
 
 }
