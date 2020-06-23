@@ -2,7 +2,7 @@ CREATE TABLE Usuario(
 	idUsuario INT AUTO_INCREMENT PRIMARY KEY,
 	perfil ENUM('ALUNO', 'INSTRUTOR', 'RECEPCAO', 'GERENTE'),
 	nome VARCHAR(255) NOT NULL,
-	cpf CHAR(11),
+	cpf CHAR(11) UNIQUE,
 	dtNascimento DATE,
 	sexo ENUM('M', 'F'),
 	email VARCHAR(255),
