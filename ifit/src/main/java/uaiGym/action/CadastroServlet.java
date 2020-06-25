@@ -1,6 +1,8 @@
-package uaiGym.controller;
+package uaiGym.action;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import uaiGym.service.AuthService;
 
-@WebServlet("/")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/cadastrar")
+public class CadastroServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -25,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 	    dispatcher = request.getRequestDispatcher("/WEB-INF/menu.jsp");
 	} else {
 	    request.setAttribute("mensagem", authenticator.getMessages());
-	    dispatcher = request.getRequestDispatcher("index.jsp");
+	    dispatcher = request.getRequestDispatcher("/WEB-INF/cadastro.jsp");
 	}
 
 	dispatcher.forward(request, response);
@@ -37,18 +39,23 @@ public class LoginServlet extends HttpServlet {
 	RequestDispatcher dispatcher;
 	AuthService authenticator = new AuthService(request.getSession());
 
+	String email = request.getParameter("email");
 	String usuario = request.getParameter("usuario");
 	String senha = request.getParameter("senha");
+	String confirmarSenha = request.getParameter("confirmarSenha");
 
 	try {
-		authenticator.login(usuario, senha);
-	} catch (Exception e) {
+		authenticator.register(email, usuario, senha, confirmarSenha);
+	} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 		e.printStackTrace();
 	}
-
 	request.setAttribute("mensagem", authenticator.getMessages());
 
-	dispatcher = request.getRequestDispatcher("/");
+	if (authenticator.isValid()) {
+	    dispatcher = request.getRequestDispatcher("/login");
+	} else {
+	    dispatcher = request.getRequestDispatcher("/cadastrar");
+	}
 	dispatcher.forward(request, response);
     }
 

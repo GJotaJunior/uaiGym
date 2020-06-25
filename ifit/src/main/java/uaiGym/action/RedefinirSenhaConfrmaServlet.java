@@ -1,4 +1,4 @@
-package uaiGym.controller;
+package uaiGym.action;
 
 import java.io.IOException;
 
