@@ -1,40 +1,32 @@
 package uaiGym.model;
 
 public class Exercicio {
-    private String nomeExercico;
-    private String nomeEquipamento;
-    private Integer qtSerie;
-    private Integer qtRepeticao;
+    private Integer id;
+    private String nomeExercicio;
+    private Equipamento equipamento;
 
-    public String getNomeExercico() {
-	return nomeExercico;
+    public String getNomeExercicio() {
+	return nomeExercicio;
     }
 
-    public void setNomeExercico(String nomeExercico) {
-	this.nomeExercico = nomeExercico;
+    public void setNomeExercico(String nomeExercicio) {
+	this.nomeExercicio = nomeExercicio;
     }
 
-    public String getNomeEquipamento() {
-	return nomeEquipamento;
+    public Equipamento getEquipamento() {
+	return equipamento;
     }
 
-    public void setNomeEquipamento(String nomeEquipamento) {
-	this.nomeEquipamento = nomeEquipamento;
+    public void setEquipamento(Equipamento equipamento) {
+	this.equipamento = equipamento;
     }
 
-    public Integer getQtSerie() {
-	return qtSerie;
+    public int getId() {
+	return id;
     }
 
-    public void setQtSerie(Integer qtSerie) {
-	this.qtSerie = qtSerie;
+    public void setId(Integer id) {
+	this.id = id;
     }
 
-    public Integer getQtRepeticao() {
-	return qtRepeticao;
-    }
-
-    public void setQtRepeticao(Integer qtRepeticao) {
-	this.qtRepeticao = qtRepeticao;
-    }
 }
