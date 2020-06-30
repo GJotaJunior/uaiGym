@@ -52,7 +52,7 @@ public class TelefoneDAO extends Dao<Telefone> {
 	    stms.setInt(1, telefone.getIdUsuario());
 	    stms.setString(2, telefone.getTelefone());
 	    
-	    stms.executeQuery();
+	    stms.execute();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	} 
@@ -100,6 +100,8 @@ public class TelefoneDAO extends Dao<Telefone> {
 	try(CallableStatement stms = getConnection().prepareCall(sql)){
 	    stms.setInt(1, telefone.getIdTelefone());
 	    stms.setString(2, telefone.getTelefone());
+	    
+	    stms.execute();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
