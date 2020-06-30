@@ -43,7 +43,7 @@ public class RecepcaoDAO extends UsuarioDAO<Recepcao> {
 			    String cpf = rst.getString(4);
 			    Date nascimento = rst.getDate(5);
 			    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
-			    PerfilEnum perfil = PerfilEnum.INSTRUTOR;
+			    PerfilEnum perfil = PerfilEnum.RECEPCAO;
 			    String contrato = rst.getString(9);
 			    Date admissao = rst.getDate(10);
 			    Date demissao = rst.getDate(11);
@@ -121,7 +121,7 @@ public class RecepcaoDAO extends UsuarioDAO<Recepcao> {
 					String cpf = rst.getString(4);
 					Date nascimento = rst.getDate(5);
 					SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
-					PerfilEnum perfil = PerfilEnum.INSTRUTOR;
+					PerfilEnum perfil = PerfilEnum.RECEPCAO;
 					String contrato = rst.getString(9);
 					Date admissao = rst.getDate(10);
 					Date demissao = rst.getDate(11);
