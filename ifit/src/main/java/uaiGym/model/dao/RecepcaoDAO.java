@@ -12,6 +12,7 @@ import java.util.List;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Recepcao;
+import uaiGym.service.DataBase.DatabaseUtils;
 
 public class RecepcaoDAO extends UsuarioDAO<Recepcao> {
 
@@ -68,13 +69,13 @@ public class RecepcaoDAO extends UsuarioDAO<Recepcao> {
 		    stms.setString(2, entidade.getPerfil().toString());
 		    stms.setString(3, entidade.getNome());
 		    stms.setString(4, entidade.getCpf());
-		    stms.setDate(5, (Date) entidade.getDtNascimento());
+		    stms.setDate(5, DatabaseUtils.converteData(entidade.getDtNascimento()));
 		    stms.setString(6, entidade.getSexo().toString());
 		    stms.setString(7, entidade.getEmail());
 		    stms.setString(8, entidade.getSenha());
 		    stms.setString(9, entidade.getContrato());
-		    stms.setDate(10, (Date) entidade.getAdmissao());
-		    stms.setDate(11, (Date) entidade.getDemissao());
+		    stms.setDate(10, DatabaseUtils.converteData(entidade.getAdmissao()));
+		    stms.setDate(11, DatabaseUtils.converteData(entidade.getDemissao()));
 		    stms.setString(12, entidade.getEndereco().getRua());
 		    stms.setString(13, entidade.getEndereco().getNumero().toString());
 		    stms.setString(14, entidade.getEndereco().getComplemento());
@@ -146,13 +147,13 @@ public class RecepcaoDAO extends UsuarioDAO<Recepcao> {
 			stms.setString(2, e.getPerfil().toString());
 			stms.setString(3, e.getNome());
 			stms.setString(4, e.getCpf());
-			stms.setDate(5, (Date) e.getDtNascimento());
+			stms.setDate(5, DatabaseUtils.converteData(e.getDtNascimento()));
 			stms.setString(6, e.getSexo().toString());
 			stms.setString(7, e.getEmail());
 			stms.setString(8, e.getSenha());
 			stms.setString(9, e.getContrato());
-			stms.setDate(10, (Date) e.getAdmissao());
-			stms.setDate(11, (Date) e.getDemissao());
+			stms.setDate(10, DatabaseUtils.converteData(e.getAdmissao()));
+			stms.setDate(11, DatabaseUtils.converteData(e.getDemissao()));
 			stms.setString(12, e.getEndereco().getRua());
 			stms.setString(13, e.getEndereco().getNumero());
 			stms.setString(14, e.getEndereco().getComplemento());
