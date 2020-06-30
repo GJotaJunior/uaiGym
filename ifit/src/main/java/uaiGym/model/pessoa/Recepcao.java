@@ -16,7 +16,7 @@ public class Recepcao extends Funcionario {
     private Map<Aluno, Instrutor> ligacaoAlunoInstrutor;
 
     public Recepcao(String email, String senha, String nome, String cpf, Date nascimento, Set<String> telefones,
-	    SexoEnum sexo, Endereco endereco, PerfilEnum perfil, int codigoFuncional, String contrato, Date admissao,
+	    SexoEnum sexo, Endereco endereco, PerfilEnum perfil, String contrato, Date admissao,
 	    Date demissao, Set<Aluno> alunos, Set<Equipamento> equipamentos,
 	    Map<Aluno, Instrutor> ligacaoAlunoInstrutor) {
 	super(email, senha, nome, cpf, nascimento, telefones, sexo, endereco, perfil, contrato, admissao, demissao);
@@ -25,7 +25,13 @@ public class Recepcao extends Funcionario {
 	this.ligacaoAlunoInstrutor = ligacaoAlunoInstrutor;
     }
 
-    public void cadastroAlunos(Aluno aluno) {
+    public Recepcao(String email, String senha, String nome, String cpf, java.sql.Date nascimento,
+			Set<String> telefonesPorId, SexoEnum sexo, Endereco enderecoPorId, PerfilEnum perfil, String contrato,
+			java.sql.Date admissao, java.sql.Date demissao) {
+    	super(email, senha, nome, cpf, nascimento, telefonesPorId, sexo, enderecoPorId, perfil, contrato, admissao, demissao);
+	}
+
+	public void cadastroAlunos(Aluno aluno) {
 	if (aluno != null)
 	    alunos.add(aluno);
     }
