@@ -48,7 +48,7 @@ BEGIN
 	
 	SET _idUsuario = LAST_INSERT_ID();
 	
-	CALL sp_inserirEndereco(_idUsuario, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep);
+	CALL sp_inserir_endereco(_idUsuario, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep);
 
 END $$
 DELIMITER
@@ -62,7 +62,7 @@ _senha VARCHAR(255), _matricula VARCHAR(255), _status ENUM('ATIVO', 'INATIVO'), 
 
 BEGIN
 	
-	CALL sp_inserirUsuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
+	CALL sp_inserir_usuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
 	
 	INSERT INTO Aluno(idUsuario, matricula, status) VALUES (@_idUsuario, _matricula, _status);
 
@@ -77,7 +77,7 @@ _senha VARCHAR(255), _contrato VARCHAR(255), _dtAdmissao DATE, _dtDemissao DATE,
 
 BEGIN
 	
-	CALL sp_inserirUsuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
+	CALL sp_inserir_usuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
 	
 	
 	INSERT INTO Funcionario(idUsuario, contrato, dtAdmissao, dtDemissao) VALUES (@_idUsuario, _contrato, _dtAdmissao, _dtDemissao);
