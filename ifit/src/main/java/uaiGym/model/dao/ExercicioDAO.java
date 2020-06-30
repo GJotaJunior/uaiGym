@@ -30,7 +30,7 @@ public class ExercicioDAO extends Dao<Exercicio> {
 	    try (ResultSet rst = pstm.getResultSet()) {
 
 		if (rst.next()) {
-		    
+
 		    EquipamentoDAO equiDAO = new EquipamentoDAO(getConnection());
 
 		    String nomeExercicio = rst.getString(3);
@@ -118,4 +118,26 @@ public class ExercicioDAO extends Dao<Exercicio> {
 	}
     }
 
+    public List<Exercicio> buscarTodosPorIdTreino(int id) {
+	List<Exercicio> exercicios = new ArrayList<Exercicio>();
+
+	String sql = "SELECT e.* FROM exercicio e INNER JOIN exerciciostreino et ON et.idExercicio = e.idExercicio WHERE et.idTreino = ?";
+
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.setInt(1, id);
+	    pstm.execute();
+	    try (ResultSet rst = pstm.getResultSet()) {
+		while (rst.next()) {
+		    int idExercicio = rst.getInt(1);
+		    Exercicio exercicio = recuperarPorId(idExercicio);
+		    exercicios.add(exercicio);
+
+		}
+
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	return exercicios;
+    }
 }

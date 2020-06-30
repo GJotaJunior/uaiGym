@@ -25,6 +25,12 @@ public class ContatoDeEmergencia {
 	this.parentesco = parentesco;
     }
 
+    public ContatoDeEmergencia(String nome, String telefone, ParentescoEnum parentesco) {
+	this.nome = nome;
+	this.telefone = telefone;
+	this.parentesco = parentesco;
+    }
+
     public Integer getIdContato() {
         return idContato;
     }

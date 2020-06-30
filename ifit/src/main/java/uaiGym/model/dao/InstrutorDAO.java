@@ -143,30 +143,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 	return instrutor;
     }
 
-    private Set<Aluno> getAlunosPorIdInstrutor(int id) {
-	Set<Aluno> alunos = new HashSet<Aluno>();
-
-	String sql = "SELECT a.idAluno " + "FROM AlunoTreino alt "
-		+ "INNER JOIN Funcionario f ON alt.idFuncionario = f.idFuncionario "
-		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno " + "WHERE f.idUsuario = ?";
-
-	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
-	    pstm.setInt(1, id);
-	    pstm.execute();
-
-	    try (ResultSet rst = pstm.getResultSet()) {
-		while (rst.next()) {
-		    int idAluno = rst.getInt(1);
-		    Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(idAluno);
-		    alunos.add(aluno);
-		}
-	    }
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	}
-
-	return alunos;
-    }
+    
 
     @Override
     public void excluir(int id) {
@@ -221,7 +198,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 		return instrutores;
 	}
 
-    public Instrutor getInstrutorPorIdDoAluno(Integer idAluno) {
+    /*public Instrutor getInstrutorPorIdDoAluno(Integer idAluno) {
 	Integer idInstrutor = null;
 
 	String sql = "SELECT f.idUsuario " + "FROM AlunoTreino alt "
@@ -241,6 +218,31 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 	}
 
 	return recuperarPorId(idInstrutor);
+    }*/
+    
+    private Set<Aluno> getAlunosPorIdInstrutor(int id) {
+	Set<Aluno> alunos = new HashSet<Aluno>();
+
+	String sql = "SELECT a.idAluno " + "FROM AlunoTreino alt "
+		+ "INNER JOIN Funcionario f ON alt.idFuncionario = f.idFuncionario "
+		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno " + "WHERE f.idUsuario = ?";
+
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.setInt(1, id);
+	    pstm.execute();
+
+	    try (ResultSet rst = pstm.getResultSet()) {
+		while (rst.next()) {
+		    int idAluno = rst.getInt(1);
+		    Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(idAluno);
+		    alunos.add(aluno);
+		}
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+
+	return alunos;
     }
 
 }

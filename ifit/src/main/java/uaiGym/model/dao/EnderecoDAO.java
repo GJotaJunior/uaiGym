@@ -54,7 +54,7 @@ public class EnderecoDAO extends Dao<Endereco> {
     @Override
     public void salvar(Endereco entidade) {
 
-	String sql = "{CALL sp_inserirEndereco(?,?,?,?,?,?,?,?)}";
+	String sql = "{CALL sp_inserir_endereco(?,?,?,?,?,?,?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
@@ -77,7 +77,7 @@ public class EnderecoDAO extends Dao<Endereco> {
 
     @Override
     public void atualizar(Endereco entidade) {
-	String sql = "{CALL sp_atualiza_ndereco(?,?,?,?,?,?,?,?)}";
+	String sql = "{CALL sp_atualiza_endereco(?,?,?,?,?,?,?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 

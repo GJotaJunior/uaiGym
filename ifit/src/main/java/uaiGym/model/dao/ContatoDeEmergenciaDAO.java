@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import uaiGym.model.ContatoDeEmergencia;
 import uaiGym.model.enuns.ParentescoEnum;
@@ -115,4 +117,30 @@ public class ContatoDeEmergenciaDAO extends Dao<ContatoDeEmergencia>{
 	
     }
 
+    public Set<ContatoDeEmergencia> buscarContatosDeEmergenciaPorIdUsuario(int idUsuario) {
+	Set<ContatoDeEmergencia> contatos = new HashSet<ContatoDeEmergencia>();
+
+	String sql = "SELECT c.* FROM Contato c INNER JOIN Aluno a ON c.idAluno = a.idAluno WHERE a.idUsuario = ?";
+
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.setInt(1, idUsuario);
+	    pstm.execute();
+
+	    try (ResultSet rst = pstm.getResultSet()) {
+		while (rst.next()) {
+		    String nome = rst.getString(3);
+		    String telefone = rst.getString(4);
+		    ParentescoEnum parentesco = ParentescoEnum.valueOf(rst.getString(5));
+
+		    ContatoDeEmergencia contatoDeEmergencia = new ContatoDeEmergencia(nome, telefone, parentesco);
+		    contatos.add(contatoDeEmergencia);
+		}
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+
+	return contatos;
+    }
+    
 }
