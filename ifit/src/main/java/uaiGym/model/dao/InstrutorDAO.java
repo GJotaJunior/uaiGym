@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -185,9 +186,40 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 
     @Override
     public List<Instrutor> listarTodos() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+    	List<Instrutor> instrutores = new ArrayList<Instrutor>();
+		String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao " + "FROM Funcionario f "
+				+ "INNER JOIN Usuario u ON f.idUsuario = u.idUsuario " + "WHERE u.perfil = 'INSTRUTOR'";
+
+		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+			pstm.execute();
+
+			try (ResultSet rst = pstm.getResultSet()) {
+
+				if (rst.next()) {
+					int id = rst.getInt(1);
+					String email = rst.getString(7);
+					String senha = rst.getString(8);
+					String nome = rst.getString(3);
+					String cpf = rst.getString(4);
+					Date nascimento = rst.getDate(5);
+					SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
+					PerfilEnum perfil = PerfilEnum.INSTRUTOR;
+					String contrato = rst.getString(9);
+					Date admissao = rst.getDate(10);
+					Date demissao = rst.getDate(11);
+
+					Instrutor instrutor = new Instrutor(email, senha, nome, cpf, nascimento, getTelefonesPorId(id),
+							sexo, getEnderecoPorId(id), perfil, contrato, admissao, demissao,
+							getAlunosPorIdInstrutor(id));
+
+					instrutores.add(instrutor);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return instrutores;
+	}
 
     public Instrutor getInstrutorPorIdDoAluno(Integer idAluno) {
 	Integer idInstrutor = null;
