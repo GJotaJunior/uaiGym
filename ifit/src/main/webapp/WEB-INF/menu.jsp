@@ -73,7 +73,7 @@
                                 <div class="card mb-4 shadow-sm">
                                     <img class="cartao" src="../img/img05.png">
                                     <div class="card-body">
-                                        <p class="card-text" style="text-align: center;">Gerenciar Alunos</p>
+                                        <p class="card-text" style="text-align: center;">Gerenciar Treinos e Avaliações</p>
                                     </div>
                                 </div>
                             </a>
