@@ -18,6 +18,8 @@ public class ActionFactory {
 		actions.put("POST/cadastrar", new RegisterAction());
 		actions.put("POST/redefinir-senha", new ResetPasswordAction());
 		actions.put("POST/redefinir-senha-confirma", new ResetPasswordConfirmAction());
+		
+		actions.put("GET/instrutor/cadastrar", new InstrutorRegisterAction());
 	}
 
 	public static Action getAction(HttpServletRequest request) {
