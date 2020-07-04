@@ -26,7 +26,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
     @Override
     public void salvar(Instrutor entidade) {
 
-	String sql = "{CALL sp_inserirFuncionario(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	String sql = "{CALL sp_inserir_funcionario(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
@@ -59,7 +59,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
     @Override
     public void atualizar(Instrutor entidade) {
 
-	String sql = "{CALL sp_atualia_funcionario(?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	String sql = "{CALL sp_atualiza_funcionario(?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
@@ -143,8 +143,6 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 	return instrutor;
     }
 
-    
-
     @Override
     public void excluir(int id) {
 
@@ -163,63 +161,29 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 
     @Override
     public List<Instrutor> listarTodos() {
-    	List<Instrutor> instrutores = new ArrayList<Instrutor>();
-		String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao " + "FROM Funcionario f "
-				+ "INNER JOIN Usuario u ON f.idUsuario = u.idUsuario " + "WHERE u.perfil = 'INSTRUTOR'";
-
-		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
-			pstm.execute();
-
-			try (ResultSet rst = pstm.getResultSet()) {
-
-				if (rst.next()) {
-					int id = rst.getInt(1);
-					String email = rst.getString(7);
-					String senha = rst.getString(8);
-					String nome = rst.getString(3);
-					String cpf = rst.getString(4);
-					Date nascimento = rst.getDate(5);
-					SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
-					PerfilEnum perfil = PerfilEnum.INSTRUTOR;
-					String contrato = rst.getString(9);
-					Date admissao = rst.getDate(10);
-					Date demissao = rst.getDate(11);
-
-					Instrutor instrutor = new Instrutor(email, senha, nome, cpf, nascimento, getTelefonesPorId(id),
-							sexo, getEnderecoPorId(id), perfil, contrato, admissao, demissao,
-							getAlunosPorIdInstrutor(id));
-
-					instrutores.add(instrutor);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return instrutores;
-	}
-
-    /*public Instrutor getInstrutorPorIdDoAluno(Integer idAluno) {
-	Integer idInstrutor = null;
-
-	String sql = "SELECT f.idUsuario " + "FROM AlunoTreino alt "
-		+ "INNER JOIN Funcionario f ON alt.idFuncionario = f.idFuncionario "
-		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno " + "WHERE a.idUsuario = ?";
+	List<Instrutor> instrutores = new ArrayList<Instrutor>();
+	String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao " + "FROM Funcionario f "
+		+ "INNER JOIN Usuario u ON f.idUsuario = u.idUsuario " + "WHERE u.perfil = 'INSTRUTOR'";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
-	    pstm.setInt(1, idAluno);
 	    pstm.execute();
+
 	    try (ResultSet rst = pstm.getResultSet()) {
+
 		if (rst.next()) {
-		    idInstrutor = rst.getInt(1);
+		    int id = rst.getInt(1);
+
+		    Instrutor instrutor = recuperarPorId(id);
+
+		    instrutores.add(instrutor);
 		}
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
+	return instrutores;
+    }
 
-	return recuperarPorId(idInstrutor);
-    }*/
-    
     private Set<Aluno> getAlunosPorIdInstrutor(int id) {
 	Set<Aluno> alunos = new HashSet<Aluno>();
 
