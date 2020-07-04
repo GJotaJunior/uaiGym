@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
     @Override
     public void salvar(Instrutor entidade) {
 
-	String sql = "{CALL sp_inserirFuncionario(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	String sql = "{CALL sp_inserir_funcionario(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
@@ -58,7 +59,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
     @Override
     public void atualizar(Instrutor entidade) {
 
-	String sql = "{CALL sp_atualia_funcionario(?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	String sql = "{CALL sp_atualiza_funcionario(?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
@@ -142,6 +143,47 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 	return instrutor;
     }
 
+    @Override
+    public void excluir(int id) {
+
+	String sql = "{CALL sp_desativa_funcionario(?)}";
+
+	try (CallableStatement stms = getConnection().prepareCall(sql)) {
+
+	    stms.setInt(1, id);
+
+	    stms.executeQuery();
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+    }
+
+    @Override
+    public List<Instrutor> listarTodos() {
+	List<Instrutor> instrutores = new ArrayList<Instrutor>();
+	String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao " + "FROM Funcionario f "
+		+ "INNER JOIN Usuario u ON f.idUsuario = u.idUsuario " + "WHERE u.perfil = 'INSTRUTOR'";
+
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.execute();
+
+	    try (ResultSet rst = pstm.getResultSet()) {
+
+		if (rst.next()) {
+		    int id = rst.getInt(1);
+
+		    Instrutor instrutor = recuperarPorId(id);
+
+		    instrutores.add(instrutor);
+		}
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	return instrutores;
+    }
+
     private Set<Aluno> getAlunosPorIdInstrutor(int id) {
 	Set<Aluno> alunos = new HashSet<Aluno>();
 
@@ -165,50 +207,6 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 	}
 
 	return alunos;
-    }
-
-    @Override
-    public void excluir(int id) {
-
-	String sql = "{CALL sp_desativa_funcionario(?)}";
-
-	try (CallableStatement stms = getConnection().prepareCall(sql)) {
-
-	    stms.setInt(1, id);
-
-	    stms.executeQuery();
-
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	}
-    }
-
-    @Override
-    public List<Instrutor> listarTodos() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public Instrutor getInstrutorPorIdDoAluno(Integer idAluno) {
-	Integer idInstrutor = null;
-
-	String sql = "SELECT f.idUsuario " + "FROM AlunoTreino alt "
-		+ "INNER JOIN Funcionario f ON alt.idFuncionario = f.idFuncionario "
-		+ "INNER JOIN Aluno a ON alt.idAluno = a.idAluno " + "WHERE a.idUsuario = ?";
-
-	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
-	    pstm.setInt(1, idAluno);
-	    pstm.execute();
-	    try (ResultSet rst = pstm.getResultSet()) {
-		if (rst.next()) {
-		    idInstrutor = rst.getInt(1);
-		}
-	    }
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	}
-
-	return recuperarPorId(idInstrutor);
     }
 
 }

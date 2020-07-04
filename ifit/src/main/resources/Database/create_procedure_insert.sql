@@ -1,7 +1,7 @@
-#sp_inserirTelefone
+#sp_inserir_telefone
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirTelefone`(_idUsuario INT, _telefone VARCHAR(15))
+CREATE PROCEDURE `sp_inserir_telefone`(_idUsuario INT, _telefone VARCHAR(15))
 
 BEGIN
 
@@ -10,10 +10,10 @@ BEGIN
 END $$
 DELIMITER
 
-#sp_inserirContato
+#sp_inserir_contato
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirContato`(_idAluno INT, _nome VARCHAR(255), _telefone VARCHAR(15), _parentesco VARCHAR(15))
+CREATE PROCEDURE `sp_inserir_contato`(_idAluno INT, _nome VARCHAR(255), _telefone VARCHAR(15), _parentesco VARCHAR(15))
 
 BEGIN
 
@@ -22,10 +22,10 @@ BEGIN
 END $$
 DELIMITER
 
-#sp_inserirEndereco
+#sp_inserir_endereco
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirEndereco`(_idUsuario INT, _logradouro VARCHAR(255), _numero CHAR(6), _complemento VARCHAR(100), 
+CREATE PROCEDURE `sp_inserir_endereco`(_idUsuario INT, _logradouro VARCHAR(255), _numero CHAR(6), _complemento VARCHAR(100), 
                                    _bairro VARCHAR(50), _cidade VARCHAR(80), _uf CHAR(2), _cep CHAR(8))
 
 BEGIN
@@ -36,10 +36,10 @@ BEGIN
 END $$
 DELIMITER
 
-#sp_inserirUsuario
+#sp_inserir_usuario
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirUsuario`(IN _perfil ENUM('ALUNO', 'INSTRUTOR', 'RECEPCAO', 'GERENTE'), _nome VARCHAR(255), _cpf CHAR(11), _dtNascimento DATE, _sexo ENUM('M', 'F'), _email VARCHAR(255),
+CREATE PROCEDURE `sp_inserir_usuario`(IN _perfil ENUM('ALUNO', 'INSTRUTOR', 'RECEPCAO', 'GERENTE'), _nome VARCHAR(255), _cpf CHAR(11), _dtNascimento DATE, _sexo ENUM('M', 'F'), _email VARCHAR(255),
 _senha VARCHAR(255), _logradouro VARCHAR(255), _numero CHAR(6), _complemento VARCHAR(100), _bairro VARCHAR(50), _cidade VARCHAR(80), _uf CHAR(2), _cep CHAR(8), OUT _idUsuario INT)
 
 BEGIN
@@ -48,36 +48,36 @@ BEGIN
 	
 	SET _idUsuario = LAST_INSERT_ID();
 	
-	CALL sp_inserirEndereco(_idUsuario, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep);
+	CALL sp_inserir_endereco(_idUsuario, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep);
 
 END $$
 DELIMITER
 
-#sp_inserirAluno
+#sp_inserir_aluno
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirAluno`(IN _perfil ENUM('ALUNO', 'INSTRUTOR', 'RECEPCAO', 'GERENTE'), _nome VARCHAR(255), _cpf CHAR(11), _dtNascimento DATE, _sexo ENUM('M', 'F'), _email VARCHAR(255),
+CREATE PROCEDURE `sp_inserir_aluno`(IN _perfil ENUM('ALUNO', 'INSTRUTOR', 'RECEPCAO', 'GERENTE'), _nome VARCHAR(255), _cpf CHAR(11), _dtNascimento DATE, _sexo ENUM('M', 'F'), _email VARCHAR(255),
 _senha VARCHAR(255), _matricula VARCHAR(255), _status ENUM('ATIVO', 'INATIVO'), _logradouro VARCHAR(255), _numero CHAR(6), _complemento VARCHAR(100), _bairro VARCHAR(50), _cidade VARCHAR(80), _uf CHAR(2), _cep CHAR(8))
 
 
 BEGIN
 	
-	CALL sp_inserirUsuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
+	CALL sp_inserir_usuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
 	
 	INSERT INTO Aluno(idUsuario, matricula, status) VALUES (@_idUsuario, _matricula, _status);
 
 END $$
 DELIMITER
 
-#sp_inserirFuncionario
+#sp_inserir_funcionario
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirFuncionario`(IN _perfil ENUM('ALUNO', 'INSTRUTOR', 'RECEPCAO', 'GERENTE'), _nome VARCHAR(255), _cpf CHAR(11), _dtNascimento DATE, _sexo ENUM('M', 'F'), _email VARCHAR(255),
+CREATE PROCEDURE `sp_inserir_funcionario`(IN _perfil ENUM('ALUNO', 'INSTRUTOR', 'RECEPCAO', 'GERENTE'), _nome VARCHAR(255), _cpf CHAR(11), _dtNascimento DATE, _sexo ENUM('M', 'F'), _email VARCHAR(255),
 _senha VARCHAR(255), _contrato VARCHAR(255), _dtAdmissao DATE, _dtDemissao DATE, _logradouro VARCHAR(255), _numero CHAR(6), _complemento VARCHAR(100), _bairro VARCHAR(50), _cidade VARCHAR(80), _uf CHAR(2), _cep CHAR(8))
 
 BEGIN
 	
-	CALL sp_inserirUsuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
+	CALL sp_inserir_usuario(_perfil, _nome, _cpf, _dtNascimento, _sexo, _email, _senha, _logradouro, _numero, _complemento, _bairro, _cidade, _uf, _cep, @_idUsuario);
 	
 	
 	INSERT INTO Funcionario(idUsuario, contrato, dtAdmissao, dtDemissao) VALUES (@_idUsuario, _contrato, _dtAdmissao, _dtDemissao);
@@ -85,10 +85,10 @@ BEGIN
 END $$
 DELIMITER
 
-#sp_inserirEquipamento
+#sp_inserir_equipamento
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirEquipamento`(IN _nome VARCHAR(255))
+CREATE PROCEDURE `sp_inserir_equipamento`(IN _nome VARCHAR(255))
 
 BEGIN
 
@@ -97,10 +97,10 @@ BEGIN
 END $$
 DELIMITER
 
-#sp_inserirTreino
+#sp_inserir_treino
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirTreino`(IN _nome VARCHAR(255))
+CREATE PROCEDURE `sp_inserir_treino`(IN _nome VARCHAR(255))
 
 BEGIN
 
@@ -109,10 +109,10 @@ BEGIN
 END $$
 DELIMITER
 
-#sp_inserirExercicio
+#sp_inserir_exercicio
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirExercicio`(IN _idEquipamento INT ,_nome VARCHAR(255))
+CREATE PROCEDURE `sp_inserir_exercicio`(IN _idEquipamento INT ,_nome VARCHAR(255))
 
 BEGIN
 
@@ -121,10 +121,10 @@ BEGIN
 END $$
 DELIMITER
 
-#sp_inserirExerciciosTreino
+#sp_inserir_exercicios_treino
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirExerciciosTreino`(IN _idExercicio INT ,_idTreino INT, _qtSerie INT, _qtRepeticao INT)
+CREATE PROCEDURE `sp_inserir_exercicios_treino`(IN _idExercicio INT ,_idTreino INT, _qtSerie INT, _qtRepeticao INT)
 
 BEGIN
 
@@ -133,10 +133,10 @@ BEGIN
 END $$
 DELIMITER
 
-#sp_inserirAlunoTreino
+#sp_inserir_aluno_treino
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirAlunoTreino`(_idAluno INT, _idTreino INT, _idFuncionario INT, _dtTreino DATE)
+CREATE PROCEDURE `sp_inserir_aluno_treino`(_idAluno INT, _idTreino INT, _idFuncionario INT, _dtTreino DATE)
 
 BEGIN
 
@@ -146,10 +146,10 @@ BEGIN
 END $$
 DELIMITER
 
-#sp_inserirAvaliacao
+#sp_inserir_avaliacao
 DELIMITER $$
 
-CREATE PROCEDURE `sp_inserirAvaliacao`(_idAluno INT, _idFuncionario INT, _dtAvaliacao DATE,
+CREATE PROCEDURE `sp_inserir_avaliacao`(_idAluno INT, _idFuncionario INT, _dtAvaliacao DATE,
 	_altura FLOAT, _peso FLOAT, _percGordura FLOAT, _percResiduos FLOAT, _percMusculo FLOAT)
 
 BEGIN

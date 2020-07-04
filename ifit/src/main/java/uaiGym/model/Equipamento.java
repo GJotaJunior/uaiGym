@@ -1,32 +1,30 @@
 package uaiGym.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Equipamento {
-	private String nomeEquipamento;
-	private List<Exercicio> exerciciosEquipamento;
+    private Integer id;
+    private String nomeEquipamento;
 
-	public Equipamento(String nomeEquipamento) {
-		this.nomeEquipamento = nomeEquipamento;
-		exerciciosEquipamento = new ArrayList<>();
-	}
+    public Equipamento(String nomeEquipamento) {
+	this.nomeEquipamento = nomeEquipamento;
+    }
 
-	public String getNomeEquipamento() {
-		return nomeEquipamento;
-	}
+    public Equipamento() {
+    }
 
-	public void setNomeEquipamento(String nomeEquipamento) {
-		this.nomeEquipamento = nomeEquipamento;
-	}
+    public String getNomeEquipamento() {
+	return nomeEquipamento;
+    }
 
-	public List<Exercicio> getExerciciosEquipamento() {
-		return exerciciosEquipamento;
-	}
+    public void setNomeEquipamento(String nomeEquipamento) {
+	this.nomeEquipamento = nomeEquipamento;
+    }
 
-	public void setExerciciosEquipamento(Exercicio exercicioEquipamento) {
-		if (!this.exerciciosEquipamento.contains(exercicioEquipamento))
-			this.exerciciosEquipamento.add(exercicioEquipamento);
-	}
+    public int getId() {
+	return id;
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
 }
