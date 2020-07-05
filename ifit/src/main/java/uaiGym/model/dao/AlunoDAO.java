@@ -15,7 +15,6 @@ import uaiGym.model.ContatoDeEmergencia;
 import uaiGym.model.Treino;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
-import uaiGym.model.pessoa.Instrutor;
 import uaiGym.service.DataBase.DatabaseUtils;
 
 public class AlunoDAO extends UsuarioDAO<Aluno> {
@@ -43,7 +42,6 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		    Date nascimento = rst.getDate(5);
 		    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
 		    String matricula = rst.getString(9);
-		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(rst.getInt(11));
 		    boolean estaAtivo = rst.getString(10).equals("ATIVO");
 
 		    Set<ContatoDeEmergencia> contatos = new ContatoDeEmergenciaDAO(getConnection())
@@ -53,7 +51,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		    List<Treino> treinos = new TreinoDAO(getConnection()).buscarTreinosPorIdUsuario(id);
 
 		    aluno = new Aluno(email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
-			    getEnderecoPorId(id), matricula, instrutor, avaliacoes, treinos, estaAtivo, contatos);
+			    getEnderecoPorId(id), matricula, avaliacoes, treinos, estaAtivo, contatos);
 		}
 	    }
 	} catch (SQLException e) {
