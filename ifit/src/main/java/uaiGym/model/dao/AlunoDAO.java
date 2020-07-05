@@ -28,7 +28,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
     public Aluno recuperarPorId(int id) {
 	Aluno aluno = null;
 
-	String sql = "SELECT u.*, a.matricula, a.status, alt.idFuncionario FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario INNER JOIN alunotreino alt ON alt.idAluno = a.idAluno WHERE a.idUsuario = ?";
+	String sql = "SELECT u.*, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE a.idUsuario = ?";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
