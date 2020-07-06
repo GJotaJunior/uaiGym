@@ -75,7 +75,7 @@ public class AuthService {
 						usuario = new InstrutorDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
 					} else if (perfil.equals(PerfilEnum.RECEPCAO.toString())) {
 						usuario = new RecepcaoDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
-					} else if (perfil.equals(PerfilEnum.GERENCIA.toString())) {
+					} else if (perfil.equals(PerfilEnum.GERENTE.toString())) {
 						usuario = new GerenteDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
 					}
 				}

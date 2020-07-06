@@ -1,6 +1,8 @@
 package uaiGym.action;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +19,7 @@ import uaiGym.model.enuns.EstadoEnum;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Instrutor;
+import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
@@ -24,25 +27,15 @@ public class InstrutorRegisterAction implements Action {
 
     private String doGet(HttpServletRequest request) {
 
-	// AuthService authenticator = new AuthService(request.getSession());
+	//AuthService authenticator = new AuthService(request.getSession());
+	//if (authenticator.isValid()) {
+	//    return "instrutor/cadastrar";
+	//} else {
+	    // request.setAttribute("mensagem", authenticator.getMessages()); //
+	    //return "instrutor/listagem";
+	//}
+	    return "instrutor/cadastrar";
 
-	ConnectionFactory cf;
-	try {
-	    cf = new ConnectionFactory();
-	    InstrutorDAO instrutorDAO = new InstrutorDAO(cf.recuperarConexao());
-	    Instrutor instrutor = instrutorDAO.recuperarPorId(6);
-	    System.out.println(instrutor.getNome());
-	} catch (ClassNotFoundException | IOException | SQLException e) {
-	    e.printStackTrace();
-	}
-
-	return "instrutor/cadastrar";
-	/*
-	 * if (authenticator.isValid()) { return "instrutor/cadastrar";
-	 * 
-	 * } else { // request.setAttribute("mensagem", authenticator.getMessages()); //
-	 * return "menu"; return "instrutor/cadastrar"; }
-	 */
     }
 
     private String doPost(HttpServletRequest request) {
@@ -57,6 +50,11 @@ public class InstrutorRegisterAction implements Action {
 	String telefone2 = request.getParameter("telefone2");
 	String email = request.getParameter("email");
 	String senha = request.getParameter("senha");
+	try {
+	    senha = AuthService.securityPassword(senha);
+	} catch (NoSuchAlgorithmException | UnsupportedEncodingException e2) {
+	    e2.printStackTrace();
+	}
 	Set<String> telefones = new HashSet<String>();
 	telefones.add(telefone1);
 	telefones.add(telefone2);
@@ -90,6 +88,7 @@ public class InstrutorRegisterAction implements Action {
 	PerfilEnum perfilEnum = PerfilEnum.INSTRUTOR;
 
 	System.out.println("mapeamento realizado");
+	System.out.println(nome);
 
 	try {
 	    // if (authenticator.isValid()) {

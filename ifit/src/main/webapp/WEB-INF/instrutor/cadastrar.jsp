@@ -146,7 +146,7 @@
                             <label
 								class="col-md-2 col-form-label text-right" for="Nome">Nome <h11>*</h11></label>
                             <div class="col-md-8">
-                                <input id="Nome" name="Nome"
+                                <input id="nome" name="nome"
 									placeholder="" class="form-control" required="" type="text">
                             </div>
                         </div>
