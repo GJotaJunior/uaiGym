@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.AuthService;
 
 public class LoginAction implements Action {
@@ -26,16 +27,19 @@ public class LoginAction implements Action {
 
 		AuthService authenticator = new AuthService(request.getSession());
 
-		String usuario = request.getParameter("usuario");
+		String login = request.getParameter("usuario");
 		String senha = request.getParameter("senha");
 
 		boolean isValid = false;
 		try {
-			isValid = authenticator.login(usuario, senha);
+			isValid = authenticator.login(login, senha);
 		} catch (NoSuchAlgorithmException | ClassNotFoundException | SQLException | IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		Usuario usuario = (Usuario) authenticator.getAuthenticator().getAttribute("usuario");
+		request.setAttribute("usuario", usuario);
+		
 		request.setAttribute("mensagem", authenticator.getMessages());
 
 		return (isValid) ? "menu" : "index";
