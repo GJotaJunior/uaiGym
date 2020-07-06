@@ -20,11 +20,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import uaiGym.model.dao.AlunoDAO;
-import uaiGym.model.dao.GerenteDAO;
-import uaiGym.model.dao.InstrutorDAO;
-import uaiGym.model.dao.RecepcaoDAO;
-import uaiGym.model.enuns.PerfilEnum;
+import uaiGym.model.dao.UsuarioDAOFactory;
 import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.DataBase.ConnectionFactory;
 import uaiGym.service.dto.EmailDto;
@@ -32,7 +28,6 @@ import uaiGym.service.dto.EmailDto;
 public class AuthService {
 
 	private HttpSession authenticator;
-	private boolean isValid;
 	private List<String> messages;
 
 	public AuthService(HttpSession session) {
@@ -41,10 +36,6 @@ public class AuthService {
 
 	public HttpSession getAuthenticator() {
 		return authenticator;
-	}
-
-	public boolean isValid() {
-		return isValid;
 	}
 
 	public List<String> getMessages() {
@@ -56,7 +47,7 @@ public class AuthService {
 		password = securityPassword(password);
 
 		Connection connection = new ConnectionFactory().recuperarConexao();
-		String sql = "SELECT idUsuario, perfil FROM Usuario WHERE email = ? AND senha = ? OR CPF = ? AND senha = ?";
+		String sql = "SELECT idUsuario FROM Usuario WHERE email = ? AND senha = ? OR CPF = ? AND senha = ?";
 		try (PreparedStatement pstm = connection.prepareStatement(sql)) {
 			pstm.setString(1, emailOrCpf);
 			pstm.setString(2, password);
@@ -67,17 +58,8 @@ public class AuthService {
 			try (ResultSet rst = pstm.getResultSet()) {
 				Usuario usuario = null;
 				if (rst.next()) {
-					String perfil = rst.getString(2);
 					Integer id = rst.getInt(1);
-					if (perfil.equals(PerfilEnum.ALUNO.toString())) {
-						usuario = new AlunoDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
-					} else if (perfil.equals(PerfilEnum.INSTRUTOR.toString())) {
-						usuario = new InstrutorDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
-					} else if (perfil.equals(PerfilEnum.RECEPCAO.toString())) {
-						usuario = new RecepcaoDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
-					} else if (perfil.equals(PerfilEnum.GERENCIA.toString())) {
-						usuario = new GerenteDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(id);
-					}
+					usuario = new UsuarioDAOFactory(connection).recuperarPorId(id);
 				}
 				if (usuario != null) {
 					authenticator.setAttribute("usuario", usuario);
@@ -96,7 +78,6 @@ public class AuthService {
 			messages.add("As senhas não são iguais!");
 		password = securityPassword(password);
 
-		isValid = true;
 		messages.add("Cadastrado com sucesso!");
 	}
 
@@ -163,5 +144,9 @@ public class AuthService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean isValid() {
+		return (authenticator.getAttribute("usuario") != null);
 	}
 }

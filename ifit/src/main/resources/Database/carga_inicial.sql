@@ -1,17 +1,17 @@
 #################PROCEDURES DE INSERÇÃO##########################
 
 #CALL sp_inserir_funcionario(perfil, nome, cpf, dtNascimento, sexo, email, senha, contrato, dtAdmissao, dtDemissao, logradouro, numero, complemento, bairro, cidade, uf, cep);
-CALL sp_inserir_funcionario('GERENTE', 'Laura Bella Trump', 11122233344, '1996-05-18', 'F', 'laurinha.amaisbela@teste.com', '123456', 'contrato1', '2020-01-10', null, 'Rua da prata', 213, 'Casa da frente', 'Finotti', 'Uberlândia', 'MG', '38400123');
-CALL sp_inserir_funcionario('RECEPCAO', 'Frederico Antônio', 21122233344, '1989-02-09', 'M', 'fred.tonin@teste.com', '123456', 'contrato2', '2020-02-10', '2020-04-04', 'Rua do ouro', 312, 'Casa do fundo', 'Morumbi', 'Uberlândia', 'MG', '38400456');
-CALL sp_inserir_funcionario('RECEPCAO', 'Tânia Araújo Pereira', 19122233344, '2000-09-10', 'F', 'tania.pereirinha@teste.com', '123456', 'contrato3', '2020-01-10', null, 'Rua da madeira', 4213, 'Bloco 1 Apto 301', 'Jardim Patrícia', 'Uberlândia', 'MG', '38400789');
-CALL sp_inserir_funcionario('INSTRUTOR', 'Paulo Roberto', 19162233344, '2002-12-15', 'M', 'paulaobombado@teste.com', '123456', 'contrato4', '2020-01-10', null, 'Rua Padre Antônio Manoel', 1010, '', 'Pequis', 'Uberlândia', 'MG', '38401156');
-CALL sp_inserir_funcionario('INSTRUTOR', 'Kléber Jacinto Pinto', 69162233345, '1991-01-04', 'M', 'kleberpinto@teste.com', '123456', 'contrato5', '2020-01-10', null, 'Avenida Rondon Pacheco', 9403, 'Edifício Paula Dantas', 'Altamira', 'Uberlândia', 'MG', '38404563');
+CALL sp_inserir_funcionario('GERENTE', 'Laura Bella Trump', 11122233344, '1996-05-18', 'F', 'laurinha.amaisbela@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'contrato1', '2020-01-10', null, 'Rua da prata', 213, 'Casa da frente', 'Finotti', 'Uberlândia', 'MG', '38400123');
+CALL sp_inserir_funcionario('RECEPCAO', 'Frederico Antônio', 21122233344, '1989-02-09', 'M', 'fred.tonin@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'contrato2', '2020-02-10', '2020-04-04', 'Rua do ouro', 312, 'Casa do fundo', 'Morumbi', 'Uberlândia', 'MG', '38400456');
+CALL sp_inserir_funcionario('RECEPCAO', 'Tânia Araújo Pereira', 19122233344, '2000-09-10', 'F', 'tania.pereirinha@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'contrato3', '2020-01-10', null, 'Rua da madeira', 4213, 'Bloco 1 Apto 301', 'Jardim Patrícia', 'Uberlândia', 'MG', '38400789');
+CALL sp_inserir_funcionario('INSTRUTOR', 'Paulo Roberto', 19162233344, '2002-12-15', 'M', 'paulaobombado@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'contrato4', '2020-01-10', null, 'Rua Padre Antônio Manoel', 1010, '', 'Pequis', 'Uberlândia', 'MG', '38401156');
+CALL sp_inserir_funcionario('INSTRUTOR', 'Kléber Jacinto Pinto', 69162233345, '1991-01-04', 'M', 'kleberpinto@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'contrato5', '2020-01-10', null, 'Avenida Rondon Pacheco', 9403, 'Edifício Paula Dantas', 'Altamira', 'Uberlândia', 'MG', '38404563');
 
 #CALL sp_inserir_aluno(perfil, nome, cpf, dtNascimento, sexo, email, senha, matricula, status, logradouro, numero, complemento, bairro, cidade, uf, cep);
-CALL sp_inserir_aluno('ALUNO', 'Nawan Soares', 12362233345, '1999-09-04', 'M', 'nawan@teste.com', '123456', 'mat1', 'ATIVO', 'Avenida da secretária', 12, null, 'Planalto', 'Uberlândia', 'MG', '38404565');
-CALL sp_inserir_aluno('ALUNO', 'Wanderson Gutemberg Silva', 12362233388, '1992-02-03', 'M', 'wands@teste.com', '123456', 'mat2', 'INATIVO', 'Rua Monte Carmelo', 15, 'a mais bonita da rua', 'Martins', 'Uberlândia', 'MG', '38404561');
-CALL sp_inserir_aluno('ALUNO', 'Gledson Júnior', 57362233388, '2000-08-01', 'M', 'gledin@teste.com', '123456', 'mat3', 'ATIVO', 'Travessa aqui', 24, '', 'Alvorada', 'Uberlândia', 'MG', '38404560');
-CALL sp_inserir_aluno('ALUNO', 'Yure yure', 57362233308, '2001-04-24', 'M', 'yurelindao@teste.com', '123456', 'mat4', 'ATIVO', 'Pç Borges da Fonseca', 17, '', 'Cruzeiro dos Peixotos', 'Uberlândia', 'MG', '38404562');
+CALL sp_inserir_aluno('ALUNO', 'Nawan Soares', 12362233345, '1999-09-04', 'M', 'nawan@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'mat1', 'ATIVO', 'Avenida da secretária', 12, null, 'Planalto', 'Uberlândia', 'MG', '38404565');
+CALL sp_inserir_aluno('ALUNO', 'Wanderson Gutemberg Silva', 12362233388, '1992-02-03', 'M', 'wands@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'mat2', 'INATIVO', 'Rua Monte Carmelo', 15, 'a mais bonita da rua', 'Martins', 'Uberlândia', 'MG', '38404561');
+CALL sp_inserir_aluno('ALUNO', 'Gledson Júnior', 57362233388, '2000-08-01', 'M', 'gledin@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'mat3', 'ATIVO', 'Travessa aqui', 24, '', 'Alvorada', 'Uberlândia', 'MG', '38404560');
+CALL sp_inserir_aluno('ALUNO', 'Yure yure', 57362233308, '2001-04-24', 'M', 'yurelindao@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'mat4', 'ATIVO', 'Pç Borges da Fonseca', 17, '', 'Cruzeiro dos Peixotos', 'Uberlândia', 'MG', '38404562');
 
 #CALL sp_inserir_telefone(idUsuario,telefone)
 CALL sp_inserir_telefone(1, '34991919191');
@@ -66,10 +66,10 @@ CALL sp_inserir_avaliacao(1, 1, '2020-02-01', '1.78', '90.32', '30', '15.5', '10
 #################PROCEDURES DE ATUALIZAÇÃO##########################
 
 #CALL sp_atualiza_funcionario(idUsuario, perfil, nome, cpf, dtNascimento, sexo, email, senha, contrato, dtAdmissao, dtDemissao, logradouro, numero, complemento, bairro, cidade, uf, cep);
-CALL sp_atualiza_funcionario('1', 'GERENTE', 'Laura Bella Trump jÚNIOR', 11122233344, '1996-05-18', 'F', 'laurinha.amaisbeladobrasil@teste.com', '123456', 'contrato1', '2020-01-10', '2020-04-15', 'Rua da prata', 213, 'Casa da frente', 'Finotti', 'Uberlândia', 'MG', '38400123');
+CALL sp_atualiza_funcionario('1', 'GERENTE', 'Laura Bella Trump jÚNIOR', 11122233344, '1996-05-18', 'F', 'laurinha.amaisbeladobrasil@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'contrato1', '2020-01-10', '2020-04-15', 'Rua da prata', 213, 'Casa da frente', 'Finotti', 'Uberlândia', 'MG', '38400123');
 
 #CALL sp_atualiza_aluno(idUsuario, perfil, nome, cpf, dtNascimento, sexo, email, senha, matricula, status, logradouro, numero, complemento, bairro, cidade, uf, cep);
-CALL sp_atualiza_aluno(6, 'ALUNO', 'Nawan Soares Benedito', 12362233345, '1999-09-04', 'M', 'nawan.com@teste.com', '123456', 'mat6', 'ATIVO', 'Avenida da secretária', 12, 'fundo', 'Planalto', 'Uberlândia', 'MG', '38404565');
+CALL sp_atualiza_aluno(6, 'ALUNO', 'Nawan Soares Benedito', 12362233345, '1999-09-04', 'M', 'nawan.com@teste.com', '3-841036622-13-319211830-31-91-3085-16103-1075435-56-77-120-7669-9819-7120-41-5670-12', 'mat6', 'ATIVO', 'Avenida da secretária', 12, 'fundo', 'Planalto', 'Uberlândia', 'MG', '38404565');
 
 #CALL sp_atualiza_telefone(idTelefone, telefone)
 CALL sp_atualiza_telefone(1, '34991919192');
