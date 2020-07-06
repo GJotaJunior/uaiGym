@@ -1,7 +1,9 @@
+<%@page import="uaiGym.model.pessoa.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ page import="uaiGym.model.enuns.PerfilEnum" %>
 
 <tags:template>
 	<jsp:attribute name="title">
@@ -26,20 +28,21 @@
                 </div>
             </section>
 
-          	<c:choose>
-          		<c:when test = '${usuario.perfil = "GERENCIA" }'>
+			<c:choose>
+          		<c:when test = '${usuario.perfil == PerfilEnum.GERENCIA }'>
 	          		<c:import url="menus/menu-gerente.jsp"></c:import>
           		</c:when>
-          		<c:when test = '${usuario.perfil = "RECECPCAO" }'>
+          		<c:when test = '${usuario.perfil == PerfilEnum.RECEPCAO }'>
           			<c:import url="menus/menu-recepcionista.jsp"></c:import>
           		</c:when>
-          		<c:when test = '${usuario.perfil = "INSTRUTOR" }'>
+          		<c:when test = '${usuario.perfil == PerfilEnum.INSTRUTOR }'>
           			<c:import url="menus/menu-instrutor.jsp"></c:import>
           		</c:when>
-          		<c:when test = '${usuario.perfil = "ALUNO" }'>
+          		<c:when test = '${usuario.perfil == PerfilEnum.ALUNO }'>
           			<c:import url="menus/menu-aluno.jsp"></c:import>
           		</c:when>
           	</c:choose>
+          	
         </main>
     </jsp:body>
 </tags:template>
