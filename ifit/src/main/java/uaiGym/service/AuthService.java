@@ -32,7 +32,6 @@ import uaiGym.service.dto.EmailDto;
 public class AuthService {
 
 	private HttpSession authenticator;
-	private boolean isValid;
 	private List<String> messages;
 
 	public AuthService(HttpSession session) {
@@ -41,10 +40,6 @@ public class AuthService {
 
 	public HttpSession getAuthenticator() {
 		return authenticator;
-	}
-
-	public boolean isValid() {
-		return isValid;
 	}
 
 	public List<String> getMessages() {
@@ -81,7 +76,6 @@ public class AuthService {
 				}
 				if (usuario != null) {
 					authenticator.setAttribute("usuario", usuario);
-					isValid = true;
 					return true;
 				} else {
 					messages.add("As informações de login não foram inseridas corretamente!");
@@ -97,7 +91,6 @@ public class AuthService {
 			messages.add("As senhas não são iguais!");
 		password = securityPassword(password);
 
-		isValid = true;
 		messages.add("Cadastrado com sucesso!");
 	}
 
@@ -164,5 +157,9 @@ public class AuthService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean isValid() {
+		return (authenticator.getAttribute("usuario") != null);
 	}
 }
