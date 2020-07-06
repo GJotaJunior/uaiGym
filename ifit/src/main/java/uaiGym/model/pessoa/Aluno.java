@@ -21,11 +21,10 @@ public class Aluno extends Usuario {
     private Set<ContatoDeEmergencia> contatosDeEmergencia;
 
     public Aluno(String email, String senha, String nome, String cpf, Date nascimento, Set<String> telefones,
-	    SexoEnum sexo, Endereco endereco, String matricula, Instrutor instrutor, Set<AvaliacaoFisica> avaliacoes,
+	    SexoEnum sexo, Endereco endereco, String matricula, Set<AvaliacaoFisica> avaliacoes,
 	    List<Treino> treinos, boolean estaAtivo, Set<ContatoDeEmergencia> contatosDeEmergencia) {
 	super(email, senha, nome, cpf, nascimento, telefones, sexo, endereco, PerfilEnum.ALUNO);
 	this.matricula = matricula;
-	this.instrutor = instrutor;
 	this.avaliacoes = avaliacoes;
 	this.treinos = treinos;
 	this.estaAtivo = estaAtivo;
