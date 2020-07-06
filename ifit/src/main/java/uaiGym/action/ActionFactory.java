@@ -19,6 +19,8 @@ public class ActionFactory {
 	actions.put("POST/redefinir-senha", new ResetPasswordAction());
 	actions.put("POST/redefinir-senha-confirma", new ResetPasswordConfirmAction());
 
+	actions.put("GET/instrutor/", new InstrutorListAction());
+	actions.put("GET/instrutor/listagem", new InstrutorListAction());
 	actions.put("GET/instrutor/cadastrar", new InstrutorRegisterAction());
 	actions.put("POST/instrutor/cadastrar", new InstrutorRegisterAction());
     }
