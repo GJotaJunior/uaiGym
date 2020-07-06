@@ -81,6 +81,7 @@ public class AuthService {
 				}
 				if (usuario != null) {
 					authenticator.setAttribute("usuario", usuario);
+					isValid = true;
 					return true;
 				} else {
 					messages.add("As informações de login não foram inseridas corretamente!");
