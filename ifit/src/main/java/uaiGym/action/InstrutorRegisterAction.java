@@ -19,7 +19,6 @@ import uaiGym.model.enuns.EstadoEnum;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Instrutor;
-import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
@@ -40,25 +39,38 @@ public class InstrutorRegisterAction implements Action {
 
     private String doPost(HttpServletRequest request) {
 
-	AuthService authenticator = new AuthService(request.getSession());
+	//AuthService authenticator = new AuthService(request.getSession());
 
 	String nome = request.getParameter("nome");
 	String cpf = request.getParameter("cpf");
-	Date dtNascimento = null;
-	String sexo = request.getParameter("sexo");
 	String telefone1 = request.getParameter("telefone1");
 	String telefone2 = request.getParameter("telefone2");
 	String email = request.getParameter("email");
 	String senha = request.getParameter("senha");
+	String sexo = request.getParameter("sexo");
+	Date dtNascimento = null;
+
 	try {
 	    senha = AuthService.securityPassword(senha);
 	} catch (NoSuchAlgorithmException | UnsupportedEncodingException e2) {
 	    e2.printStackTrace();
 	}
+
 	Set<String> telefones = new HashSet<String>();
-	telefones.add(telefone1);
-	telefones.add(telefone2);
-	SexoEnum sexoEnum = SexoEnum.valueOf((sexo == "masculino" ? "M" : "F"));
+	if (telefone1 != "")
+	    telefones.add(telefone1);
+	if (telefone2 != "")
+	    telefones.add(telefone2);
+
+	System.out.println(sexo);
+	SexoEnum sexoEnum;
+	if (sexo.equals("masculino"))
+	    sexoEnum = SexoEnum.M;
+	else
+	    sexoEnum = SexoEnum.F;
+
+	System.out.println(sexoEnum);
+	
 	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	try {
 	    dtNascimento = formato.parse(request.getParameter("dtNascimento"));
@@ -87,9 +99,6 @@ public class InstrutorRegisterAction implements Action {
 	}
 	PerfilEnum perfilEnum = PerfilEnum.INSTRUTOR;
 
-	System.out.println("mapeamento realizado");
-	System.out.println(nome);
-
 	try {
 	    // if (authenticator.isValid()) {
 	    ConnectionFactory cf = new ConnectionFactory();
@@ -99,15 +108,9 @@ public class InstrutorRegisterAction implements Action {
 	    instrutor = new Instrutor(email, senha, nome, cpf, dtNascimento, telefones, sexoEnum, endereco, perfilEnum,
 		    contrato, dtAdmissao, dtDemissao, null);
 	    instrutorDAO.salvar(instrutor);
-	    System.out.println("passou da instancia instrutor");
-	    // } else {
-	    // request.setAttribute("mensagem", "Ação não permitida.");
-	    // }
 	} catch (ClassNotFoundException | IOException | SQLException e) {
 	    e.printStackTrace();
 	}
-
-	System.out.println("terminou de salvar");
 
 	return "instrutor/listagem";
     }

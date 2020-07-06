@@ -175,13 +175,13 @@
                                 <input class="form-check-input"
 									type="radio" name="sexo" value="feminino">
                                 <label class="form-check-label"
-									for="radios-0">Feminino</label>
+									for="sexo">Feminino</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input"
 									type="radio" name="sexo" value="masculino">
                                 <label class="form-check-label"
-									for="radios-1">Masculino</label>
+									for="sexo">Masculino</label>
                             </div>
                         </div>
 

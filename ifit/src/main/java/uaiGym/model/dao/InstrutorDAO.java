@@ -54,6 +54,43 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 	    e.printStackTrace();
 	}
 
+	Set<String> telefones = entidade.getTelefone();
+
+	if (!telefones.isEmpty()) {
+
+	    String sqlLastID = "SELECT MAX(idUsuario) AS lastID FROM usuario";
+
+	    try (PreparedStatement pstmLastID = getConnection().prepareStatement(sqlLastID)) {
+		pstmLastID.execute();
+
+		try (ResultSet rstLastID = pstmLastID.getResultSet()) {
+
+		    if (rstLastID.next()) {
+			int lastID = rstLastID.getInt(1);
+			entidade.setId(lastID);
+		    }
+		}
+	    } catch (SQLException e) {
+		e.printStackTrace();
+	    }
+
+	    String sqlTel = "{CALL sp_inserir_telefone(?,?)}";
+
+	    for (String telefone : telefones) {
+
+		try (CallableStatement stmsTel = getConnection().prepareCall(sqlTel)) {
+
+		    stmsTel.setInt(1, entidade.getId());
+		    stmsTel.setString(2, telefone);
+
+		    stmsTel.executeQuery();
+
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		}
+	    }
+	}
+
     }
 
     @Override
