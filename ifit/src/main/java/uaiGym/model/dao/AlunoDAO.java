@@ -12,6 +12,7 @@ import java.util.Set;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.ContatoDeEmergencia;
+import uaiGym.model.Telefone;
 import uaiGym.model.Treino;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
@@ -86,8 +87,66 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 	    stms.setString(16, entidade.getEndereco().getCep());
 
 	    stms.executeQuery();
+	    
+	    String sqlLastID = "SELECT MAX(idUsuario) AS lastID FROM usuario";
+
+	    try (PreparedStatement pstmLastID = getConnection().prepareStatement(sqlLastID)) {
+		pstmLastID.execute();
+
+		try (ResultSet rstLastID = pstmLastID.getResultSet()) {
+
+		    if (rstLastID.next()) {
+			int lastID = rstLastID.getInt(1);
+			entidade.setId(lastID);
+		    }
+		}
+	    } catch (SQLException e) {
+		e.printStackTrace();
+	    }
+	    
+	    String sqlLastIDAluno = "SELECT MAX(idAluno) AS lastID FROM aluno";
+
+	    try (PreparedStatement pstmLastIDAluno = getConnection().prepareStatement(sqlLastIDAluno)) {
+		pstmLastIDAluno.execute();
+
+		try (ResultSet rstLastID = pstmLastIDAluno.getResultSet()) {
+
+		    if (rstLastID.next()) {
+			int lastIDAluno = rstLastID.getInt(1);
+			entidade.setIdAluno(lastIDAluno);;
+		    }
+		}
+	    } catch (SQLException e) {
+		e.printStackTrace();
+	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
+	}
+
+	Set<String> telefones = entidade.getTelefone();
+
+	if (!telefones.isEmpty()) {
+
+	    TelefoneDAO telDao = new TelefoneDAO(getConnection());
+
+	    for (String numTelefone : telefones) {
+
+		Telefone telefone = new Telefone(entidade.getId(), numTelefone);
+
+		telDao.salvar(telefone);
+	    }
+	}
+	
+	Set<ContatoDeEmergencia> contatosEmergencia = entidade.getContatosDeEmergencia();
+
+	if (!contatosEmergencia.isEmpty()) {
+
+	    ContatoDeEmergenciaDAO contatoDao = new ContatoDeEmergenciaDAO(getConnection());
+
+	    for (ContatoDeEmergencia contato : contatosEmergencia) {
+		contato.setIdAluno(entidade.getIdAluno());
+		contatoDao.salvar(contato);
+	    }
 	}
 
     }

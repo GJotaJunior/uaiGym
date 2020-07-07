@@ -29,7 +29,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
-                            <a href="#">
+                            <a href="instrutor/">
                                 <div class="card mb-4 shadow-sm">
                                     <img src="../img/img03.png">
                                     <div class="card-body">

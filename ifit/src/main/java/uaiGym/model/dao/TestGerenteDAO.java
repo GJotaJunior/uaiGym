@@ -36,7 +36,7 @@ public class TestGerenteDAO {
 
 		Gerente novoG = new Gerente("novo@gerente", "senha", "Novo Gerente", "01030040600", new Date(2000, 12, 15), new HashSet<String>(), SexoEnum.M,
 				new Endereco("Rua rua", "numero", "complemento", "bairro", "cidade", "cep", EstadoEnum.MG),
-				PerfilEnum.GERENCIA, "contrato", null, null);
+				PerfilEnum.GERENTE, "contrato", null, null);
 
 		gerenteDAO.salvar(novoG);
 	}

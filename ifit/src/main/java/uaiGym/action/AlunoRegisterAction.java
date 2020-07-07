@@ -6,35 +6,32 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import uaiGym.model.AvaliacaoFisica;
+import uaiGym.model.ContatoDeEmergencia;
 import uaiGym.model.Endereco;
-import uaiGym.model.dao.InstrutorDAO;
+import uaiGym.model.Treino;
+import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.enuns.EstadoEnum;
-import uaiGym.model.enuns.PerfilEnum;
+import uaiGym.model.enuns.ParentescoEnum;
 import uaiGym.model.enuns.SexoEnum;
-import uaiGym.model.pessoa.Instrutor;
+import uaiGym.model.pessoa.Aluno;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
-public class InstrutorRegisterAction implements Action {
+public class AlunoRegisterAction implements Action {
 
     private String doGet(HttpServletRequest request) {
 
-	// AuthService authenticator = new AuthService(request.getSession());
-	// if (authenticator.isValid()) {
-	// return "instrutor/cadastrar";
-	// } else {
-	// request.setAttribute("mensagem", authenticator.getMessages()); //
-	// return "instrutor/listagem";
-	// }
-
-	return "instrutor/cadastrar";
+	return "aluno/cadastrar";
 
     }
 
@@ -86,31 +83,44 @@ public class InstrutorRegisterAction implements Action {
 	EstadoEnum estadoEnum = EstadoEnum.valueOf(estado);
 	Endereco endereco = new Endereco(logradouro, numero, complemento, bairro, cidade, cep, estadoEnum);
 
-	String contrato = request.getParameter("contrato");
-	Date dtAdmissao = null;
-	Date dtDemissao = null;
+	String matricula = request.getParameter("matricula");
 
-	try {
-	    dtAdmissao = formato.parse(request.getParameter("dtAdmissao"));
-	} catch (ParseException e1) {
-	    e1.printStackTrace();
+	String contatoNome1 = request.getParameter("contatoNome1");
+	String contatoTelefone1 = request.getParameter("contatoTelefone1");
+	String contatoParentesco1 = request.getParameter("contatoParentesco1");
+	String contatoNome2 = request.getParameter("contatoNome2");
+	String contatoTelefone2 = request.getParameter("contatoTelefone2");
+	String contatoParentesco2 = request.getParameter("contatoParentesco2");
+
+	Set<ContatoDeEmergencia> contatosEmergencia = new HashSet<ContatoDeEmergencia>();
+	if (contatoNome1 != "" && contatoTelefone1 != "" && contatoParentesco1 != "") {
+	    ParentescoEnum par1 = ParentescoEnum.valueOf(contatoParentesco1);
+	    ContatoDeEmergencia contatoEmergencia1 = new ContatoDeEmergencia(contatoNome1, contatoTelefone1, par1);
+	    contatosEmergencia.add(contatoEmergencia1);
 	}
-	PerfilEnum perfilEnum = PerfilEnum.INSTRUTOR;
+	if (contatoNome2 != "" && contatoTelefone2 != "" && contatoParentesco2 != "") {
+	    ParentescoEnum par2 = ParentescoEnum.valueOf(contatoParentesco2);
+	    ContatoDeEmergencia contatoEmergencia2 = new ContatoDeEmergencia(contatoNome2, contatoTelefone2, par2);
+	    contatosEmergencia.add(contatoEmergencia2);
+	}
+
+	Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
+
+	List<Treino> treinos = new ArrayList<Treino>();
 
 	try {
 	    // if (authenticator.isValid()) {
 	    ConnectionFactory cf = new ConnectionFactory();
-	    InstrutorDAO instrutorDAO = new InstrutorDAO(cf.recuperarConexao());
+	    AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
 
-	    Instrutor instrutor = null;
-	    instrutor = new Instrutor(email, senha, nome, cpf, dtNascimento, telefones, sexoEnum, endereco, perfilEnum,
-		    contrato, dtAdmissao, dtDemissao, null);
-	    instrutorDAO.salvar(instrutor);
+	    Aluno aluno = new Aluno(email, senha, nome, cpf, dtNascimento, telefones, sexoEnum, endereco, matricula,
+		    avaliacoes, treinos, true, contatosEmergencia);
+	    alunoDAO.salvar(aluno);
 	} catch (ClassNotFoundException | IOException | SQLException e) {
 	    e.printStackTrace();
 	}
 
-	return "instrutor/listagem";
+	return "aluno/listagem";
     }
 
     @Override

@@ -33,8 +33,8 @@ public class TesteDao extends HttpServlet {
 	    // Teste 1
 	    /*
 	     * Instrutor inst = new Instrutor(); inst.setPerfil(PerfilEnum.INSTRUTOR);
-	     * inst.setNome("Instrutor grandão"); inst.setCpf("12312312312"); //Date dtnasc
-	     * = new SimpleDateFormat("yyyy-MM-dd").parse("1992-01-01");
+	     * inst.setNome("Instrutor grandão"); inst.setCpf("12312312312"); 
+	     * //Date dtnasc = new SimpleDateFormat("yyyy-MM-dd").parse("1992-01-01");
 	     * //inst.setDtNascimento(dtnasc); inst.setSexo(SexoEnum.M);
 	     * inst.setEmail("email@teste.com"); inst.setSenha("1234"); //Date dtadm = new
 	     * SimpleDateFormat("yyyy-MM-dd").parse("2019-10-05");
