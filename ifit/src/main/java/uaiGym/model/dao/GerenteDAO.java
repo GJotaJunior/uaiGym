@@ -27,6 +27,7 @@ public class GerenteDAO extends UsuarioDAO<Gerente> {
 		String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao " + "FROM Funcionario f "
 			+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario "
 			+ "WHERE u.idUsuario = ? AND u.perfil = 'GERENTE'";
+		System.out.println("consulta");
 
 		try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 		    pstm.setInt(1, id);
@@ -40,16 +41,15 @@ public class GerenteDAO extends UsuarioDAO<Gerente> {
 			    String senha = rst.getString(8);
 			    String nome = rst.getString(3);
 			    String cpf = rst.getString(4);
-			    Date nascimento = rst.getDate(5);
+			    Date nascimento = null;//rst.getDate(5);
 			    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
-			    PerfilEnum perfil = PerfilEnum.GERENCIA;
+			    PerfilEnum perfil = PerfilEnum.GERENTE;
 			    String contrato = rst.getString(9);
 			    Date dataAdmissao = rst.getDate(10);
 			    Date dataDemissao = rst.getDate(11);
 
 //			    gerente = new Gerente();
 			    gerente = new Gerente(email, senha, nome, cpf, nascimento, null, sexo, null, perfil, contrato, dataAdmissao, dataDemissao);
-
 //			    gerente.setEmail(email);
 //			    gerente.setSenha(senha);
 //			    gerente.setNome(nome);
@@ -131,7 +131,7 @@ public class GerenteDAO extends UsuarioDAO<Gerente> {
 			    String cpf = rs.getString(4);
 			    Date nascimento = rs.getDate(5);
 			    SexoEnum sexo = SexoEnum.valueOf(rs.getString(6));
-			    PerfilEnum perfil = PerfilEnum.GERENCIA;
+			    PerfilEnum perfil = PerfilEnum.GERENTE;
 			    String contrato = rs.getString(9);
 			    Date dataAdmissao = rs.getDate(10);
 			    Date dataDemissao = rs.getDate(11);

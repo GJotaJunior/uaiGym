@@ -38,6 +38,10 @@ public class ContatoDeEmergencia {
     public Integer getIdAluno() {
         return idAluno;
     }
+    
+    public void setIdAluno(Integer idAluno) {
+	this.idAluno = idAluno;
+    }
 
     public String getNome() {
 	return nome;

@@ -50,9 +50,9 @@ public class ContatoDeEmergenciaDAO extends Dao<ContatoDeEmergencia>{
 	    stms.setInt(1, contato.getIdAluno());
 	    stms.setString(2, contato.getNome());
 	    stms.setString(3, contato.getTelefone());
-	    stms.setString(4, String.valueOf(contato.getParentesco()));
+	    stms.setString(4, contato.getParentesco().toString());
 	    
-	    stms.execute();
+	    stms.executeQuery();
 	}
 	catch(SQLException e) {
 	    e.printStackTrace();

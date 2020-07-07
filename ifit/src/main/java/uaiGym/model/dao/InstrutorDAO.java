@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import uaiGym.model.Telefone;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
@@ -52,6 +53,36 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 
 	} catch (SQLException e) {
 	    e.printStackTrace();
+	}
+
+	Set<String> telefones = entidade.getTelefone();
+
+	if (!telefones.isEmpty()) {
+
+	    String sqlLastID = "SELECT MAX(idUsuario) AS lastID FROM usuario";
+
+	    try (PreparedStatement pstmLastID = getConnection().prepareStatement(sqlLastID)) {
+		pstmLastID.execute();
+
+		try (ResultSet rstLastID = pstmLastID.getResultSet()) {
+
+		    if (rstLastID.next()) {
+			int lastID = rstLastID.getInt(1);
+			entidade.setId(lastID);
+		    }
+		}
+	    } catch (SQLException e) {
+		e.printStackTrace();
+	    }
+
+	    TelefoneDAO telDao = new TelefoneDAO(getConnection());
+
+	    for (String numTelefone : telefones) {
+
+		Telefone telefone = new Telefone(entidade.getId(), numTelefone);
+
+		telDao.salvar(telefone);
+	    }
 	}
 
     }
@@ -170,7 +201,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 
 	    try (ResultSet rst = pstm.getResultSet()) {
 
-		if (rst.next()) {
+		while (rst.next()) {
 		    int id = rst.getInt(1);
 
 		    Instrutor instrutor = recuperarPorId(id);
