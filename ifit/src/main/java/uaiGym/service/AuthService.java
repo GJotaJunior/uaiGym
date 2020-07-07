@@ -21,6 +21,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import uaiGym.model.dao.UsuarioDAOFactory;
+import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.DataBase.ConnectionFactory;
 import uaiGym.service.dto.EmailDto;
@@ -148,5 +149,10 @@ public class AuthService {
 
 	public boolean isValid() {
 		return (authenticator.getAttribute("usuario") != null);
+	}
+
+	public boolean isAllowed(PerfilEnum perfilAutorizado) {
+	    Usuario usuario = (Usuario) authenticator.getAttribute("usuario");
+	    return (usuario.getPerfil() == perfilAutorizado);
 	}
 }

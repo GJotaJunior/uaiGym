@@ -39,7 +39,7 @@
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a href="#">
+                            <a href="aluno/">
                                 <div class="card mb-4 shadow-sm">
                                     <img class="cartao" src="../img/img04.png">
                                     <div class="card-body">
