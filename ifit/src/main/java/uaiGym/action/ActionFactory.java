@@ -30,13 +30,16 @@ public class ActionFactory {
 	actions.put("GET/aluno/listagem", new AlunoListAction());
 	actions.put("GET/aluno/cadastrar", new AlunoRegisterAction());
 	actions.put("POST/aluno/cadastrar", new AlunoRegisterAction());
-    }
 
-    public static Action getAction(HttpServletRequest request) {
-	String method = request.getMethod();
-	String url = request.getPathInfo().toLowerCase();
+	actions.put("GET/avaliacoes", new AvaliacoesListAction());
+    
+	}
 
-	Action action = actions.getOrDefault(method + url, new NULLAction());
-	return action;
-    }
+	public static Action getAction(HttpServletRequest request) {
+		String method = request.getMethod();
+		String url = request.getPathInfo().toLowerCase();
+
+		Action action = actions.getOrDefault(method + url, new NULLAction());
+		return action;
+	}
 }

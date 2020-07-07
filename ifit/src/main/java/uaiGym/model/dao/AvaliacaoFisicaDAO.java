@@ -7,9 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.MedidasCorporais;
@@ -154,12 +152,12 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	}
     }
 
-    public Set<AvaliacaoFisica> buscarAvaliacoesPorIdUsuario(int idUsuario) {
+    public List<AvaliacaoFisica> buscarAvaliacoesPorIdUsuario(int idUsuario) {
 
-	Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
+	List<AvaliacaoFisica> avaliacoes = new ArrayList<AvaliacaoFisica>();
 
 	String sql = "SELECT ava.* " + "FROM Avaliacao ava " + "INNER JOIN Aluno a ON ava.idAluno = a.idAluno "
-		+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ?";
+		+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ? ORDER BY ava.dtAvaliacao DESC";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 
@@ -169,6 +167,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	    try (ResultSet rst = pstm.getResultSet()) {
 
 		while (rst.next()) {
+			int id = rst.getInt(1);
 		    int idInstrutor = rst.getInt(3);
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
 		    Date data = rst.getDate(4);
@@ -187,6 +186,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	    }
 
 	} catch (SQLException e) {
+		System.out.println(e.getMessage());
 	    e.printStackTrace();
 	}
 	return avaliacoes;
