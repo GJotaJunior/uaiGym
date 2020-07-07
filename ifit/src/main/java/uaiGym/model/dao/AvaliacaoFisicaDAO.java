@@ -52,7 +52,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 			    musculoPercentual);
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idUsuario);
 
-		    avaliacao = new AvaliacaoFisica(idAva, instrutor, dtAvaliacao, medidas);
+		    avaliacao = new AvaliacaoFisica(idAva, instrutor.getId(), dtAvaliacao, medidas);
 
 		}
 	    }
@@ -71,7 +71,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
 	    stms.setInt(1, 1);
-	    stms.setInt(2, entidade.getInstrutor().getId());
+	    stms.setInt(2, entidade.getIdInstrutor());
 	    stms.setDate(3, DatabaseUtils.converteData(entidade.getData()));
 	    stms.setFloat(4, entidade.getMedidas().getAltura());
 	    stms.setFloat(5, entidade.getMedidas().getPeso());
@@ -117,7 +117,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 			    musculoPercentual);
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idUsuario);
 
-		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, instrutor, dtAvaliacao, medidas);
+		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, instrutor.getId(), dtAvaliacao, medidas);
 
 		    listaAvaliacao.add(avaliacao);
 
@@ -139,7 +139,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 
 	    stms.setInt(1, entidade.getId());
 	    stms.setInt(2, 1);
-	    stms.setInt(3, entidade.getInstrutor().getId());
+	    stms.setInt(3, entidade.getIdInstrutor());
 	    stms.setDate(4, DatabaseUtils.converteData(entidade.getData()));
 	    stms.setFloat(5, entidade.getMedidas().getAltura());
 	    stms.setFloat(6, entidade.getMedidas().getPeso());
@@ -180,7 +180,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
 
-		    AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica(instrutor, data, medidas);
+		    AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica(instrutor.getId(), data, medidas);
 
 		    avaliacoes.add(avaliacaoFisica);
 		}

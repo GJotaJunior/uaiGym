@@ -22,8 +22,10 @@ public class ActionFactory {
 	actions.put("GET/instrutor/", new InstrutorListAction());
 	actions.put("GET/instrutor/listagem", new InstrutorListAction());
 	actions.put("GET/instrutor/cadastrar", new InstrutorRegisterAction());
+	actions.put("GET/instrutor/avaliacao/cadastrar", new PhysicalEvaluationRegisterAction());
 	actions.put("POST/instrutor/cadastrar", new InstrutorRegisterAction());
-	
+	actions.put("POST/instrutor/avaliacao/cadastrar", new PhysicalEvaluationRegisterAction());
+
 	actions.put("GET/aluno/", new AlunoListAction());
 	actions.put("GET/aluno/listagem", new AlunoListAction());
 	actions.put("GET/aluno/cadastrar", new AlunoRegisterAction());
