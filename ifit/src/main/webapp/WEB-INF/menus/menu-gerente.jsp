@@ -15,6 +15,17 @@
 			<div class="col-md-4">
 				<a href="#">
 					<div class="card mb-4 shadow-sm">
+						<img class="cartao" src="../img/img01.png">
+						<div class="card-body">
+							<p class="card-text" style="text-align: center;">Gerenciar
+								Recepcionistas</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-4">
+				<a href="#">
+					<div class="card mb-4 shadow-sm">
 						<img class="cartao" src="../img/img04.png">
 						<div class="card-body">
 							<p class="card-text" style="text-align: center;">Gerenciar
@@ -30,17 +41,6 @@
 						<div class="card-body">
 							<p class="card-text" style="text-align: center;">Gerenciar
 								Equipamentos</p>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="col-md-4">
-				<a href="#">
-					<div class="card mb-4 shadow-sm">
-						<img class="cartao" src="../img/img01.png">
-						<div class="card-body">
-							<p class="card-text" style="text-align: center;">Gerenciar
-								Recepcionistas</p>
 						</div>
 					</div>
 				</a>
