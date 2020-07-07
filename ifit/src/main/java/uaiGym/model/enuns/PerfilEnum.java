@@ -1,5 +1,5 @@
 package uaiGym.model.enuns;
 
 public enum PerfilEnum {
-	ALUNO, INSTRUTOR, RECEPCAO, GERENCIA;
+	ALUNO, INSTRUTOR, RECEPCAO, GERENTE;
 }
