@@ -19,7 +19,7 @@ public class AlunoListAction implements Action {
 
 	AuthService authenticator = new AuthService(request.getSession());
 
-	if (authenticator.isValid() && authenticator.isAllowed(PerfilEnum.GERENTE)) {
+	if (authenticator.isValid() && (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
 
 	    ConnectionFactory cf;
 	    try {
@@ -41,7 +41,7 @@ public class AlunoListAction implements Action {
 
 	AuthService authenticator = new AuthService(request.getSession());
 
-	if (authenticator.isValid() && authenticator.isAllowed(PerfilEnum.GERENTE)) {
+	if (authenticator.isValid() && (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
 	    return "aluno/listagem";
 	} else {
 	    return "menu";
