@@ -6,19 +6,19 @@
 
 <tags:template>
 	<jsp:attribute name="title">
-		<title>Listagem de Instrutores - UaiGym</title>
+		<title>Listagem de Alunos - UaiGym</title>
 	</jsp:attribute>
 
 	<jsp:body>
 		<div class="card">
         	<div class="card-header text-center">
-            	<h5 class="card-title">Listagem de Intrutores</h5>
+            	<h5 class="card-title">Listagem de Alunos</h5>
            	</div>
 
             <div class="card-body">
                 <div class="form-group">
             	    <div class="col-md-12 text-right">
-                            <a href="cadastrar" class="btn btn-primary">Cadastrar instrutor</a>
+                            <a href="cadastrar" class="btn btn-primary">Cadastrar aluno</a>
                     </div>
                 </div>
                     
@@ -30,20 +30,27 @@
 						      		<th scope="col">#</th>
 						      		<th scope="col">Nome</th>
 						      		<th scope="col">E-mail</th>
-						      		<th scope="col">Data Admissão</th>
+						      		<th scope="col">Matrícula</th>
+						      		<th scope="col">É ativo?</th>
 						    	</tr>
 						  	</thead>
 						  	<tbody>
-						  		<c:if test="${requestScope.instrutores.size() == 0}">
+						  		<c:if test="${requestScope.alunos.size() == 0}">
 						  			<tr><td colspan="4" class="text-center">Nenhum registro encontrado.</td></tr>
 						  		</c:if>
-						  		<c:if test="${requestScope.instrutores.size() > 0}">
-							  		<c:forEach var="item" items="${requestScope.instrutores}" varStatus="loop">
+						  		<c:if test="${requestScope.alunos.size() > 0}">
+							  		<c:forEach var="item" items="${requestScope.alunos}" varStatus="loop">
 							  			<tr>
 								      		<th scope="row">${loop.index + 1}</th>
 								      		<td>${item.getNome()}</td>
 								      		<td>${item.getEmail()}</td>
-								      		<td><fmt:formatDate pattern="dd/MM/yyyy" value="${item.getAdmissao()}" /></td>
+								      		<td>${item.getMatricula()}</td>
+								      		<c:if test="${item.isEstaAtivo()}">
+								      			<td>SIM</td>
+								      		</c:if>
+								      		<c:if test="${!item.isEstaAtivo()}">
+								      			<td>NÃO</td>
+								      		</c:if>
 								    	</tr>
 							  		</c:forEach>
 							  	</c:if>

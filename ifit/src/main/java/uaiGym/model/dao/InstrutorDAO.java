@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import uaiGym.model.Telefone;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
@@ -74,20 +75,13 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 		e.printStackTrace();
 	    }
 
-	    String sqlTel = "{CALL sp_inserir_telefone(?,?)}";
+	    TelefoneDAO telDao = new TelefoneDAO(getConnection());
 
-	    for (String telefone : telefones) {
+	    for (String numTelefone : telefones) {
 
-		try (CallableStatement stmsTel = getConnection().prepareCall(sqlTel)) {
+		Telefone telefone = new Telefone(entidade.getId(), numTelefone);
 
-		    stmsTel.setInt(1, entidade.getId());
-		    stmsTel.setString(2, telefone);
-
-		    stmsTel.executeQuery();
-
-		} catch (SQLException e) {
-		    e.printStackTrace();
-		}
+		telDao.salvar(telefone);
 	    }
 	}
 
@@ -207,7 +201,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 
 	    try (ResultSet rst = pstm.getResultSet()) {
 
-		if (rst.next()) {
+		while (rst.next()) {
 		    int id = rst.getInt(1);
 
 		    Instrutor instrutor = recuperarPorId(id);

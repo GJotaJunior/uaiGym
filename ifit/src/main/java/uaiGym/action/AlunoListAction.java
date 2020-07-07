@@ -7,30 +7,30 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uaiGym.model.dao.InstrutorDAO;
-import uaiGym.model.pessoa.Instrutor;
+import uaiGym.model.dao.AlunoDAO;
+import uaiGym.model.pessoa.Aluno;
 import uaiGym.service.DataBase.ConnectionFactory;
 
-public class InstrutorListAction implements Action {
+public class AlunoListAction implements Action {
 
     private String doGet(HttpServletRequest request) {
 
 	ConnectionFactory cf;
 	try {
 	    cf = new ConnectionFactory();
-	    InstrutorDAO instrutorDAO = new InstrutorDAO(cf.recuperarConexao());
-	    List<Instrutor> instrutores = instrutorDAO.listarTodos();
-	    request.setAttribute("instrutores", instrutores);
+	    AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
+	    List<Aluno> alunos = alunoDAO.listarTodos();
+	    request.setAttribute("alunos", alunos);
 	} catch (ClassNotFoundException | SQLException | IOException e) {
 	    e.printStackTrace();
 	}
-	return "instrutor/listagem";
+	return "aluno/listagem";
 
     }
 
     private String doPost(HttpServletRequest request) {
 
-	return "instrutor/listagem";
+	return "aluno/listagem";
     }
 
     @Override

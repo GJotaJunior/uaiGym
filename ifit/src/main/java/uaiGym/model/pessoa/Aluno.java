@@ -13,6 +13,7 @@ import uaiGym.model.enuns.SexoEnum;
 
 public class Aluno extends Usuario {
 
+    private Integer idAluno;
     private String matricula;
     private Instrutor instrutor;
     private Set<AvaliacaoFisica> avaliacoes;
@@ -102,6 +103,14 @@ public class Aluno extends Usuario {
 	} else if (!matricula.equals(other.matricula))
 	    return false;
 	return true;
+    }
+
+    public Integer getIdAluno() {
+	return idAluno;
+    }
+
+    public void setIdAluno(Integer idAluno) {
+	this.idAluno = idAluno;
     }
 
 }
