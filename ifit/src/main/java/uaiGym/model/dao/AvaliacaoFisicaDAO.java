@@ -11,6 +11,7 @@ import java.util.List;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.MedidasCorporais;
+import uaiGym.model.pessoa.Aluno;
 import uaiGym.model.pessoa.Instrutor;
 import uaiGym.service.DataBase.DatabaseUtils;
 
@@ -25,7 +26,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 
 	AvaliacaoFisica avaliacao = null;
 
-	String sql = "SELECT a.*, f.idUsuario FROM avaliacao "
+	String sql = "SELECT a.*, f.idUsuario, a.idUsuario FROM avaliacao "
 		+ "INNER JOIN funcionario f ON f.idFuncionario = a.idFuncionario" + "WHERE a.idAvaliacao = ? ";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
@@ -44,14 +45,15 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		    float residuosPercentual = rst.getFloat(8);
 		    float musculoPercentual = rst.getFloat(9);
 
-		    int idUsuario = rst.getInt(10);
-
+		    int idInstrutor = rst.getInt(10);
+		    int idAluno = rst.getInt(11);
+		    
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
-		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idUsuario);
+		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
+		    Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(idAluno);
 
-		    avaliacao = new AvaliacaoFisica(idAva, instrutor.getId(), dtAvaliacao, medidas);
-
+		    avaliacao = new AvaliacaoFisica(idAva, aluno, instrutor , dtAvaliacao, medidas);
 		}
 	    }
 	} catch (SQLException e) {
@@ -64,12 +66,12 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
     @Override
     public void salvar(AvaliacaoFisica entidade) {
 
-	String sql = "{CALL sp_inserirAvaliacao(?,?,?,?,?,?,?,?)}";
+	String sql = "{CALL sp_inserir_avaliacao(?,?,?,?,?,?,?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
-	    stms.setInt(1, 1);
-	    stms.setInt(2, entidade.getIdInstrutor());
+	    stms.setInt(1, entidade.getAluno().getId());
+	    stms.setInt(2, entidade.getInstrutor().getId());
 	    stms.setDate(3, DatabaseUtils.converteData(entidade.getData()));
 	    stms.setFloat(4, entidade.getMedidas().getAltura());
 	    stms.setFloat(5, entidade.getMedidas().getPeso());
@@ -92,8 +94,9 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
     public List<AvaliacaoFisica> listarTodos() {
 	List<AvaliacaoFisica> listaAvaliacao = new ArrayList<AvaliacaoFisica>();
 
-	String sql = "SELECT DISTINCT a.*, f.idUsuario FROM avaliacao "
-		+ "INNER JOIN funcionario f ON f.idFuncionario = a.idFuncionario";
+	String sql = "SELECT DISTINCT ava.*, f.idUsuario, a.idUsuario FROM avaliacao ava "
+		+ "INNER JOIN funcionario f ON f.idFuncionario = ava.idFuncionario"
+		+ "INNER JOIN aluno a ON a.idAluno = ava.idAluno";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.execute();
@@ -109,13 +112,15 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		    float residuosPercentual = rst.getFloat(8);
 		    float musculoPercentual = rst.getFloat(9);
 
-		    int idUsuario = rst.getInt(10);
-
+		    int idInstrutor = rst.getInt(10);
+		    int idAluno = rst.getInt(11);
+		    
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
-		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idUsuario);
+		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
+		    Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(idAluno);
 
-		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, instrutor.getId(), dtAvaliacao, medidas);
+		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, aluno, instrutor , dtAvaliacao, medidas);
 
 		    listaAvaliacao.add(avaliacao);
 
@@ -136,8 +141,8 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
 	    stms.setInt(1, entidade.getId());
-	    stms.setInt(2, 1);
-	    stms.setInt(3, entidade.getIdInstrutor());
+	    stms.setInt(2, entidade.getAluno().getId());
+	    stms.setInt(3, entidade.getInstrutor().getId());
 	    stms.setDate(4, DatabaseUtils.converteData(entidade.getData()));
 	    stms.setFloat(5, entidade.getMedidas().getAltura());
 	    stms.setFloat(6, entidade.getMedidas().getPeso());
@@ -156,7 +161,9 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 
 	List<AvaliacaoFisica> avaliacoes = new ArrayList<AvaliacaoFisica>();
 
-	String sql = "SELECT ava.* " + "FROM Avaliacao ava " + "INNER JOIN Aluno a ON ava.idAluno = a.idAluno "
+	String sql = "SELECT ava.*, f.idUsuario, a.idUsuario " + "FROM Avaliacao ava " 
+		+ "INNER JOIN Funcionario f ON ava.idFuncionario = f.idFuncionario"	
+		+ "INNER JOIN Aluno a ON ava.idAluno = a.idAluno "
 		+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ? ORDER BY ava.dtAvaliacao DESC";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
@@ -167,21 +174,25 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	    try (ResultSet rst = pstm.getResultSet()) {
 
 		while (rst.next()) {
-			int id = rst.getInt(1);
-		    int idInstrutor = rst.getInt(3);
-		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
-		    Date data = rst.getDate(4);
+		    int idAva = rst.getInt(1);
+		    Date dtAvaliacao = rst.getDate(4);
 		    float altura = rst.getFloat(5);
 		    float peso = rst.getFloat(6);
 		    float gorduraPercentual = rst.getFloat(7);
 		    float residuosPercentual = rst.getFloat(8);
 		    float musculoPercentual = rst.getFloat(9);
+		    
+		    int idInstrutor = rst.getInt(10);
+		    int idAluno = rst.getInt(11);
+		    
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
+		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
+		    Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(idAluno);
 
-		    AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica(instrutor.getId(), data, medidas);
+		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, aluno, instrutor , dtAvaliacao, medidas);
 
-		    avaliacoes.add(avaliacaoFisica);
+		    avaliacoes.add(avaliacao);
 		}
 	    }
 

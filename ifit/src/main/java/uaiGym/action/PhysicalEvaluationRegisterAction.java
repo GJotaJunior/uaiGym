@@ -4,15 +4,20 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.MedidasCorporais;
+import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.dao.AvaliacaoFisicaDAO;
 import uaiGym.model.dao.InstrutorDAO;
+import uaiGym.model.pessoa.Aluno;
 import uaiGym.model.pessoa.Instrutor;
 import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.DataBase.ConnectionFactory;
@@ -20,21 +25,60 @@ import uaiGym.service.DataBase.ConnectionFactory;
 public class PhysicalEvaluationRegisterAction implements Action {
 
     private String doGet(HttpServletRequest request) {
-	return "instrutor/cadastrar-avaliacao-fisica";
+	
+	List<Aluno> alunos = new ArrayList<>();
+	
+	try {
+	    // if (authenticator.isValid()) {
+		ConnectionFactory cf = new ConnectionFactory();
+		AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
+		
+		alunos = alunoDAO.listarTodos();
+		request.setAttribute("alunos", alunos);
+		
+		System.out.println("buscou alunos");
+		
+	    // } else {
+	    //	request.setAttribute("mensagem", "Ação não permitida.");
+	    // }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+	
+	return "instrutor/avaliacao/cadastrar";
     }
 
     private String doPost(HttpServletRequest request) {
 
 	// AuthService authenticator = new AuthService(request.getSession());
 	Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+	Integer idAluno = Integer.parseInt(request.getParameter("idAluno"));
 	
 	float altura = Float.valueOf(request.getParameter("altura"));
-	float peso = Float.valueOf(request.getParameter("altura"));
-	float gorduraPercentual = Float.valueOf(request.getParameter("altura"));
-	float residuosPercentual = Float.valueOf(request.getParameter("altura"));
-	float musculoPercentual = Float.valueOf(request.getParameter("altura"));
+	float peso = Float.valueOf(request.getParameter("peso"));
+	float gorduraPercentual = Float.valueOf(request.getParameter("gordura"));
+	float residuosPercentual = Float.valueOf(request.getParameter("residuos"));
+	float musculoPercentual = Float.valueOf(request.getParameter("musculo"));
 	
 	MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual, musculoPercentual);
+	
+	Aluno aluno = null;
+	
+	try {
+	    // if (authenticator.isValid()) {
+		ConnectionFactory cf = new ConnectionFactory();
+		AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
+		
+		aluno = alunoDAO.recuperarPorId(idAluno);
+		
+		System.out.println("buscou aluno");
+	    // } else {
+	    //	request.setAttribute("mensagem", "Ação não permitida.");
+	    // }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+	
 	Instrutor instrutor = null;
 	
 	try {
@@ -56,12 +100,12 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	Date dtAvaliacao = null;
 	
 	try {
-	    dtAvaliacao = formato.parse(request.getParameter("dtAdmissao"));
+	    dtAvaliacao = formato.parse(Calendar.getInstance().getTime().toString());
 	} catch (ParseException e1) {
 	    e1.printStackTrace();
 	}
 	
-	AvaliacaoFisica avaliacao = new AvaliacaoFisica(instrutor.getId(), dtAvaliacao , medidas);
+	AvaliacaoFisica avaliacao = new AvaliacaoFisica(aluno, instrutor, dtAvaliacao , medidas);
 	
 	System.out.println("mapeamento realizado");
 	

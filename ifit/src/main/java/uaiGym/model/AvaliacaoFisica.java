@@ -2,28 +2,38 @@ package uaiGym.model;
 
 import java.util.Date;
 
+import uaiGym.model.pessoa.Aluno;
+import uaiGym.model.pessoa.Instrutor;
+
 public class AvaliacaoFisica {
 
     private Integer id;
-    private Integer idInstrutor;
+    private Aluno aluno;
+    private Instrutor instrutor;
     private Date data;
     private MedidasCorporais medidas;
 
-    public AvaliacaoFisica(Integer idInstrutor, Date data, MedidasCorporais medidas) {
-	this.idInstrutor = idInstrutor;
+    public AvaliacaoFisica(Aluno aluno, Instrutor instrutor, Date data, MedidasCorporais medidas) {
+	this.aluno= aluno;
+	this.instrutor = instrutor;
 	this.data = data;
 	this.medidas = medidas;
     }
 
-    public AvaliacaoFisica(Integer id, Integer idInstrutor, Date data, MedidasCorporais medidas) {
+    public AvaliacaoFisica(Integer id, Aluno aluno, Instrutor instrutor, Date data, MedidasCorporais medidas) {
 	this.id = id;
-	this.idInstrutor = idInstrutor;
+	this.aluno = aluno;
+	this.instrutor = instrutor;
 	this.data = data;
 	this.medidas = medidas;
     }
-
-    public Integer getIdInstrutor() {
-	return idInstrutor;
+    
+    public Aluno getAluno() {
+	return aluno;
+    }
+    
+    public Instrutor getInstrutor() {
+	return instrutor;
     }
 
     public Date getData() {
