@@ -38,8 +38,7 @@ public class AlunoRegisterAction implements Action {
 	    return "aluno/cadastrar";
 	else
 	    return "menu";
-
-    }
+  }
 
     private String doPost(HttpServletRequest request) {
 
