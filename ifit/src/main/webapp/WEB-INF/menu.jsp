@@ -28,7 +28,7 @@
             </section>
 
 			<c:choose>
-          		<c:when test = '${usuario.perfil == PerfilEnum.GERENCIA }'>
+          		<c:when test = '${usuario.perfil == PerfilEnum.GERENTE }'>
 	          		<c:import url="menus/menu-gerente.jsp"></c:import>
           		</c:when>
           		<c:when test = '${usuario.perfil == PerfilEnum.RECEPCAO }'>
