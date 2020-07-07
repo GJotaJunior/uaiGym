@@ -47,12 +47,13 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 
 		    Set<ContatoDeEmergencia> contatos = new ContatoDeEmergenciaDAO(getConnection())
 			    .buscarContatosDeEmergenciaPorIdUsuario(id);
-		    Set<AvaliacaoFisica> avaliacoes = new AvaliacaoFisicaDAO(getConnection())
+		    List<AvaliacaoFisica> avaliacoes = new AvaliacaoFisicaDAO(getConnection())
 			    .buscarAvaliacoesPorIdUsuario(id);
 		    List<Treino> treinos = new TreinoDAO(getConnection()).buscarTreinosPorIdUsuario(id);
 
 		    aluno = new Aluno(email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
 			    getEnderecoPorId(id), matricula, avaliacoes, treinos, estaAtivo, contatos);
+		    aluno.setId(id);
 		}
 	    }
 	} catch (SQLException e) {

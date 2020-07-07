@@ -6,7 +6,7 @@ import uaiGym.model.pessoa.Instrutor;
 
 public class AvaliacaoFisica {
 
-    	private Integer id;
+    private Integer id;
 	private Instrutor instrutor;
 	private Date data;
 	private MedidasCorporais medidas;
@@ -18,7 +18,7 @@ public class AvaliacaoFisica {
 	}
 	
 	public AvaliacaoFisica(Integer id, Instrutor instrutor, Date data, MedidasCorporais medidas) {
-	    	this.id = id;
+	    this.id = id;
 		this.instrutor = instrutor;
 		this.data = data;
 		this.medidas = medidas;

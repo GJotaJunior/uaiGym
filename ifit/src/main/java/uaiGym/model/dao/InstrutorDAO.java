@@ -160,7 +160,7 @@ public class InstrutorDAO extends UsuarioDAO<Instrutor> {
 		    instrutor.setPerfil(perfil);
 		    instrutor.setContrato(contrato);
 		    instrutor.setAdmissao(dataAdmissao);
-		    instrutor.setDemissao(dataDemissao);
+		    if (dataDemissao != null) instrutor.setDemissao(dataDemissao);
 
 		    Set<Aluno> alunos = getAlunosPorIdInstrutor(id);
 
