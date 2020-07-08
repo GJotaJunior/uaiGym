@@ -37,6 +37,11 @@ public class ActionFactory {
 	actions.put("GET/recepcionista/listagem", new RecepcaoListAction());
 	actions.put("GET/recepcionista/cadastrar", new RecepcaoRegisterAction());
 	actions.put("POST/recepcionista/cadastrar", new RecepcaoRegisterAction());
+	
+	actions.put("GET/gerente/", new GerenteListAction());
+	actions.put("GET/gerente/listagem", new GerenteListAction());
+	actions.put("GET/gerente/cadastrar", new GerenteRegisterAction());
+	actions.put("POST/gerente/cadastrar", new GerenteRegisterAction());
       
 	}
 
