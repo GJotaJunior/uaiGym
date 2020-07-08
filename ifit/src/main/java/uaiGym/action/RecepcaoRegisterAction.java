@@ -95,7 +95,7 @@ public class RecepcaoRegisterAction implements Action {
 	    } catch (ParseException e1) {
 		e1.printStackTrace();
 	    }
-	    PerfilEnum perfilEnum = PerfilEnum.INSTRUTOR;
+	    PerfilEnum perfilEnum = PerfilEnum.RECEPCAO;
 
 	    try {
 		ConnectionFactory cf = new ConnectionFactory();
