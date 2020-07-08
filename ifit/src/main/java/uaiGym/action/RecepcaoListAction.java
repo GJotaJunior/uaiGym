@@ -13,7 +13,7 @@ import uaiGym.model.pessoa.Funcionario;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
-public class InstrutorListAction implements Action {
+public class RecepcaoListAction implements Action {
 
     private String doGet(HttpServletRequest request) {
 
@@ -24,13 +24,13 @@ public class InstrutorListAction implements Action {
 	    ConnectionFactory cf;
 	    try {
 		cf = new ConnectionFactory();
-		FuncionarioDAO instrutorDAO = new FuncionarioDAO(cf.recuperarConexao());
-		List<Funcionario> instrutores = instrutorDAO.listarTodosInstrutores();
-		request.setAttribute("instrutores", instrutores);
+		FuncionarioDAO recepcaoDAO = new FuncionarioDAO(cf.recuperarConexao());
+		List<Funcionario> recepcionistas = recepcaoDAO.listarTodosRecepcionistas();
+		request.setAttribute("recepcionistas", recepcionistas);
 	    } catch (ClassNotFoundException | SQLException | IOException e) {
 		e.printStackTrace();
 	    }
-	    return "instrutor/listagem";
+	    return "recepcionista/listagem";
 	} else {
 	    return "menu";
 	}
@@ -43,7 +43,7 @@ public class InstrutorListAction implements Action {
 
 	if (authenticator.isValid()
 		&& (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
-	    return "instrutor/listagem";
+	    return "recepcionista/listagem";
 	} else {
 	    return "menu";
 	}

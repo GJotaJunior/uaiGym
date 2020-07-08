@@ -7,15 +7,13 @@ import uaiGym.model.Endereco;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
 
-public abstract class Funcionario extends Usuario {
-
+public class Funcionario extends Usuario {
+    
+    private Integer idFuncionario;
     private String contrato;
     private Date admissao;
     private Date demissao;
-
-    public Funcionario() {
-    }
-
+    
     public Funcionario(String email, String senha, String nome, String cpf, Date nascimento, Set<String> telefones,
 	    SexoEnum sexo, Endereco endereco, PerfilEnum perfil, String contrato, Date admissao, Date demissao) {
 	super(email, senha, nome, cpf, nascimento, telefones, sexo, endereco, perfil);
@@ -23,7 +21,28 @@ public abstract class Funcionario extends Usuario {
 	this.admissao = admissao;
 	this.demissao = demissao;
     }
-
+    
+    public Funcionario(Integer idUsuario, String email, String senha, String nome, String cpf, Date nascimento,
+    	    SexoEnum sexo, PerfilEnum perfil, Integer idFuncionario, String contrato, Date admissao, Date demissao) {
+    	super(idUsuario, email, senha, nome, cpf, nascimento, sexo, perfil);
+    	this.idFuncionario = idFuncionario;
+    	this.contrato = contrato;
+    	this.admissao = admissao;
+    	this.demissao = demissao;
+    }
+    
+    public Funcionario(Integer idUsuario, String email, String senha, String nome, String cpf, Date nascimento, Set<String> telefones,
+	    SexoEnum sexo, Endereco endereco, PerfilEnum perfil, Integer idFuncionario, String contrato, Date admissao, Date demissao) {
+	super(idUsuario, email, senha, nome, cpf, nascimento, telefones, sexo, endereco, perfil);
+	this.idFuncionario = idFuncionario;
+	this.contrato = contrato;
+	this.admissao = admissao;
+	this.demissao = demissao;
+    }
+    public Integer getIdFuncionario() {
+	return idFuncionario;
+    }
+    
     public Date getDemissao() {
 	return demissao;
     }

@@ -22,14 +22,14 @@ import uaiGym.model.pessoa.Funcionario;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
-public class InstrutorRegisterAction implements Action {
+public class RecepcaoRegisterAction implements Action {
 
     private String doGet(HttpServletRequest request) {
 
 	AuthService authenticator = new AuthService(request.getSession());
 
 	if (authenticator.isValid() && authenticator.isAllowed(PerfilEnum.GERENTE)) {
-	    return "instrutor/cadastrar";
+	    return "recepcionista/cadastrar";
 	} else {
 	    return "menu";
 	}
@@ -95,22 +95,21 @@ public class InstrutorRegisterAction implements Action {
 	    } catch (ParseException e1) {
 		e1.printStackTrace();
 	    }
-	    PerfilEnum perfilEnum = PerfilEnum.INSTRUTOR;
+	    PerfilEnum perfilEnum = PerfilEnum.RECEPCAO;
 
 	    try {
-		// if (authenticator.isValid()) {
 		ConnectionFactory cf = new ConnectionFactory();
-		FuncionarioDAO instrutorDAO = new FuncionarioDAO(cf.recuperarConexao());
+		FuncionarioDAO recepcionistaDAO = new FuncionarioDAO(cf.recuperarConexao());
 
-		Funcionario instrutor = null;
-		instrutor = new Funcionario(email, senha, nome, cpf, dtNascimento, telefones, sexoEnum, endereco,
+		Funcionario recepcionista = null;
+		recepcionista = new Funcionario(email, senha, nome, cpf, dtNascimento, telefones, sexoEnum, endereco,
 			perfilEnum, contrato, dtAdmissao, dtDemissao);
-		instrutorDAO.salvar(instrutor);
+		recepcionistaDAO.salvar(recepcionista);
 	    } catch (ClassNotFoundException | IOException | SQLException e) {
 		e.printStackTrace();
 	    }
 
-	    return "instrutor/listagem";
+	    return "recepcionista/listagem";
 	} else {
 	    return "menu";
 	}
