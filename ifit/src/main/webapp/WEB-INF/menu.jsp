@@ -59,7 +59,7 @@
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a href="#">
+                            <a href="recepcionista/">
                                 <div class="card mb-4 shadow-sm">
                                     <img class="cartao" src="../img/img01.png">
                                     <div class="card-body">
