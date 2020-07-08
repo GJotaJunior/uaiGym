@@ -6,9 +6,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 public class ActionFactory {
-
-    static Map<String, Action> actions = new HashMap<String, Action>();
-    static {
+  
+  static Map<String, Action> actions = new HashMap<String, Action>();
+  static {
 	actions.put("GET/", new LoginAction());
 	actions.put("GET/cadastrar", new RegisterAction());
 	actions.put("GET/sair", new LogoutAction());
@@ -22,19 +22,34 @@ public class ActionFactory {
 	actions.put("GET/instrutor/", new InstrutorListAction());
 	actions.put("GET/instrutor/listagem", new InstrutorListAction());
 	actions.put("GET/instrutor/cadastrar", new InstrutorRegisterAction());
+	actions.put("GET/instrutor/avaliacao/cadastrar", new PhysicalEvaluationRegisterAction());
 	actions.put("POST/instrutor/cadastrar", new InstrutorRegisterAction());
-	
+	actions.put("POST/instrutor/avaliacao/cadastrar", new PhysicalEvaluationRegisterAction());
+
 	actions.put("GET/aluno/", new AlunoListAction());
 	actions.put("GET/aluno/listagem", new AlunoListAction());
 	actions.put("GET/aluno/cadastrar", new AlunoRegisterAction());
 	actions.put("POST/aluno/cadastrar", new AlunoRegisterAction());
-    }
 
-    public static Action getAction(HttpServletRequest request) {
-	String method = request.getMethod();
-	String url = request.getPathInfo().toLowerCase();
+	actions.put("GET/avaliacoes", new AvaliacoesListAction());
+	
+	actions.put("GET/recepcionista/", new RecepcaoListAction());
+	actions.put("GET/recepcionista/listagem", new RecepcaoListAction());
+	actions.put("GET/recepcionista/cadastrar", new RecepcaoRegisterAction());
+	actions.put("POST/recepcionista/cadastrar", new RecepcaoRegisterAction());
+	
+	actions.put("GET/gerente/", new GerenteListAction());
+	actions.put("GET/gerente/listagem", new GerenteListAction());
+	actions.put("GET/gerente/cadastrar", new GerenteRegisterAction());
+	actions.put("POST/gerente/cadastrar", new GerenteRegisterAction());
+      
+	}
 
-	Action action = actions.getOrDefault(method + url, new NULLAction());
-	return action;
-    }
+	public static Action getAction(HttpServletRequest request) {
+		String method = request.getMethod();
+		String url = request.getPathInfo().toLowerCase();
+
+		Action action = actions.getOrDefault(method + url, new NULLAction());
+		return action;
+	}
 }

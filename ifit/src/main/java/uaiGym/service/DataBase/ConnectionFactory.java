@@ -18,7 +18,7 @@ public class ConnectionFactory {
 
 	public ConnectionFactory() throws IOException, ClassNotFoundException {
 		getProperties();
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		
 //		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 //		comboPooledDataSource.setJdbcUrl(url);
@@ -43,7 +43,7 @@ public class ConnectionFactory {
 		String user = prop.getProperty("user");
 		String password = prop.getProperty("password");
 		
-		this.url = "jdbc:mysql://" + server + ":" + port + "/" + name + "?useTimezone=true&serverTimezone=UTC";
+		this.url = "jdbc:mysql://" + server + ":" + port + "/" + name + "?useTimezone=true&serverTimezone=UTC&noAccessToProcedureBodies=true";
 		this.user = user;
 		this.password = password;
 	}
