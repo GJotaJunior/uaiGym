@@ -14,11 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import uaiGym.model.Endereco;
-import uaiGym.model.dao.InstrutorDAO;
+import uaiGym.model.dao.FuncionarioDAO;
 import uaiGym.model.enuns.EstadoEnum;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
-import uaiGym.model.pessoa.Instrutor;
+import uaiGym.model.pessoa.Funcionario;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
@@ -98,12 +98,13 @@ public class InstrutorRegisterAction implements Action {
 	    PerfilEnum perfilEnum = PerfilEnum.INSTRUTOR;
 
 	    try {
+		// if (authenticator.isValid()) {
 		ConnectionFactory cf = new ConnectionFactory();
-		InstrutorDAO instrutorDAO = new InstrutorDAO(cf.recuperarConexao());
+		FuncionarioDAO instrutorDAO = new FuncionarioDAO(cf.recuperarConexao());
 
-		Instrutor instrutor = null;
-		instrutor = new Instrutor(email, senha, nome, cpf, dtNascimento, telefones, sexoEnum, endereco,
-			perfilEnum, contrato, dtAdmissao, dtDemissao, null);
+		Funcionario instrutor = null;
+		instrutor = new Funcionario(email, senha, nome, cpf, dtNascimento, telefones, sexoEnum, endereco,
+			perfilEnum, contrato, dtAdmissao, dtDemissao);
 		instrutorDAO.salvar(instrutor);
 	    } catch (ClassNotFoundException | IOException | SQLException e) {
 		e.printStackTrace();

@@ -15,12 +15,24 @@ public class Aluno extends Usuario {
 
     private Integer idAluno;
     private String matricula;
-    private Instrutor instrutor;
+    private Funcionario instrutor;
     private List<AvaliacaoFisica> avaliacoes;
     private List<Treino> treinos;
     private boolean estaAtivo;
     private Set<ContatoDeEmergencia> contatosDeEmergencia;
 
+    public Aluno(Integer idUsuario, String email, String senha, String nome, String cpf, Date nascimento, Set<String> telefones,
+	    SexoEnum sexo, Endereco endereco, Integer idAluno, String matricula, List<AvaliacaoFisica> avaliacoes,
+	    List<Treino> treinos, boolean estaAtivo, Set<ContatoDeEmergencia> contatosDeEmergencia) {
+	super(idUsuario, email, senha, nome, cpf, nascimento, telefones, sexo, endereco, PerfilEnum.ALUNO);
+	this.idAluno = idAluno;
+	this.matricula = matricula;
+	this.avaliacoes = avaliacoes;
+	this.treinos = treinos;
+	this.estaAtivo = estaAtivo;
+	this.contatosDeEmergencia = contatosDeEmergencia;
+    }
+    
     public Aluno(String email, String senha, String nome, String cpf, Date nascimento, Set<String> telefones,
 	    SexoEnum sexo, Endereco endereco, String matricula, List<AvaliacaoFisica> avaliacoes,
 	    List<Treino> treinos, boolean estaAtivo, Set<ContatoDeEmergencia> contatosDeEmergencia) {
@@ -36,11 +48,11 @@ public class Aluno extends Usuario {
 	return matricula;
     }
 
-    public Instrutor getInstrutor() {
+    public Funcionario getFuncionario() {
 	return instrutor;
     }
 
-    public void setInstrutor(Instrutor instrutor) {
+    public void setFuncionario(Funcionario instrutor) {
 	this.instrutor = instrutor;
     }
 

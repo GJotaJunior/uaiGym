@@ -9,9 +9,7 @@ import java.util.List;
 
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.pessoa.Aluno;
-import uaiGym.model.pessoa.Gerente;
-import uaiGym.model.pessoa.Instrutor;
-import uaiGym.model.pessoa.Recepcao;
+import uaiGym.model.pessoa.Funcionario;
 import uaiGym.model.pessoa.Usuario;
 
 public class UsuarioDAOFactory extends UsuarioDAO<Usuario> {
@@ -30,12 +28,8 @@ public class UsuarioDAOFactory extends UsuarioDAO<Usuario> {
 	PerfilEnum perfil = entidade.getPerfil();
 	if (perfil == PerfilEnum.ALUNO)
 	    new AlunoDAO(getConnection()).salvar((Aluno) entidade);
-	else if (perfil == PerfilEnum.GERENTE)
-	    new GerenteDAO(getConnection()).salvar((Gerente) entidade);
-	else if (perfil == PerfilEnum.INSTRUTOR)
-	    new InstrutorDAO(getConnection()).salvar((Instrutor) entidade);
-	else if (perfil == PerfilEnum.RECEPCAO)
-	    new RecepcaoDAO(getConnection()).salvar((Recepcao) entidade);
+	else
+	    new FuncionarioDAO(getConnection()).salvar((Funcionario) entidade);
     }
 
     @Override
@@ -43,12 +37,8 @@ public class UsuarioDAOFactory extends UsuarioDAO<Usuario> {
 	PerfilEnum perfil = getUsuario(id).getPerfil();
 	if (perfil == PerfilEnum.ALUNO)
 	    new AlunoDAO(getConnection()).excluir(id);
-	else if (perfil == PerfilEnum.GERENTE)
-	    new GerenteDAO(getConnection()).excluir(id);
-	else if (perfil == PerfilEnum.INSTRUTOR)
-	    new InstrutorDAO(getConnection()).excluir(id);
-	else if (perfil == PerfilEnum.RECEPCAO)
-	    new RecepcaoDAO(getConnection()).excluir(id);
+	else
+	    new FuncionarioDAO(getConnection()).excluir(id);
     }
 
     @Override
@@ -78,12 +68,8 @@ public class UsuarioDAOFactory extends UsuarioDAO<Usuario> {
 	PerfilEnum perfil = entidade.getPerfil();
 	if (perfil == PerfilEnum.ALUNO)
 	    new AlunoDAO(getConnection()).atualizar((Aluno) entidade);
-	else if (perfil == PerfilEnum.GERENTE)
-	    new GerenteDAO(getConnection()).atualizar((Gerente) entidade);
-	else if (perfil == PerfilEnum.INSTRUTOR)
-	    new InstrutorDAO(getConnection()).atualizar((Instrutor) entidade);
-	else if (perfil == PerfilEnum.RECEPCAO)
-	    new RecepcaoDAO(getConnection()).atualizar((Recepcao) entidade);
+	else
+	    new FuncionarioDAO(getConnection()).atualizar((Funcionario) entidade);
     }
 
     private Usuario getUsuario(int id) {
@@ -97,12 +83,8 @@ public class UsuarioDAOFactory extends UsuarioDAO<Usuario> {
 		    PerfilEnum perfil = PerfilEnum.valueOf(rst.getString(1));
 		    if (perfil == PerfilEnum.ALUNO)
 			return new AlunoDAO(getConnection()).recuperarPorId(id);
-		    else if (perfil == PerfilEnum.GERENTE)
-			return new GerenteDAO(getConnection()).recuperarPorId(id);
-		    else if (perfil == PerfilEnum.INSTRUTOR)
-			return new InstrutorDAO(getConnection()).recuperarPorId(id);
-		    else if (perfil == PerfilEnum.RECEPCAO)
-			return new RecepcaoDAO(getConnection()).recuperarPorId(id);
+		    else
+			return new FuncionarioDAO(getConnection()).recuperarPorId(id);
 		}
 	    }
 	} catch (SQLException e) {

@@ -43,7 +43,7 @@ public class ConnectionFactory {
 		String user = prop.getProperty("user");
 		String password = prop.getProperty("password");
 		
-		this.url = "jdbc:mysql://" + server + ":" + port + "/" + name + "?useTimezone=true&serverTimezone=UTC";
+		this.url = "jdbc:mysql://" + server + ":" + port + "/" + name + "?useTimezone=true&serverTimezone=UTC&noAccessToProcedureBodies=true";
 		this.user = user;
 		this.password = password;
 	}

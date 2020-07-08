@@ -7,24 +7,24 @@ import uaiGym.model.Endereco;
 import uaiGym.model.enuns.EstadoEnum;
 import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.enuns.SexoEnum;
-import uaiGym.model.pessoa.Gerente;
+import uaiGym.model.pessoa.Funcionario;
 import uaiGym.service.DataBase.ConnectionFactory;
 
-public class TestGerenteDAO {
+public class TestFuncionarioDAO {
 
 	public static void main(String[] args) {
 
 		ConnectionFactory factory = null;
-		GerenteDAO gerenteDAO = null;
+		FuncionarioDAO gerenteDAO = null;
 
 		try {
 			factory = new ConnectionFactory();
-			gerenteDAO = new GerenteDAO(factory.recuperarConexao());
+			gerenteDAO = new FuncionarioDAO(factory.recuperarConexao());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		Gerente gerente = gerenteDAO.recuperarPorId(1);
+		Funcionario gerente = gerenteDAO.recuperarPorId(1);
 		if (!gerente.getNome().split(" ")[0].equals("Laura"))
 			System.out.println("Deu merda ao recuperar!");
 
@@ -34,7 +34,7 @@ public class TestGerenteDAO {
 		if (gerenteDAO.listarTodos().isEmpty())
 			System.out.println("Deu merda no listar todos!");
 
-		Gerente novoG = new Gerente("novo@gerente", "senha", "Novo Gerente", "01030040600", new Date(2000, 12, 15), new HashSet<String>(), SexoEnum.M,
+		Funcionario novoG = new Funcionario("novo@gerente", "senha", "Novo Funcionario", "01030040600", new Date(2000, 12, 15), new HashSet<String>(), SexoEnum.M,
 				new Endereco("Rua rua", "numero", "complemento", "bairro", "cidade", "cep", EstadoEnum.MG),
 				PerfilEnum.GERENTE, "contrato", null, null);
 
