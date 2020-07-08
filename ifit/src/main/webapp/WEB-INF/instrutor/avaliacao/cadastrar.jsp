@@ -65,7 +65,7 @@ h11 {
 								</select>
                     	</div>
 
-                        <div class="form-group row h-300 mt-5">
+                        <div class="form-group row mt-5">
                             <label
 								class="col-md-2 col-form-label text-center" for="altura">Altura: <h11>*</h11></label>
                             <div class="col-md-4">
@@ -83,7 +83,7 @@ h11 {
                             </div>
                         </div>
 
-                        <div class="form-group row h-300">
+                        <div class="form-group row">
                             <label
 								class="col-md-2 col-form-label text-center" for="gordura">Percentual de gordura: <h11>*</h11></label>
                             <div class="col-md-4">
@@ -101,7 +101,7 @@ h11 {
                             </div>
                         </div>
 						
-						<div class="form-group row h-300">
+						<div class="form-group row">
                             <label
 								class="col-md-2 col-form-label text-center" for="musculos">Percentual de musculos: <h11>*</h11>
                             </label>
@@ -109,16 +109,7 @@ h11 {
                                 <input id="musculo" name="musculo"
 									placeholder="Valor em (%). Ex: 30.6" class="form-control"
 									required="" type="text" maxlength="5">
-                            </div>
-                            <label
-								class="col-md-2 col-form-label text-right" for="dtAvaliacao">Dt. Avaliação<h11>*</h11>
-                            </label>
-                            <div class="col-md-4">
-                                <input id="dtAvaliacao"
-									name="dtAvaliacao" placeholder="DD/MM/AAAA"
-									class="form-control" required="" type="text" maxlength="10"
-									OnKeyPress="formatar('##/##/####', this)">
-                            </div>
+                            </div>            
                         </div>         
 				</div>
                         

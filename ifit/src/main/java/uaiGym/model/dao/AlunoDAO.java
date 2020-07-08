@@ -26,7 +26,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
     public Aluno recuperarPorId(int id) {
 	Aluno aluno = null;
 
-	String sql = "SELECT u.*, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE a.idUsuario = ?";
+	String sql = "SELECT u.*, a.idAluno, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE a.idUsuario = ?";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
@@ -40,15 +40,15 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		    String cpf = rst.getString(4);
 		    Date nascimento = rst.getDate(5);
 		    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
-		    String matricula = rst.getString(9);
-		    boolean estaAtivo = rst.getString(10).equals("ATIVO");
+		    Integer idAluno = rst.getInt(9);
+		    String matricula = rst.getString(10);
+		    boolean estaAtivo = rst.getString(11).equals("ATIVO");
 
 		    Set<ContatoDeEmergencia> contatos = new ContatoDeEmergenciaDAO(getConnection())
 			    .buscarContatosDeEmergenciaPorIdUsuario(id);
 
-		    aluno = new Aluno(email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
-			    getEnderecoPorId(id), matricula, null, null, estaAtivo, contatos);
-		    aluno.setId(id);
+		    aluno = new Aluno(id, email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
+			    getEnderecoPorId(id), idAluno, matricula, null, null, estaAtivo, contatos);
 		}
 	    }
 	} catch (SQLException e) {
@@ -164,7 +164,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
     public List<Aluno> listarTodos() {
 	List<Aluno> alunos = new ArrayList<Aluno>();
 
-	String sql = "SELECT u.*, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario";
+	String sql = "SELECT u.*, a.idAluno, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.execute();

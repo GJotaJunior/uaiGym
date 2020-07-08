@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -59,7 +60,6 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	float gorduraPercentual = Float.valueOf(request.getParameter("gordura"));
 	float residuosPercentual = Float.valueOf(request.getParameter("residuos"));
 	float musculoPercentual = Float.valueOf(request.getParameter("musculo"));
-	String dtAvaliacaoForm = request.getParameter("dtAvaliacao");
 	
 	MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual, musculoPercentual);
 	
@@ -83,16 +83,7 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	    e.printStackTrace();
 	}
 	
-	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-	Date dtAvaliacao = null;
-	
-	try {
-	    dtAvaliacao = formato.parse(dtAvaliacaoForm);
-	} catch (ParseException e1) {
-	    e1.printStackTrace();
-	}
-	
-	AvaliacaoFisica avaliacao = new AvaliacaoFisica(aluno.getIdAluno(), instrutor.getIdFuncionario(), dtAvaliacao , medidas);
+	AvaliacaoFisica avaliacao = new AvaliacaoFisica(aluno.getIdAluno(), instrutor.getIdFuncionario(), Calendar.getInstance().getTime() , medidas);
 	
 	System.out.println("mapeamento realizado");
 	
