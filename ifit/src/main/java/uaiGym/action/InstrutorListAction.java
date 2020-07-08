@@ -9,13 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import uaiGym.model.dao.FuncionarioDAO;
 import uaiGym.model.pessoa.Funcionario;
+
 import uaiGym.service.DataBase.ConnectionFactory;
 
 public class InstrutorListAction implements Action {
 
     private String doGet(HttpServletRequest request) {
 
-	ConnectionFactory cf;
+	AuthService authenticator = new AuthService(request.getSession());
+
+	if (authenticator.isValid() && (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
+ConnectionFactory cf;
 	try {
 	    cf = new ConnectionFactory();
 	    FuncionarioDAO instrutorDAO = new FuncionarioDAO(cf.recuperarConexao());
@@ -23,14 +27,23 @@ public class InstrutorListAction implements Action {
 	    request.setAttribute("instrutores", instrutores);
 	} catch (ClassNotFoundException | SQLException | IOException e) {
 	    e.printStackTrace();
+  }
+	    return "instrutor/listagem";
+	} else {
+	    return "menu";
 	}
-	return "instrutor/listagem";
 
     }
 
     private String doPost(HttpServletRequest request) {
 
-	return "instrutor/listagem";
+	AuthService authenticator = new AuthService(request.getSession());
+
+	if (authenticator.isValid() && (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
+	    return "instrutor/listagem";
+	} else {
+	    return "menu";
+	}
     }
 
     @Override

@@ -8,29 +8,44 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import uaiGym.model.dao.AlunoDAO;
+import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.pessoa.Aluno;
+import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
 public class AlunoListAction implements Action {
 
     private String doGet(HttpServletRequest request) {
 
-	ConnectionFactory cf;
-	try {
-	    cf = new ConnectionFactory();
-	    AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
-	    List<Aluno> alunos = alunoDAO.listarTodos();
-	    request.setAttribute("alunos", alunos);
-	} catch (ClassNotFoundException | SQLException | IOException e) {
-	    e.printStackTrace();
+	AuthService authenticator = new AuthService(request.getSession());
+
+	if (authenticator.isValid() && (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
+
+	    ConnectionFactory cf;
+	    try {
+		cf = new ConnectionFactory();
+		AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
+		List<Aluno> alunos = alunoDAO.listarTodos();
+		request.setAttribute("alunos", alunos);
+	    } catch (ClassNotFoundException | SQLException | IOException e) {
+		e.printStackTrace();
+	    }
+	    return "aluno/listagem";
+	} else {
+	    return "menu";
 	}
-	return "aluno/listagem";
 
     }
 
     private String doPost(HttpServletRequest request) {
 
-	return "aluno/listagem";
+	AuthService authenticator = new AuthService(request.getSession());
+
+	if (authenticator.isValid() && (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
+	    return "aluno/listagem";
+	} else {
+	    return "menu";
+	}
     }
 
     @Override
