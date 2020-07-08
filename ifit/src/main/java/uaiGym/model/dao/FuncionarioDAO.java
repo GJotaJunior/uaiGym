@@ -27,7 +27,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 	public Funcionario recuperarPorId(int id) {
 		Funcionario funcionario = null;
 
-		String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao " + "FROM Funcionario f "
+		String sql = "SELECT u.*, f.idFuncionario, f.contrato, f.dtAdmissao, f.dtDemissao " + "FROM Funcionario f "
 			+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario "
 			+ "WHERE u.idUsuario = ?";
 		System.out.println("consulta");
@@ -41,18 +41,19 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 			if (rst.next()) {
 			    Integer idUsuario = rst.getInt(1);
 			    PerfilEnum perfil = PerfilEnum.valueOf(rst.getString(2));
-			    String email = rst.getString(7);
-			    String senha = rst.getString(8);
 			    String nome = rst.getString(3);
 			    String cpf = rst.getString(4);
 			    Date nascimento = null;//rst.getDate(5);
 			    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
-			    String contrato = rst.getString(9);
-			    Date dataAdmissao = rst.getDate(10);
-			    Date dataDemissao = rst.getDate(11);
+			    String email = rst.getString(7);
+			    String senha = rst.getString(8);
+			    Integer idFuncionario = rst.getInt(9);
+			    String contrato = rst.getString(10);
+			    Date dataAdmissao = rst.getDate(11);
+			    Date dataDemissao = rst.getDate(12);
 
-//			
-			    funcionario = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, contrato, dataAdmissao, dataDemissao);
+			
+			    funcionario = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, idFuncionario, contrato, dataAdmissao, dataDemissao);
 			    
 			}
 		    }
@@ -109,7 +110,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 	public List<Funcionario> listarTodos() {
 	    	List<Funcionario> funcionarios = new ArrayList<>();
 	    
-		String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
+		String sql = "SELECT u.*, f.idFuncionario, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
 			+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario ";
 		
 		try(PreparedStatement pstm = getConnection().prepareStatement(sql)) {
@@ -119,17 +120,19 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 			while (rs.next()) {
 			    Integer idUsuario = rs.getInt(1);
 			    PerfilEnum perfil = PerfilEnum.valueOf(rs.getString(2));
-			    String email = rs.getString(7);
-			    String senha = rs.getString(8);
 			    String nome = rs.getString(3);
 			    String cpf = rs.getString(4);
-			    Date nascimento = rs.getDate(5);
+			    Date nascimento = null;//rst.getDate(5);
 			    SexoEnum sexo = SexoEnum.valueOf(rs.getString(6));
-			    String contrato = rs.getString(9);
-			    Date dataAdmissao = rs.getDate(10);
-			    Date dataDemissao = rs.getDate(11);
+			    String email = rs.getString(7);
+			    String senha = rs.getString(8);
+			    Integer idFuncionario = rs.getInt(9);
+			    String contrato = rs.getString(10);
+			    Date dataAdmissao = rs.getDate(11);
+			    Date dataDemissao = rs.getDate(12);
 
-			    Funcionario funcionario = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, contrato, dataAdmissao, dataDemissao);
+			
+			    Funcionario funcionario = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, idFuncionario, contrato, dataAdmissao, dataDemissao);
 			    
 			    funcionarios.add(funcionario);
 			}
@@ -202,7 +205,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 	   public List<Funcionario> listarTodosGerentes() {
 	    	List<Funcionario> gerentes = new ArrayList<>();
 	    
-		String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
+		String sql = "SELECT u.*, f.idFuncionario, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
 			+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario "
 			+ "WHERE u.perfil = 'GERENTE'";
 		
@@ -213,17 +216,18 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 			while (rs.next()) {
 			    Integer idUsuario = rs.getInt(1);
 			    PerfilEnum perfil = PerfilEnum.valueOf(rs.getString(2));
-			    String email = rs.getString(7);
-			    String senha = rs.getString(8);
 			    String nome = rs.getString(3);
 			    String cpf = rs.getString(4);
-			    Date nascimento = rs.getDate(5);
+			    Date nascimento = null;//rst.getDate(5);
 			    SexoEnum sexo = SexoEnum.valueOf(rs.getString(6));
-			    String contrato = rs.getString(9);
-			    Date dataAdmissao = rs.getDate(10);
-			    Date dataDemissao = rs.getDate(11);
+			    String email = rs.getString(7);
+			    String senha = rs.getString(8);
+			    Integer idFuncionario = rs.getInt(9);
+			    String contrato = rs.getString(10);
+			    Date dataAdmissao = rs.getDate(11);
+			    Date dataDemissao = rs.getDate(12);
 
-			    Funcionario gerente = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, contrato, dataAdmissao, dataDemissao);
+			    Funcionario gerente = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, idFuncionario, contrato, dataAdmissao, dataDemissao);
 			    
 			    gerentes.add(gerente);
 			}
@@ -238,7 +242,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 	   public List<Funcionario> listarTodosRecepcionistas() {
 	    	List<Funcionario> recepcionistas = new ArrayList<>();
 	    
-		String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
+		String sql = "SELECT u.*, f.idFuncionario, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
 			+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario "
 			+ "WHERE u.perfil = 'RECEPCAO'";
 		
@@ -249,17 +253,18 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 			while (rs.next()) {
 			    Integer idUsuario = rs.getInt(1);
 			    PerfilEnum perfil = PerfilEnum.valueOf(rs.getString(2));
-			    String email = rs.getString(7);
-			    String senha = rs.getString(8);
 			    String nome = rs.getString(3);
 			    String cpf = rs.getString(4);
-			    Date nascimento = rs.getDate(5);
+			    Date nascimento = null;//rst.getDate(5);
 			    SexoEnum sexo = SexoEnum.valueOf(rs.getString(6));
-			    String contrato = rs.getString(9);
-			    Date dataAdmissao = rs.getDate(10);
-			    Date dataDemissao = rs.getDate(11);
+			    String email = rs.getString(7);
+			    String senha = rs.getString(8);
+			    Integer idFuncionario = rs.getInt(9);
+			    String contrato = rs.getString(10);
+			    Date dataAdmissao = rs.getDate(11);
+			    Date dataDemissao = rs.getDate(12);
 
-			    Funcionario recepcionista = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, contrato, dataAdmissao, dataDemissao);
+			    Funcionario recepcionista = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, idFuncionario, contrato, dataAdmissao, dataDemissao);
 
 			    recepcionistas.add(recepcionista);
 			}
@@ -275,7 +280,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 	   public List<Funcionario> listarTodosInstrutores() {
 	    	List<Funcionario> instrutores = new ArrayList<>();
 	    
-		String sql = "SELECT u.*, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
+		String sql = "SELECT u.*, f.idFuncionario, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
 			+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario "
 			+ "WHERE u.perfil = 'INSTRUTOR'";
 		
@@ -286,17 +291,18 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 			while (rs.next()) {
 			    Integer idUsuario = rs.getInt(1);
 			    PerfilEnum perfil = PerfilEnum.valueOf(rs.getString(2));
-			    String email = rs.getString(7);
-			    String senha = rs.getString(8);
 			    String nome = rs.getString(3);
 			    String cpf = rs.getString(4);
-			    Date nascimento = rs.getDate(5);
+			    Date nascimento = null;//rst.getDate(5);
 			    SexoEnum sexo = SexoEnum.valueOf(rs.getString(6));
-			    String contrato = rs.getString(9);
-			    Date dataAdmissao = rs.getDate(10);
-			    Date dataDemissao = rs.getDate(11);
+			    String email = rs.getString(7);
+			    String senha = rs.getString(8);
+			    Integer idFuncionario = rs.getInt(9);
+			    String contrato = rs.getString(10);
+			    Date dataAdmissao = rs.getDate(11);
+			    Date dataDemissao = rs.getDate(12);
 
-			    Funcionario instrutor = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, contrato, dataAdmissao, dataDemissao);
+			    Funcionario instrutor = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, idFuncionario, contrato, dataAdmissao, dataDemissao);
 
 			    
 			    instrutores.add(instrutor);

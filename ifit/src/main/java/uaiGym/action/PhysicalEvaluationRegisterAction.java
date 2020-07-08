@@ -15,7 +15,9 @@ import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.MedidasCorporais;
 import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.dao.AvaliacaoFisicaDAO;
+import uaiGym.model.dao.FuncionarioDAO;
 import uaiGym.model.pessoa.Aluno;
+import uaiGym.model.pessoa.Funcionario;
 import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
@@ -61,6 +63,26 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	
 	MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual, musculoPercentual);
 	
+	Aluno aluno = null;
+	
+	try {
+	    ConnectionFactory cf = new ConnectionFactory();
+	    AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
+	    aluno  = alunoDAO.recuperarPorId(idAluno);
+	} catch (ClassNotFoundException | SQLException | IOException e) {
+	    e.printStackTrace();
+	}
+	
+	Funcionario instrutor = null;
+	
+	try {
+	    ConnectionFactory cf = new ConnectionFactory();
+	    FuncionarioDAO instrutorDAO = new FuncionarioDAO(cf.recuperarConexao());
+	    instrutor = instrutorDAO.recuperarPorId(usuario.getId());
+	} catch (ClassNotFoundException | SQLException | IOException e) {
+	    e.printStackTrace();
+	}
+	
 	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	Date dtAvaliacao = null;
 	
@@ -70,7 +92,7 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	    e1.printStackTrace();
 	}
 	
-	AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAluno, usuario.getId(), dtAvaliacao , medidas);
+	AvaliacaoFisica avaliacao = new AvaliacaoFisica(aluno.getIdAluno(), instrutor.getIdFuncionario(), dtAvaliacao , medidas);
 	
 	System.out.println("mapeamento realizado");
 	
