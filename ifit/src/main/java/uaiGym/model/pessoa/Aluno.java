@@ -32,6 +32,17 @@ public class Aluno extends Usuario {
 	this.estaAtivo = estaAtivo;
 	this.contatosDeEmergencia = contatosDeEmergencia;
     }
+    
+    public Aluno(String email, String senha, String nome, String cpf, Date nascimento, Set<String> telefones,
+	    SexoEnum sexo, Endereco endereco, String matricula, List<AvaliacaoFisica> avaliacoes,
+	    List<Treino> treinos, boolean estaAtivo, Set<ContatoDeEmergencia> contatosDeEmergencia) {
+	super(email, senha, nome, cpf, nascimento, telefones, sexo, endereco, PerfilEnum.ALUNO);
+	this.matricula = matricula;
+	this.avaliacoes = avaliacoes;
+	this.treinos = treinos;
+	this.estaAtivo = estaAtivo;
+	this.contatosDeEmergencia = contatosDeEmergencia;
+    }
 
     public String getMatricula() {
 	return matricula;

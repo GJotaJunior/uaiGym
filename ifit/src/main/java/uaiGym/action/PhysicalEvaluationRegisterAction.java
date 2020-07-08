@@ -103,7 +103,7 @@ public class PhysicalEvaluationRegisterAction implements Action {
 
 	System.out.println("terminou de salvar");
 
-	return "instrutor/avaliacao/cadastrar";
+	return "menu";
     }
 
     @Override
