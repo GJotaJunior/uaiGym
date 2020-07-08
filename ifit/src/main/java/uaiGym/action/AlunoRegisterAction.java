@@ -111,7 +111,7 @@ public class AlunoRegisterAction implements Action {
 		contatosEmergencia.add(contatoEmergencia2);
 	    }
 
-	    Set<AvaliacaoFisica> avaliacoes = new HashSet<AvaliacaoFisica>();
+	    List<AvaliacaoFisica> avaliacoes = new ArrayList<AvaliacaoFisica>();
 
 	    List<Treino> treinos = new ArrayList<Treino>();
 
