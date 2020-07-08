@@ -164,7 +164,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
     public List<Aluno> listarTodos() {
 	List<Aluno> alunos = new ArrayList<Aluno>();
 
-	String sql = "SELECT u.*, a.idAluno, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario";
+	String sql = "SELECT u.*, a.idAluno, a.matricula, a.status FROM Aluno a INNER JOIN Usuario u ON a.idUsuario = u.idUsuario ORDER BY u.nome";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.execute();

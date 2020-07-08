@@ -250,7 +250,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 	List<Funcionario> recepcionistas = new ArrayList<>();
 
 	String sql = "SELECT u.*, f.idFuncionario, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
-		+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario " + "WHERE u.perfil = 'RECEPCAO'";
+		+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario " + "WHERE u.perfil = 'RECEPCAO' ORDER BY u.nome";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.execute();
@@ -275,7 +275,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 	List<Funcionario> instrutores = new ArrayList<>();
 
 	String sql = "SELECT u.*, f.idFuncionario, f.contrato, f.dtAdmissao, f.dtDemissao FROM Funcionario f "
-		+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario " + "WHERE u.perfil = 'INSTRUTOR'";
+		+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario " + "WHERE u.perfil = 'INSTRUTOR' ORDER BY u.nome";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.execute();
