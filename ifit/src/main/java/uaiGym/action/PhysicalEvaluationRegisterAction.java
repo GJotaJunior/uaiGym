@@ -16,9 +16,7 @@ import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.MedidasCorporais;
 import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.dao.AvaliacaoFisicaDAO;
-import uaiGym.model.dao.InstrutorDAO;
 import uaiGym.model.pessoa.Aluno;
-import uaiGym.model.pessoa.Instrutor;
 import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.DataBase.ConnectionFactory;
 
@@ -52,7 +50,7 @@ public class PhysicalEvaluationRegisterAction implements Action {
 
 	// AuthService authenticator = new AuthService(request.getSession());
 	Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-	Integer idAluno = Integer.parseInt(request.getParameter("idAluno"));
+	Integer idAluno = Integer.parseInt(request.getParameter("aluno"));
 	
 	float altura = Float.valueOf(request.getParameter("altura"));
 	float peso = Float.valueOf(request.getParameter("peso"));
@@ -61,40 +59,6 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	float musculoPercentual = Float.valueOf(request.getParameter("musculo"));
 	
 	MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual, musculoPercentual);
-	
-	Aluno aluno = null;
-	
-	try {
-	    // if (authenticator.isValid()) {
-		ConnectionFactory cf = new ConnectionFactory();
-		AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
-		
-		aluno = alunoDAO.recuperarPorId(idAluno);
-		
-		System.out.println("buscou aluno");
-	    // } else {
-	    //	request.setAttribute("mensagem", "Ação não permitida.");
-	    // }
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-	
-	Instrutor instrutor = null;
-	
-	try {
-	    // if (authenticator.isValid()) {
-		ConnectionFactory cf = new ConnectionFactory();
-		InstrutorDAO instrutorDAO = new InstrutorDAO(cf.recuperarConexao());
-		
-		instrutor = instrutorDAO.recuperarPorId(usuario.getId());
-		
-		System.out.println("buscou instrutor");
-	    // } else {
-	    //	request.setAttribute("mensagem", "Ação não permitida.");
-	    // }
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
 	
 	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	Date dtAvaliacao = null;
@@ -105,7 +69,7 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	    e1.printStackTrace();
 	}
 	
-	AvaliacaoFisica avaliacao = new AvaliacaoFisica(aluno, instrutor, dtAvaliacao , medidas);
+	AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAluno, usuario.getId(), dtAvaliacao , medidas);
 	
 	System.out.println("mapeamento realizado");
 	
@@ -125,7 +89,7 @@ public class PhysicalEvaluationRegisterAction implements Action {
 
 	System.out.println("terminou de salvar");
 
-	return "instrutor/cadastrar-avaliacao-fisica";
+	return "instrutor/avaliacao/cadastrar";
     }
 
     @Override

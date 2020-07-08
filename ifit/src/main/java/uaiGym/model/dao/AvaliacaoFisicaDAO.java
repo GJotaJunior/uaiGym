@@ -11,7 +11,6 @@ import java.util.List;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.MedidasCorporais;
-import uaiGym.model.pessoa.Aluno;
 import uaiGym.model.pessoa.Instrutor;
 import uaiGym.service.DataBase.DatabaseUtils;
 
@@ -27,7 +26,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	AvaliacaoFisica avaliacao = null;
 
 	String sql = "SELECT a.*, f.idUsuario, a.idUsuario FROM avaliacao "
-		+ "INNER JOIN funcionario f ON f.idFuncionario = a.idFuncionario" + "WHERE a.idAvaliacao = ? ";
+		+ "INNER JOIN funcionario f ON f.idFuncionario = a.idFuncionario " + "WHERE a.idAvaliacao = ? ";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
@@ -51,9 +50,8 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
-		    Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(idAluno);
 
-		    avaliacao = new AvaliacaoFisica(idAva, aluno, instrutor , dtAvaliacao, medidas);
+		    avaliacao = new AvaliacaoFisica(idAva, idAluno, instrutor.getId() , dtAvaliacao, medidas);
 		}
 	    }
 	} catch (SQLException e) {
@@ -70,8 +68,8 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
-	    stms.setInt(1, entidade.getAluno().getId());
-	    stms.setInt(2, entidade.getInstrutor().getId());
+	    stms.setInt(1, entidade.getIdAluno());
+	    stms.setInt(2, entidade.getIdInstrutor());
 	    stms.setDate(3, DatabaseUtils.converteData(entidade.getData()));
 	    stms.setFloat(4, entidade.getMedidas().getAltura());
 	    stms.setFloat(5, entidade.getMedidas().getPeso());
@@ -95,7 +93,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	List<AvaliacaoFisica> listaAvaliacao = new ArrayList<AvaliacaoFisica>();
 
 	String sql = "SELECT DISTINCT ava.*, f.idUsuario, a.idUsuario FROM avaliacao ava "
-		+ "INNER JOIN funcionario f ON f.idFuncionario = ava.idFuncionario"
+		+ "INNER JOIN funcionario f ON f.idFuncionario = ava.idFuncionario "
 		+ "INNER JOIN aluno a ON a.idAluno = ava.idAluno";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
@@ -118,9 +116,9 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
-		    Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(idAluno);
+		    
 
-		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, aluno, instrutor , dtAvaliacao, medidas);
+		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, idAluno, instrutor.getId() , dtAvaliacao, medidas);
 
 		    listaAvaliacao.add(avaliacao);
 
@@ -141,8 +139,8 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 
 	    stms.setInt(1, entidade.getId());
-	    stms.setInt(2, entidade.getAluno().getId());
-	    stms.setInt(3, entidade.getInstrutor().getId());
+	    stms.setInt(2, entidade.getIdAluno());
+	    stms.setInt(3, entidade.getIdInstrutor());
 	    stms.setDate(4, DatabaseUtils.converteData(entidade.getData()));
 	    stms.setFloat(5, entidade.getMedidas().getAltura());
 	    stms.setFloat(6, entidade.getMedidas().getPeso());
@@ -162,7 +160,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	List<AvaliacaoFisica> avaliacoes = new ArrayList<AvaliacaoFisica>();
 
 	String sql = "SELECT ava.*, f.idUsuario, a.idUsuario " + "FROM Avaliacao ava " 
-		+ "INNER JOIN Funcionario f ON ava.idFuncionario = f.idFuncionario"	
+		+ "INNER JOIN Funcionario f ON ava.idFuncionario = f.idFuncionario "	
 		+ "INNER JOIN Aluno a ON ava.idAluno = a.idAluno "
 		+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ? ORDER BY ava.dtAvaliacao DESC";
 
@@ -188,11 +186,10 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
 		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
-		    Aluno aluno = new AlunoDAO(getConnection()).recuperarPorId(idAluno);
 
-		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, aluno, instrutor , dtAvaliacao, medidas);
+		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, idAluno, instrutor.getId(), dtAvaliacao, medidas);
 
-		    avaliacoes.add(avaliacao);
+		    avaliacoes.add(avaliacao);	
 		}
 	    }
 
