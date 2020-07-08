@@ -6,9 +6,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 public class ActionFactory {
-
-    static Map<String, Action> actions = new HashMap<String, Action>();
-    static {
+  
+  static Map<String, Action> actions = new HashMap<String, Action>();
+  static {
 	actions.put("GET/", new LoginAction());
 	actions.put("GET/cadastrar", new RegisterAction());
 	actions.put("GET/sair", new LogoutAction());
@@ -37,7 +37,7 @@ public class ActionFactory {
 	actions.put("GET/recepcionista/listagem", new RecepcaoListAction());
 	actions.put("GET/recepcionista/cadastrar", new RecepcaoRegisterAction());
 	actions.put("POST/recepcionista/cadastrar", new RecepcaoRegisterAction());
-    
+      
 	}
 
 	public static Action getAction(HttpServletRequest request) {

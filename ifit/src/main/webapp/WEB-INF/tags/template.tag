@@ -10,6 +10,8 @@
 	rel="stylesheet"
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
+	
+<link href="../../assets/css/template.css" rel="stylesheet">
 <meta charset="UTF-8">
 <jsp:invoke fragment="title"/>
 </head>
@@ -52,15 +54,21 @@
 		</div>
 	</header>
 
-	<jsp:doBody />
+	<div class="content p-4">
+		<jsp:doBody />
+	</div>
 
-	<footer class="text-muted">
+	<footer id="myFooter">
 		<div class="container">
-			<p class="float-right">
-				<a href="#">Voltar ao início</a>
-			</p>
-			<p>&copy; UaiGym 2020 - Todos os direitos reservados!</p>
-		</div>
+            <div class="row">
+                <div class="col-sm-12 text-center p-4">
+                	&copy; UaiGym 2020 - Todos os direitos reservados!
+                </div>
+            </div>
+        </div>
+        <!-- <p class="float-right">
+			<a href="#">Voltar ao início</a>
+		</p> -->
 	</footer>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
