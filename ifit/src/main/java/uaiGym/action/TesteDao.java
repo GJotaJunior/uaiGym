@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import uaiGym.model.dao.AlunoDAO;
-import uaiGym.model.dao.InstrutorDAO;
+import uaiGym.model.dao.FuncionarioDAO;
 import uaiGym.service.DataBase.ConnectionFactory;
 
 @WebServlet("/teste-dao")
@@ -27,13 +27,13 @@ public class TesteDao extends HttpServlet {
 	try {
 
 	    ConnectionFactory cf = new ConnectionFactory();
-	    InstrutorDAO instDao = new InstrutorDAO(cf.recuperarConexao());
+	    FuncionarioDAO instDao = new FuncionarioDAO(cf.recuperarConexao());
 	    AlunoDAO ad = new AlunoDAO(cf.recuperarConexao());
 
 	    // Teste 1
 	    /*
-	     * Instrutor inst = new Instrutor(); inst.setPerfil(PerfilEnum.INSTRUTOR);
-	     * inst.setNome("Instrutor grandão"); inst.setCpf("12312312312"); 
+	     * Funcionario inst = new Funcionario(); inst.setPerfil(PerfilEnum.INSTRUTOR);
+	     * inst.setNome("Funcionario grandï¿½o"); inst.setCpf("12312312312"); 
 	     * //Date dtnasc = new SimpleDateFormat("yyyy-MM-dd").parse("1992-01-01");
 	     * //inst.setDtNascimento(dtnasc); inst.setSexo(SexoEnum.M);
 	     * inst.setEmail("email@teste.com"); inst.setSenha("1234"); //Date dtadm = new
@@ -43,7 +43,7 @@ public class TesteDao extends HttpServlet {
 	     * //inst.setDemissao(dtdem);
 	     * 
 	     * Endereco end = new Endereco("Rua rua", "12C", "Frente", "Centro",
-	     * "Uberlândia", "38400470", EstadoEnum.MG);
+	     * "Uberlï¿½ndia", "38400470", EstadoEnum.MG);
 	     * 
 	     * inst.setEndereco(end);
 	     * 
@@ -51,7 +51,7 @@ public class TesteDao extends HttpServlet {
 	     */
 
 	    // Teste 2
-	    //Instrutor instrutor = instDao.recuperarPorId(5);
+	    //Funcionario instrutor = instDao.recuperarPorId(5);
 	    //System.out.println(instrutor.getNome());
 
 	    // Teste 3
@@ -60,7 +60,7 @@ public class TesteDao extends HttpServlet {
 
 	    //Teste 4
 	    /*Set<Aluno> alunos = new HashSet<Aluno>(); //alunos =
-	    alunos = instDao.getAlunosPorIdInstrutor(5); //System.out.println(alunos.toString());
+	    alunos = instDao.getAlunosPorIdFuncionario(5); //System.out.println(alunos.toString());
 	     
 	    System.out.println("inicio loop");
 	    for (Aluno aluno : alunos) {

@@ -22,6 +22,18 @@ h11 {
 </style>
 		<link rel="stylesheet"
 			href="../../assets/font-awesome/css/font-awesome.min.css">
+			<script>
+				function formatar(mascara, documento) {
+					var i = documento.value.length;
+					var saida = mascara.substring(0, 1);
+					var texto = mascara.substring(i);
+
+					if (texto.substring(0, 1) != saida) {
+						documento.value += texto.substring(0, 1);
+					}
+
+				}
+			</script>
 	</jsp:attribute>
 
 	<jsp:body>
@@ -94,9 +106,18 @@ h11 {
 								class="col-md-2 col-form-label text-center" for="musculos">Percentual de musculos: <h11>*</h11>
                             </label>
                             <div class="col-md-4">
-                                <input id="musculo" name="musculos"
+                                <input id="musculo" name="musculo"
 									placeholder="Valor em (%). Ex: 30.6" class="form-control"
 									required="" type="text" maxlength="5">
+                            </div>
+                            <label
+								class="col-md-2 col-form-label text-right" for="dtAvaliacao">Dt. Avaliação<h11>*</h11>
+                            </label>
+                            <div class="col-md-4">
+                                <input id="dtAvaliacao"
+									name="dtAvaliacao" placeholder="DD/MM/AAAA"
+									class="form-control" required="" type="text" maxlength="10"
+									OnKeyPress="formatar('##/##/####', this)">
                             </div>
                         </div>         
 				</div>
@@ -107,13 +128,14 @@ h11 {
                     <div class="form-group">
                         <div class="col-md-12 mt-3 text-center">
                             <button id="Cadastrar" name="Cadastrar"
-										class="btn btn-success" type="Submit">Cadastrar</button>
+									class="btn btn-success" type="Submit">Cadastrar</button>
                             <button id="Cancelar" name="Cancelar"
-										class="btn btn-danger" type="Reset">Cancelar</button>
+									class="btn btn-danger" type="Reset">Cancelar</button>
                         </div>
                     </div>
                 </div>
             </div>
+		
 		</form>
 	    </jsp:body>
 </tags:template>

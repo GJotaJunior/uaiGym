@@ -11,7 +11,7 @@ import java.util.List;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.MedidasCorporais;
-import uaiGym.model.pessoa.Instrutor;
+import uaiGym.model.pessoa.Funcionario;
 import uaiGym.service.DataBase.DatabaseUtils;
 
 public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
@@ -49,7 +49,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		    
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
-		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
+		    Funcionario instrutor = new FuncionarioDAO(getConnection()).recuperarPorId(idInstrutor);
 
 		    avaliacao = new AvaliacaoFisica(idAva, idAluno, instrutor.getId() , dtAvaliacao, medidas);
 		}
@@ -115,7 +115,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		    
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
-		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
+		    Funcionario instrutor = new FuncionarioDAO(getConnection()).recuperarPorId(idInstrutor);
 		    
 
 		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, idAluno, instrutor.getId() , dtAvaliacao, medidas);
@@ -181,11 +181,11 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		    float musculoPercentual = rst.getFloat(9);
 		    
 		    int idInstrutor = rst.getInt(10);
-		    int idAluno = rst.getInt(11);
+		    int idAluno = rst.getInt(11);		
 		    
 		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
 			    musculoPercentual);
-		    Instrutor instrutor = new InstrutorDAO(getConnection()).recuperarPorId(idInstrutor);
+		    Funcionario instrutor = new FuncionarioDAO(getConnection()).recuperarPorId(idInstrutor);
 
 		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, idAluno, instrutor.getId(), dtAvaliacao, medidas);
 

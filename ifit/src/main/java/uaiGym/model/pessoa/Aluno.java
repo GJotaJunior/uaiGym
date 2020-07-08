@@ -15,7 +15,7 @@ public class Aluno extends Usuario {
 
     private Integer idAluno;
     private String matricula;
-    private Instrutor instrutor;
+    private Funcionario instrutor;
     private List<AvaliacaoFisica> avaliacoes;
     private List<Treino> treinos;
     private boolean estaAtivo;
@@ -36,11 +36,11 @@ public class Aluno extends Usuario {
 	return matricula;
     }
 
-    public Instrutor getInstrutor() {
+    public Funcionario getFuncionario() {
 	return instrutor;
     }
 
-    public void setInstrutor(Instrutor instrutor) {
+    public void setFuncionario(Funcionario instrutor) {
 	this.instrutor = instrutor;
     }
 

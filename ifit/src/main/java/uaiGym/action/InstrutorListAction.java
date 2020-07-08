@@ -7,8 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uaiGym.model.dao.InstrutorDAO;
-import uaiGym.model.pessoa.Instrutor;
+import uaiGym.model.dao.FuncionarioDAO;
+import uaiGym.model.pessoa.Funcionario;
 import uaiGym.service.DataBase.ConnectionFactory;
 
 public class InstrutorListAction implements Action {
@@ -18,8 +18,8 @@ public class InstrutorListAction implements Action {
 	ConnectionFactory cf;
 	try {
 	    cf = new ConnectionFactory();
-	    InstrutorDAO instrutorDAO = new InstrutorDAO(cf.recuperarConexao());
-	    List<Instrutor> instrutores = instrutorDAO.listarTodos();
+	    FuncionarioDAO instrutorDAO = new FuncionarioDAO(cf.recuperarConexao());
+	    List<Funcionario> instrutores = instrutorDAO.listarTodosInstrutores();
 	    request.setAttribute("instrutores", instrutores);
 	} catch (ClassNotFoundException | SQLException | IOException e) {
 	    e.printStackTrace();

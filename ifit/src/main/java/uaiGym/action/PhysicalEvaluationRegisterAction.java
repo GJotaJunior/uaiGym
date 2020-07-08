@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +17,7 @@ import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.dao.AvaliacaoFisicaDAO;
 import uaiGym.model.pessoa.Aluno;
 import uaiGym.model.pessoa.Usuario;
+import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
 public class PhysicalEvaluationRegisterAction implements Action {
@@ -48,8 +48,8 @@ public class PhysicalEvaluationRegisterAction implements Action {
 
     private String doPost(HttpServletRequest request) {
 
-	// AuthService authenticator = new AuthService(request.getSession());
-	Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+	AuthService authenticator = new AuthService(request.getSession());
+	Usuario usuario = (Usuario) authenticator.getAuthenticator().getAttribute("usuario");
 	Integer idAluno = Integer.parseInt(request.getParameter("aluno"));
 	
 	float altura = Float.valueOf(request.getParameter("altura"));
@@ -57,6 +57,7 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	float gorduraPercentual = Float.valueOf(request.getParameter("gordura"));
 	float residuosPercentual = Float.valueOf(request.getParameter("residuos"));
 	float musculoPercentual = Float.valueOf(request.getParameter("musculo"));
+	String dtAvaliacaoForm = request.getParameter("dtAvaliacao");
 	
 	MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual, musculoPercentual);
 	
@@ -64,7 +65,7 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	Date dtAvaliacao = null;
 	
 	try {
-	    dtAvaliacao = formato.parse(Calendar.getInstance().getTime().toString());
+	    dtAvaliacao = formato.parse(dtAvaliacaoForm);
 	} catch (ParseException e1) {
 	    e1.printStackTrace();
 	}

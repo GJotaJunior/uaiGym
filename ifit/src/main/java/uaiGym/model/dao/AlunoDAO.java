@@ -10,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.ContatoDeEmergencia;
 import uaiGym.model.Telefone;
-import uaiGym.model.Treino;
 import uaiGym.model.enuns.SexoEnum;
 import uaiGym.model.pessoa.Aluno;
 import uaiGym.service.DataBase.DatabaseUtils;
@@ -47,12 +45,9 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 
 		    Set<ContatoDeEmergencia> contatos = new ContatoDeEmergenciaDAO(getConnection())
 			    .buscarContatosDeEmergenciaPorIdUsuario(id);
-		    List<AvaliacaoFisica> avaliacoes = new AvaliacaoFisicaDAO(getConnection())
-			    .buscarAvaliacoesPorIdUsuario(id);
-		    List<Treino> treinos = new TreinoDAO(getConnection()).buscarTreinosPorIdUsuario(id);
 
 		    aluno = new Aluno(email, senha, nome, cpf, nascimento, getTelefonesPorId(id), sexo,
-			    getEnderecoPorId(id), matricula, avaliacoes, treinos, estaAtivo, contatos);
+			    getEnderecoPorId(id), matricula, null, null, estaAtivo, contatos);
 		    aluno.setId(id);
 		}
 	    }
