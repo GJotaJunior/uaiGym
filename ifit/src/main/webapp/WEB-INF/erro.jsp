@@ -7,6 +7,17 @@
 	<title>Erro!</title>
 	</jsp:attribute>
     <jsp:body>
-        <h1>Ocorreu um erro inesperado! :(</h1>
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm-12 text-center">
+    				<h1>Ocorreu um erro inesperado! :(</h1>
+    			</div>
+    		</div>
+    		<div class="row">
+    			<div class="col-sm-12 text-center">
+    				Volte para a nossa página inicial <a href="/web/">clicando aqui</a>.
+    			</div>
+    		</div>
+    	</div>
     </jsp:body>
 </tags:template>

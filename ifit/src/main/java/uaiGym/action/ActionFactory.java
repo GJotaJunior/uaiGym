@@ -20,11 +20,13 @@ public class ActionFactory {
 		actions.put("POST/redefinir-senha-confirma", new ResetPasswordConfirmAction());
 
 		actions.put("GET/instrutor", new InstrutorListAction());
+		actions.put("GET/instrutor/", new InstrutorListAction());
 		actions.put("GET/instrutor/listagem", new InstrutorListAction());
 		actions.put("GET/instrutor/cadastrar", new InstrutorRegisterAction());
 		actions.put("POST/instrutor/cadastrar", new InstrutorRegisterAction());
 
 		actions.put("GET/aluno", new AlunoListAction());
+		actions.put("GET/aluno/", new AlunoListAction());
 		actions.put("GET/aluno/listagem", new AlunoListAction());
 		actions.put("GET/aluno/cadastrar", new AlunoRegisterAction());
 		actions.put("POST/aluno/cadastrar", new AlunoRegisterAction());
