@@ -43,7 +43,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 			    PerfilEnum perfil = PerfilEnum.valueOf(rst.getString(2));
 			    String nome = rst.getString(3);
 			    String cpf = rst.getString(4);
-			    Date nascimento = null;//rst.getDate(5);
+			    Date nascimento = rst.getDate(5);
 			    SexoEnum sexo = SexoEnum.valueOf(rst.getString(6));
 			    String email = rst.getString(7);
 			    String senha = rst.getString(8);
@@ -53,7 +53,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 			    Date dataDemissao = rst.getDate(12);
 
 			
-			    funcionario = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, null, sexo, null, perfil, idFuncionario, contrato, dataAdmissao, dataDemissao);
+			    funcionario = new Funcionario(idUsuario, email, senha, nome, cpf, nascimento, sexo, perfil, idFuncionario, contrato, dataAdmissao, dataDemissao);
 			    
 			}
 		    }

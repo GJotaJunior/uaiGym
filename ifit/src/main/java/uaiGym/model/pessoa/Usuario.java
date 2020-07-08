@@ -34,6 +34,18 @@ public abstract class Usuario {
 	this.endereco = endereco;
 	this.perfil = perfil;
     }
+    
+    public Usuario(Integer idUsuario, String email, String senha, String nome, String cpf, Date dtNascimento,
+    	    SexoEnum sexo, PerfilEnum perfil) {
+    	this.id = idUsuario;
+    	this.setEmail(email);
+    	this.setSenha(senha);
+    	this.nome = nome;
+    	this.cpf = cpf;
+    	this.dtNascimento = dtNascimento;
+    	this.sexo = sexo;
+    	this.perfil = perfil;
+        }
 
     public Usuario(String email, String senha, String nome, String cpf, Date dtNascimento, Set<String> telefones,
 	    SexoEnum sexo, Endereco endereco, PerfilEnum perfil) {

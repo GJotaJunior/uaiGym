@@ -22,6 +22,15 @@ public class Funcionario extends Usuario {
 	this.demissao = demissao;
     }
     
+    public Funcionario(Integer idUsuario, String email, String senha, String nome, String cpf, Date nascimento,
+    	    SexoEnum sexo, PerfilEnum perfil, Integer idFuncionario, String contrato, Date admissao, Date demissao) {
+    	super(idUsuario, email, senha, nome, cpf, nascimento, sexo, perfil);
+    	this.idFuncionario = idFuncionario;
+    	this.contrato = contrato;
+    	this.admissao = admissao;
+    	this.demissao = demissao;
+    }
+    
     public Funcionario(Integer idUsuario, String email, String senha, String nome, String cpf, Date nascimento, Set<String> telefones,
 	    SexoEnum sexo, Endereco endereco, PerfilEnum perfil, Integer idFuncionario, String contrato, Date admissao, Date demissao) {
 	super(idUsuario, email, senha, nome, cpf, nascimento, telefones, sexo, endereco, perfil);
