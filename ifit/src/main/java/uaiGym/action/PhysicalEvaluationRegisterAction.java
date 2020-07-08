@@ -2,11 +2,8 @@ package uaiGym.action;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +27,9 @@ public class PhysicalEvaluationRegisterAction implements Action {
 	List<Aluno> alunos = new ArrayList<>();
 	
 	try {
-	    // if (authenticator.isValid()) {
+	    AuthService auth = new AuthService(request.getSession());
+		
+		if (!auth.isValid()) return "index";
 		ConnectionFactory cf = new ConnectionFactory();
 		AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
 		
@@ -38,10 +37,6 @@ public class PhysicalEvaluationRegisterAction implements Action {
 		request.setAttribute("alunos", alunos);
 		
 		System.out.println("buscou alunos");
-		
-	    // } else {
-	    //	request.setAttribute("mensagem", "Ação não permitida.");
-	    // }
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
