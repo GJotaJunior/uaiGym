@@ -14,10 +14,13 @@
 		<div class="card">
         	<div class="card-header text-center">
         		<c:if test="${usuario.perfil == PerfilEnum.ALUNO}">
-		      		<h5 class="card-title">Avaliações do aluno ${aluno.nome}</h5>
+		      		<h5 class="card-title">Avaliações do aluno ${usuario.nome}</h5>
 	      		</c:if>
 	      		<c:if test="${usuario.perfil == PerfilEnum.INSTRUTOR}">
-	      			<h5 class="card-title">Avaliações feitas pelo instrutor ${instrutor.nome}</h5>
+	      			<h5 class="card-title">Avaliações feitas pelo instrutor ${usuario.nome}</h5>
+	      		</c:if>
+	      		<c:if test="${usuario.perfil == PerfilEnum.GERENTE}">
+	      			<h5 class="card-title">Avaliações físicas</h5>
 	      		</c:if>
            	</div>
 
@@ -37,16 +40,16 @@
 							<thead>
 						    	<tr>
 						      		<th scope="col">#</th>
-						      		<th scope="col">Altura</th>
-						      		<th scope="col">Peso</th>
-						      		<th scope="col">Percentual de gordura</th>
-						      		<th scope="col">Percentual de resíduos</th>
-						      		<th scope="col">Percentual de musculos</th>
-						      		<th scope="col">Data</th>
-						      		<c:if test="${usuario.perfil == PerfilEnum.ALUNO}">
+						      		<th scope="col" class="text-center">Altura</th>
+						      		<th scope="col"class="text-center">Peso</th>
+						      		<th scope="col" class="text-center">Percentual de gordura</th>
+						      		<th scope="col" class="text-center">Percentual de resíduos</th>
+						      		<th scope="col" class="text-center">Percentual de musculos</th>
+						      		<th scope="col" class="text-center">Data</th>
+						      		<c:if test="${usuario.perfil != PerfilEnum.INSTRUTOR}">
 							      		<th scope="col">Instrutor</th>
 						      		</c:if>
-						      		<c:if test="${usuario.perfil == PerfilEnum.INSTRUTOR}">
+						      		<c:if test="${usuario.perfil != PerfilEnum.ALUNO}">
 						      			<th scope="col">Aluno</th>
 						      		</c:if>
 						    	</tr>
@@ -59,16 +62,16 @@
 							  		<c:forEach var="item" items="${requestScope.avaliacoes}" varStatus="loop">
 							  			<tr>
 								      		<th scope="row">${loop.index + 1}</th>
-								      		<td><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.altura}"/> M</td>
-								      		<td><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.peso}"/> KG</td>
-								      		<td><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.gorduraPercentual}"/> %</td>
-								      		<td><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.residuosPercentual}"/> %</td>
-								      		<td><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.musculoPercentual}"/> %</td>
-								      		<td><fmt:formatDate pattern="dd/MM/yyyy" value="${item.data}"/></td>	
-								      		<c:if test="${usuario.perfil == PerfilEnum.ALUNO}">
+								      		<td class="text-center"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.altura}"/> M</td>
+								      		<td class="text-center"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.peso}"/> KG</td>
+								      		<td class="text-center"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.gorduraPercentual}"/> %</td>
+								      		<td class="text-center"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.residuosPercentual}"/> %</td>
+								      		<td class="text-center"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.medidas.musculoPercentual}"/> %</td>
+								      		<td class="text-center"><fmt:formatDate pattern="dd/MM/yyyy" value="${item.data}"/></td>	
+								      		<c:if test="${usuario.perfil != PerfilEnum.INSTRUTOR}">
 									      		<td>${item.instrutor.nome}</td>
 								      		</c:if>
-								      		<c:if test="${usuario.perfil == PerfilEnum.INSTRUTOR}">
+								      		<c:if test="${usuario.perfil != PerfilEnum.ALUNO}">
 								      			<td>${item.aluno.nome}</td>
 								      		</c:if>
 								    	</tr>

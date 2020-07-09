@@ -92,9 +92,9 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
     public List<AvaliacaoFisica> listarTodos() {
 	List<AvaliacaoFisica> listaAvaliacao = new ArrayList<AvaliacaoFisica>();
 
-	String sql = "SELECT DISTINCT ava.*, f.idUsuario, a.idUsuario FROM avaliacao ava "
-		+ "INNER JOIN funcionario f ON f.idFuncionario = ava.idFuncionario "
-		+ "INNER JOIN aluno a ON a.idAluno = ava.idAluno";
+	String sql = "SELECT DISTINCT ava.*, f.idUsuario, a.idUsuario FROM Avaliacao ava "
+		+ "INNER JOIN Funcionario f ON f.idFuncionario = ava.idFuncionario "
+		+ "INNER JOIN Aluno a ON a.idAluno = ava.idAluno ORDER BY ava.dtAvaliacao DESC";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.execute();
