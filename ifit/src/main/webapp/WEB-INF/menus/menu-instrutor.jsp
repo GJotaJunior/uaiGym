@@ -1,39 +1,10 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <div class="album py-5 bg-light">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
-				<a href="/web/avaliacao/">
-					<div class="card mb-4 shadow-sm">
-						<img class="cartao" src="../img/img05.png">
-						<div class="card-body">
-							<p class="card-text" style="text-align: center;">Gerenciar
-								Avaliações</p>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="col-md-4">
-				<a href="#">
-					<div class="card mb-4 shadow-sm">
-						<img class="cartao" src="../img/img07.png">
-						<div class="card-body">
-							<p class="card-text" style="text-align: center;">Gerenciar
-								Treinos</p>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="col-md-4">
-				<a href="#">
-					<div class="card mb-4 shadow-sm">
-						<img class="cartao" src="../img/img09.png">
-						<div class="card-body">
-							<p class="card-text" style="text-align: center;">Gerenciar
-								Perfil</p>
-						</div>
-					</div>
-				</a>
-			</div>
+			<c:import url="/WEB-INF/menus/opcoes/visualizar-avaliacoes.jsp" />
+			<c:import url="/WEB-INF/menus/opcoes/visualizar-treinos.jsp" />
 		</div>
 	</div>
 </div>

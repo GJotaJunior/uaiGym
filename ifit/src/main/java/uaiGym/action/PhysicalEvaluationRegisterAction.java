@@ -98,7 +98,7 @@ public class PhysicalEvaluationRegisterAction implements Action {
 
 	System.out.println("terminou de salvar");
 
-	return "menu";
+	return "avaliacoes";
     }
 
     @Override
