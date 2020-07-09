@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import uaiGym.model.Equipamento;
 import uaiGym.model.Exercicio;
 import uaiGym.model.Treino;
 
@@ -43,8 +44,6 @@ public class TreinoDAO extends Dao<Treino> {
 		    treino = new Treino();
 
 		    treino.setNomeTreino(nomeTreino);
-		    treino.setQtRepeticao(qtRepeticao);
-		    treino.setQtSerie(qtSerie);
 		    treino.setExercicios(exercicios);
 		}
 	    }
@@ -152,7 +151,7 @@ public class TreinoDAO extends Dao<Treino> {
     private List<Exercicio> getExerciciosTreino(Integer id) {
 	List<Exercicio> exercicios = new ArrayList<>();
 
-	String sql = "SELECT et.qtRepeticao, et.qtSerie, e.nome, equip.nome " + "FROM ExerciciosTreino et "
+	String sql = "SELECT et.qtRepeticao, et.qtSerie, e.nome, equip.nome, equip.idEquipamento " + "FROM ExerciciosTreino et "
 		+ "INNER JOIN Exercicio e ON e.idExercicio = et.idExercicio "
 		+ "INNER JOIN Equipamento equip ON equip.idEquipamento = e.idEquipamento " + "WHERE et.idTreino = ?";
 
@@ -162,11 +161,17 @@ public class TreinoDAO extends Dao<Treino> {
 
 	    try (ResultSet rs = pstm.getResultSet()) {
 		while (rs.next()) {
+
+		    Equipamento equipamento = new Equipamento();
+		    equipamento.setNomeEquipamento(rs.getString(4));
+		    equipamento.setId(rs.getInt(5));
+
 		    Exercicio exercicio = new Exercicio();
-		    // exercicio.setNomeEquipamento(rs.getString(4));
+
+		    exercicio.setEquipamento(equipamento);
 		    exercicio.setNomeExercico(rs.getString(3));
-		    // exercicio.setQtSerie(rs.getInt(2));
-		    // exercicio.setQtRepeticao(rs.getInt(1));
+		    exercicio.setQtSerie(rs.getInt(2));
+		    exercicio.setQtRepeticao(rs.getInt(1));
 
 		    exercicios.add(exercicio);
 		}
