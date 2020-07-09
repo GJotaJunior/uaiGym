@@ -13,7 +13,7 @@ import uaiGym.model.pessoa.Funcionario;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
-public class InstrutorListAction implements Action {
+public class GerenteDisabledAction implements Action {
 
     private String doGet(HttpServletRequest request) {
 
@@ -21,10 +21,13 @@ public class InstrutorListAction implements Action {
 
 	if (authenticator.isValid()) {
 	    if (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO)) {
+		Integer idFunc = Integer.parseInt(request.getParameter("id"));
+
 		ConnectionFactory cf;
 		try {
 		    cf = new ConnectionFactory();
 		    FuncionarioDAO instrutorDAO = new FuncionarioDAO(cf.recuperarConexao());
+		    instrutorDAO.excluir(idFunc);
 		    List<Funcionario> instrutores = instrutorDAO.listarTodosInstrutores();
 		    request.setAttribute("instrutores", instrutores);
 		} catch (ClassNotFoundException | SQLException | IOException e) {
@@ -44,14 +47,11 @@ public class InstrutorListAction implements Action {
 
 	AuthService authenticator = new AuthService(request.getSession());
 
-	if (authenticator.isValid()) {
-	    if (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO)) {
-		return "instrutor/listagem";
-	    } else {
-		return "menu";
-	    }
+	if (authenticator.isValid()
+		&& (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
+	    return "instrutor/listagem";
 	} else {
-	    return "index";
+	    return "menu";
 	}
     }
 

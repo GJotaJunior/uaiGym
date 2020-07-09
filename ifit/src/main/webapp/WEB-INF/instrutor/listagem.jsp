@@ -12,12 +12,12 @@
 	<jsp:body>
 		<div class="card">
         	<div class="card-header text-center">
-            	<h5 class="card-title">Listagem de Intrutores</h5>
+            	<h5 class="card-title">Listagem de Instrutores</h5>
            	</div>
 
             <div class="card-body">
                 <div class="form-group">
-            	    <div class="col-md-12 text-right">
+            	    <div class="col-md-12 text-left">
                             <a href="cadastrar" class="btn btn-primary">Cadastrar instrutor</a>
                     </div>
                 </div>
@@ -30,7 +30,8 @@
 						      		<th scope="col">#</th>
 						      		<th scope="col">Nome</th>
 						      		<th scope="col">E-mail</th>
-						      		<th scope="col">Data Admissão</th>
+						      		<th scope="col" class="text-center">Data Admissão</th>
+						      		<th scope="col" class="text-center">Opções</th>
 						    	</tr>
 						  	</thead>
 						  	<tbody>
@@ -43,14 +44,21 @@
 								      		<th scope="row">${loop.index + 1}</th>
 								      		<td>${item.getNome()}</td>
 								      		<td>${item.getEmail()}</td>
-								      		<td><fmt:formatDate pattern="dd/MM/yyyy" value="${item.getAdmissao()}" /></td>
+								      		<td class="text-center"><fmt:formatDate pattern="dd/MM/yyyy" value="${item.getAdmissao()}" /></td>
+								      		<c:if test="${item.getDemissao() == null}">
+									      		<td class="text-center">
+									      			<a href="desativar?id=${item.getIdFuncionario()}" class="btn btn-warning">Desativar</a>
+									      		</td>
+								      		</c:if>
+								      		<c:if test="${item.getDemissao() != null}">
+									      		<td class="text-center"></td>
+								      		</c:if>
 								    	</tr>
 							  		</c:forEach>
 							  	</c:if>
 						  	</tbody>
 						</table>
                     </div>
-                
                 </div>
 			</div>
 		</div>

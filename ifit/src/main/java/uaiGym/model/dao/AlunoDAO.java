@@ -149,11 +149,11 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 
     @Override
     public void excluir(int id) {
-	String sql = "{CALL sp_atualiza_aluno(?)}";
+	String sql = "{CALL sp_desativa_aluno(?,?)}";
 
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 	    stms.setInt(1, id);
-
+	    stms.registerOutParameter(2, java.sql.Types.INTEGER);
 	    stms.executeQuery();
 	} catch (SQLException e) {
 	    e.printStackTrace();

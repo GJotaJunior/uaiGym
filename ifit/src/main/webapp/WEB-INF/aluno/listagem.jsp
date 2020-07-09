@@ -32,6 +32,7 @@
 						      		<th scope="col">E-mail</th>
 						      		<th scope="col">Matrícula</th>
 						      		<th scope="col">É ativo?</th>
+						      		<th scope="col" class="text-center">Opções</th>
 						    	</tr>
 						  	</thead>
 						  	<tbody>
@@ -50,6 +51,14 @@
 								      		</c:if>
 								      		<c:if test="${!item.isEstaAtivo()}">
 								      			<td>NÃO</td>
+								      		</c:if>
+								      		<c:if test="${item.isEstaAtivo()}">
+									      		<td class="text-center">
+									      			<a href="desativar?id=${item.getIdAluno()}" class="btn btn-warning">Desativar</a>
+									      		</td>
+								      		</c:if>
+								      		<c:if test="${!item.isEstaAtivo()}">
+									      		<td class="text-center"></td>
 								      		</c:if>
 								    	</tr>
 							  		</c:forEach>

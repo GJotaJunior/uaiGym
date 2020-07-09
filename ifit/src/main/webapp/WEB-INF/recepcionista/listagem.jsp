@@ -31,6 +31,7 @@
 						      		<th scope="col">Nome</th>
 						      		<th scope="col">E-mail</th>
 						      		<th scope="col">Data Admissão</th>
+						      		<th scope="col" class="text-center">Opções</th>
 						    	</tr>
 						  	</thead>
 						  	<tbody>
@@ -44,6 +45,14 @@
 								      		<td>${item.getNome()}</td>
 								      		<td>${item.getEmail()}</td>
 								      		<td><fmt:formatDate pattern="dd/MM/yyyy" value="${item.getAdmissao()}" /></td>
+								      		<c:if test="${item.getDemissao() == null}">
+									      		<td class="text-center">
+									      			<a href="desativar?id=${item.getIdFuncionario()}" class="btn btn-warning">Desativar</a>
+									      		</td>
+								      		</c:if>
+								      		<c:if test="${item.getDemissao() != null}">
+									      		<td class="text-center"></td>
+								      		</c:if>
 								    	</tr>
 							  		</c:forEach>
 							  	</c:if>
