@@ -84,7 +84,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 
 	    stms.executeQuery();
 	    
-	    String sqlLastID = "SELECT MAX(idUsuario) AS lastID FROM usuario";
+	    String sqlLastID = "SELECT MAX(idUsuario) AS lastID FROM Usuario";
 
 	    try (PreparedStatement pstmLastID = getConnection().prepareStatement(sqlLastID)) {
 		pstmLastID.execute();
@@ -100,7 +100,7 @@ public class AlunoDAO extends UsuarioDAO<Aluno> {
 		e.printStackTrace();
 	    }
 	    
-	    String sqlLastIDAluno = "SELECT MAX(idAluno) AS lastID FROM aluno";
+	    String sqlLastIDAluno = "SELECT MAX(idAluno) AS lastID FROM Aluno";
 
 	    try (PreparedStatement pstmLastIDAluno = getConnection().prepareStatement(sqlLastIDAluno)) {
 		pstmLastIDAluno.execute();
