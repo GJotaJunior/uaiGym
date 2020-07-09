@@ -20,7 +20,7 @@ public class EquipamentoDAO extends Dao<Equipamento> {
     public Equipamento recuperarPorId(int id) {
 	Equipamento equipamento = null;
 
-	String sql = "SELECT e.* FROM equipamento e WHERE e.idEquipamento = ?";
+	String sql = "SELECT e.* FROM Equipamento e WHERE e.idEquipamento = ?";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
@@ -77,17 +77,16 @@ public class EquipamentoDAO extends Dao<Equipamento> {
     public List<Equipamento> listarTodos() {
 	List<Equipamento> equipamentos = new ArrayList<Equipamento>();
 
-	String sql = "SELECT e.* FROM equipamento e";
+	String sql = "SELECT e.* FROM Equipamento e ORDER BY e.nome";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+	    pstm.execute();
 	    try (ResultSet rst = pstm.getResultSet()) {
 		while (rst.next()) {
 		    int id = rst.getInt(1);
 		    Equipamento equipamento = recuperarPorId(id);
 		    equipamentos.add(equipamento);
-
 		}
-
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
