@@ -47,6 +47,11 @@ public class ActionFactory {
 	actions.put("GET/gerente/cadastrar", new GerenteRegisterAction());
 	actions.put("POST/gerente/cadastrar", new GerenteRegisterAction());
 	actions.put("GET/gerente/desativar", new GerenteDisabledAction());
+	
+	actions.put("GET/equipamento/", new EquipamentoListAction());
+	actions.put("GET/equipamento/listagem", new EquipamentoListAction());
+	actions.put("GET/equipamento/cadastrar", new EquipamentoRegisterAction());
+	actions.put("POST/equipamento/cadastrar", new EquipamentoRegisterAction());
 
     }
 
