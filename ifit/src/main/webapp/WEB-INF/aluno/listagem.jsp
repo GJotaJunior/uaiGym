@@ -17,7 +17,7 @@
 
             <div class="card-body">
                 <div class="form-group">
-            	    <div class="col-md-12 text-right">
+            	    <div class="col-md-12 text-left">
                             <a href="cadastrar" class="btn btn-primary">Cadastrar aluno</a>
                     </div>
                 </div>

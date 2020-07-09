@@ -30,7 +30,6 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 
 	String sql = "SELECT u.*, f.idFuncionario, f.contrato, f.dtAdmissao, f.dtDemissao " + "FROM Funcionario f "
 		+ "INNER JOIN Usuario u ON u.idUsuario = f.idUsuario " + "WHERE u.idUsuario = ?";
-	System.out.println("consulta");
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 	    pstm.setInt(1, id);
@@ -99,7 +98,7 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 
 	if (!telefones.isEmpty()) {
 
-	    String sqlLastID = "SELECT MAX(idUsuario) AS lastID FROM usuario";
+	    String sqlLastID = "SELECT MAX(idUsuario) AS lastID FROM Usuario";
 
 	    try (PreparedStatement pstmLastID = getConnection().prepareStatement(sqlLastID)) {
 		pstmLastID.execute();

@@ -21,6 +21,15 @@
 	      		</c:if>
            	</div>
 
+			<div class="card-body">
+				<c:if test="${usuario.perfil == PerfilEnum.INSTRUTOR}">
+	      			<div class="form-group">
+	            	    <div class="col-md-12 text-left">
+	                            <a href="/web/instrutor/avaliacao/cadastrar" class="btn btn-primary">Cadastrar avaliação</a>
+	                    </div>
+	                </div>
+	      		</c:if>
+                
                     
                 <div class="form-group">
                     <div class="col-md-12">
