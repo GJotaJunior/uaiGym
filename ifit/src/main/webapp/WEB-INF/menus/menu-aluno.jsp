@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
-				<a href="#">
+				<a href="/web/treino/">
 					<div class="card mb-4 shadow-sm">
 						<img class="cartao" src="../img/img07.png">
 						<div class="card-body">
