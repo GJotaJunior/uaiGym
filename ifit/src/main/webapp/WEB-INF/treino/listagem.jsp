@@ -6,7 +6,7 @@
 
 <tags:template>
 	<jsp:attribute name="title">
-		<title>Listagem de Equipamentos - UaiGym</title>
+		<title>Listagem de Treinos - UaiGym</title>
 		<script>
 	        if (document.URL.includes("cadastrar")) window.location.href = document.URL.replace("cadastrar", "");
 	    </script>
@@ -15,7 +15,7 @@
 	<jsp:body>
 		<div class="card">
         	<div class="card-header text-center">
-            	<h5 class="card-title">Listagem de Equipamentos</h5>
+            	<h5 class="card-title">Listagem de Treinos</h5>
            	</div>
 
             <div class="card-body">

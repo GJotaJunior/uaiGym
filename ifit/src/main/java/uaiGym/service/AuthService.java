@@ -111,7 +111,7 @@ public class AuthService {
 					String email = rst.getString(2).trim();
 					String name = rst.getString(3);
 					if (email != null && !email.isEmpty()) {
-						String url = "http://localhost:8080" + EncryptionService.linkGenerator(id);
+						String url = "http://uaigym.herokuapp.com" + EncryptionService.linkGenerator(id);
 						sendEmailForRedefinePassword(url, email, name);
 					}
 				} else {

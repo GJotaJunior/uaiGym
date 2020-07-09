@@ -7,6 +7,9 @@
 <tags:template>
 	<jsp:attribute name="title">
 		<title>Listagem de Alunos - UaiGym</title>
+		<script>
+	        if (document.URL.includes("cadastrar")) window.location.href = document.URL.replace("cadastrar", "");
+	    </script>
 	</jsp:attribute>
 
 	<jsp:body>

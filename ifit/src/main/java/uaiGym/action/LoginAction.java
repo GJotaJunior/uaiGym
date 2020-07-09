@@ -34,7 +34,7 @@ public class LoginAction implements Action {
 		try {
 			isValid = authenticator.login(login, senha);
 		} catch (NoSuchAlgorithmException | ClassNotFoundException | SQLException | IOException e) {
-			e.printStackTrace();
+			return "index";
 		}
 		
 		Usuario usuario = (Usuario) authenticator.getAuthenticator().getAttribute("usuario");

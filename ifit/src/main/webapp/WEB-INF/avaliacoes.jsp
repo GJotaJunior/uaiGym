@@ -8,6 +8,9 @@
 <tags:template>
 	<jsp:attribute name="title">
 		<title>Visualizar Avaliações - UaiGym</title>
+		<script>
+	        if (document.URL.includes("cadastrar")) window.location.href = document.URL.replace("instrutor/avaliacao/cadastrar", "avaliacao");
+	    </script>
 	</jsp:attribute>
 
 	<jsp:body>

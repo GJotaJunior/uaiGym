@@ -9,8 +9,7 @@ public class Treino {
     private String nomeTreino;
     private List<Exercicio> exercicios;
 //    private Date dtTreino;
-    private Integer qtRepeticao;
-    private Integer qtSerie;
+    
     
     public Treino() {
 	exercicios = new ArrayList<Exercicio>();
@@ -40,22 +39,6 @@ public class Treino {
     public void setDtTreino(Date dtTreino) {
 	this.dtTreino = dtTreino;
     }*/
-
-    public Integer getQtRepeticao() {
-	return qtRepeticao;
-    }
-
-    public void setQtRepeticao(Integer qtRepeticao) {
-	this.qtRepeticao = qtRepeticao;
-    }
-
-    public Integer getQtSerie() {
-	return qtSerie;
-    }
-
-    public void setQtSerie(Integer qtSerie) {
-	this.qtSerie = qtSerie;
-    }
 
     public Integer getId() {
 	return id;
