@@ -10,29 +10,52 @@ import javax.servlet.http.HttpServletResponse;
 
 import uaiGym.model.AvaliacaoFisica;
 import uaiGym.model.dao.AvaliacaoFisicaDAO;
+import uaiGym.model.enuns.PerfilEnum;
 import uaiGym.model.pessoa.Usuario;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
 public class AvaliacoesListAction implements Action {
 
+	AuthService auth;
+	Connection connection;
+	Usuario usuario;
+
 	private String doGet(HttpServletRequest request) {
-		
+
+		auth = new AuthService(request.getSession());
 		try {
-			AuthService auth = new AuthService(request.getSession());
-			Connection connection = new ConnectionFactory().recuperarConexao();
-			
-			if (!auth.isValid()) return "index";
-			
-			Usuario usuario = (Usuario) auth.getAuthenticator().getAttribute("usuario");
-			List<AvaliacaoFisica> avaliacoes = new AvaliacaoFisicaDAO(connection).buscarAvaliacoesPorIdUsuario(usuario.getId());
-			
-			request.setAttribute("aluno", usuario);
-			request.setAttribute("avaliacoes", avaliacoes);
+			connection = new ConnectionFactory().recuperarConexao();
+			if (!auth.isValid())
+				return "index";
+			if (auth.isAllowed(PerfilEnum.ALUNO) || auth.isAllowed(PerfilEnum.INSTRUTOR)) {				
+				usuario = (Usuario) auth.getAuthenticator().getAttribute("usuario");
+				
+				return (usuario.getPerfil() == PerfilEnum.ALUNO) ? avaliacoesDoAluno(request) : avaliacoesDoInstrutor(request);
+			}
 		} catch (ClassNotFoundException | SQLException | IOException e) {
-			return "menu";
+			e.printStackTrace();
 		}
+
+		return "menu";
+	}
+
+	private String avaliacoesDoAluno(HttpServletRequest request) {
+		List<AvaliacaoFisica> avaliacoes = new AvaliacaoFisicaDAO(connection)
+				.buscarAvaliacoesPorIdUsuarioDoAluno(usuario.getId());
+
+		request.setAttribute("aluno", usuario);
+		request.setAttribute("avaliacoes", avaliacoes);
+		return "avaliacoes";
+	}
+
+	private String avaliacoesDoInstrutor(HttpServletRequest request) {
+		List<AvaliacaoFisica> avaliacoes = new AvaliacaoFisicaDAO(connection)
+				.buscarAvaliacoesPorIdUsuarioDoFuncionario(usuario.getId());
 		
+		
+		request.setAttribute("instrutor", usuario);
+		request.setAttribute("avaliacoes", avaliacoes);
 		return "avaliacoes";
 	}
 

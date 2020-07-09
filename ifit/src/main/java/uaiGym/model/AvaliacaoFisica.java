@@ -2,7 +2,9 @@ package uaiGym.model;
 
 import java.util.Date;
 
+import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.dao.FuncionarioDAO;
+import uaiGym.model.pessoa.Aluno;
 import uaiGym.model.pessoa.Funcionario;
 import uaiGym.service.DataBase.ConnectionFactory;
 
@@ -39,6 +41,10 @@ public class AvaliacaoFisica {
     
     public Funcionario getInstrutor() throws Exception {
     	return new FuncionarioDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(idInstrutor);
+    }
+    
+    public Aluno getAluno() throws Exception {
+    	return new AlunoDAO(new ConnectionFactory().recuperarConexao()).recuperarPorId(idAluno);
     }
 
     public Date getData() {
