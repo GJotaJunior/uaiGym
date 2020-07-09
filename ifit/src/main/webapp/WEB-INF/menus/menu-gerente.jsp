@@ -2,6 +2,17 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
+				<a href="/web/avaliacao">
+					<div class="card mb-4 shadow-sm">
+						<img class="cartao" src="../img/img05.png">
+						<div class="card-body">
+							<p class="card-text" style="text-align: center;">Visualizar
+								Avaliações</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-4">
 				<a href="/web/instrutor/">
 					<div class="card mb-4 shadow-sm">
 						<img src="../img/img03.png">

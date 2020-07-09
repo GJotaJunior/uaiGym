@@ -28,10 +28,12 @@ public class AvaliacoesListAction implements Action {
 			connection = new ConnectionFactory().recuperarConexao();
 			if (!auth.isValid())
 				return "index";
-			if (auth.isAllowed(PerfilEnum.ALUNO) || auth.isAllowed(PerfilEnum.INSTRUTOR)) {				
+			if (auth.isAllowed(PerfilEnum.ALUNO) || auth.isAllowed(PerfilEnum.INSTRUTOR) || auth.isAllowed(PerfilEnum.GERENTE)) {				
 				usuario = (Usuario) auth.getAuthenticator().getAttribute("usuario");
 				
-				return (usuario.getPerfil() == PerfilEnum.ALUNO) ? avaliacoesDoAluno(request) : avaliacoesDoInstrutor(request);
+				if (usuario.getPerfil() == PerfilEnum.ALUNO) return avaliacoesDoAluno(request);
+				else if (usuario.getPerfil() == PerfilEnum.INSTRUTOR) return avaliacoesDoInstrutor(request);
+				else return todasAvaliacoes(request);
 			}
 		} catch (ClassNotFoundException | SQLException | IOException e) {
 			e.printStackTrace();
@@ -44,7 +46,7 @@ public class AvaliacoesListAction implements Action {
 		List<AvaliacaoFisica> avaliacoes = new AvaliacaoFisicaDAO(connection)
 				.buscarAvaliacoesPorIdUsuarioDoAluno(usuario.getId());
 
-		request.setAttribute("aluno", usuario);
+		request.setAttribute("usuario", usuario);
 		request.setAttribute("avaliacoes", avaliacoes);
 		return "avaliacoes";
 	}
@@ -54,7 +56,16 @@ public class AvaliacoesListAction implements Action {
 				.buscarAvaliacoesPorIdUsuarioDoFuncionario(usuario.getId());
 		
 		
-		request.setAttribute("instrutor", usuario);
+		request.setAttribute("usuario", usuario);
+		request.setAttribute("avaliacoes", avaliacoes);
+		return "avaliacoes";
+	}
+	
+	private String todasAvaliacoes(HttpServletRequest request) {
+		List<AvaliacaoFisica> avaliacoes = new AvaliacaoFisicaDAO(connection)
+				.listarTodos();
+		
+		request.setAttribute("usuario", usuario);
 		request.setAttribute("avaliacoes", avaliacoes);
 		return "avaliacoes";
 	}
