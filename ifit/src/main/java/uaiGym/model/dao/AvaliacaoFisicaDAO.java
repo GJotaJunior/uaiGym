@@ -155,7 +155,7 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 	}
     }
 
-    public List<AvaliacaoFisica> buscarAvaliacoesPorIdUsuario(int idUsuario) {
+    public List<AvaliacaoFisica> buscarAvaliacoesPorIdUsuarioDoAluno(int idUsuario) {
 
 	List<AvaliacaoFisica> avaliacoes = new ArrayList<AvaliacaoFisica>();
 
@@ -163,6 +163,51 @@ public class AvaliacaoFisicaDAO extends Dao<AvaliacaoFisica> {
 		+ "INNER JOIN Funcionario f ON ava.idFuncionario = f.idFuncionario "	
 		+ "INNER JOIN Aluno a ON ava.idAluno = a.idAluno "
 		+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE u.idUsuario = ? ORDER BY ava.dtAvaliacao DESC";
+
+	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+
+	    pstm.setInt(1, idUsuario);
+	    pstm.execute();
+
+	    try (ResultSet rst = pstm.getResultSet()) {
+
+		while (rst.next()) {
+		    int idAva = rst.getInt(1);
+		    Date dtAvaliacao = rst.getDate(4);
+		    float altura = rst.getFloat(5);
+		    float peso = rst.getFloat(6);
+		    float gorduraPercentual = rst.getFloat(7);
+		    float residuosPercentual = rst.getFloat(8);
+		    float musculoPercentual = rst.getFloat(9);
+		    
+		    int idInstrutor = rst.getInt(10);
+		    int idAluno = rst.getInt(11);		
+		    
+		    MedidasCorporais medidas = new MedidasCorporais(altura, peso, gorduraPercentual, residuosPercentual,
+			    musculoPercentual);
+		    Funcionario instrutor = new FuncionarioDAO(getConnection()).recuperarPorId(idInstrutor);
+
+		    AvaliacaoFisica avaliacao = new AvaliacaoFisica(idAva, idAluno, instrutor.getId(), dtAvaliacao, medidas);
+
+		    avaliacoes.add(avaliacao);	
+		}
+	    }
+
+	} catch (SQLException e) {
+		System.out.println(e.getMessage());
+	    e.printStackTrace();
+	}
+	return avaliacoes;
+    }
+    
+    public List<AvaliacaoFisica> buscarAvaliacoesPorIdUsuarioDoFuncionario(int idUsuario) {
+
+	List<AvaliacaoFisica> avaliacoes = new ArrayList<AvaliacaoFisica>();
+
+	String sql = "SELECT ava.*, f.idUsuario, a.idUsuario " + "FROM Avaliacao ava " 
+		+ "INNER JOIN Funcionario f ON ava.idFuncionario = f.idFuncionario "	
+		+ "INNER JOIN Aluno a ON ava.idAluno = a.idAluno "
+		+ "INNER JOIN Usuario u ON a.idUsuario = u.idUsuario WHERE f.idUsuario = ? ORDER BY ava.dtAvaliacao DESC";
 
 	try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
 
