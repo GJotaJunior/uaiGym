@@ -129,9 +129,10 @@ public class FuncionarioDAO extends UsuarioDAO<Funcionario> {
 
     @Override
     public void excluir(int id) {
-	String sql = "{CALL sp_desativa_funcionario(?)}";
+	String sql = "{CALL sp_desativa_funcionario(?,?)}";
 	try (CallableStatement stms = getConnection().prepareCall(sql)) {
 	    stms.setInt(1, id);
+	    stms.registerOutParameter(2, java.sql.Types.INTEGER);
 	    stms.executeQuery();
 	} catch (SQLException e) {
 	    e.printStackTrace();

@@ -34,101 +34,112 @@ public class AlunoRegisterAction implements Action {
 
 	AuthService authenticator = new AuthService(request.getSession());
 
-	if (authenticator.isValid() && authenticator.isAllowed(PerfilEnum.GERENTE))
-	    return "aluno/cadastrar";
-	else
-	    return "menu";
-  }
+	if (authenticator.isValid()) {
+	    if (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO)) {
+		return "aluno/cadastrar";
+	    } else {
+		return "menu";
+	    }
+	} else {
+	    return "index";
+	}
+    }
 
     private String doPost(HttpServletRequest request) {
 
 	AuthService authenticator = new AuthService(request.getSession());
 
-	if (authenticator.isValid() && authenticator.isAllowed(PerfilEnum.GERENTE)) {
+	if (authenticator.isValid()) {
+	    if (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO)) {
 
-	    String nome = request.getParameter("nome");
-	    String cpf = request.getParameter("cpf");
-	    String telefone1 = request.getParameter("telefone1");
-	    String telefone2 = request.getParameter("telefone2");
-	    String email = request.getParameter("email");
-	    String senha = request.getParameter("senha");
-	    String sexo = request.getParameter("sexo");
-	    Date dtNascimento = null;
+		String nome = request.getParameter("nome");
+		String cpf = request.getParameter("cpf");
+		String telefone1 = request.getParameter("telefone1");
+		String telefone2 = request.getParameter("telefone2");
+		String email = request.getParameter("email");
+		String senha = request.getParameter("senha");
+		String sexo = request.getParameter("sexo");
+		Date dtNascimento = null;
 
-	    try {
-		senha = AuthService.securityPassword(senha);
-	    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e2) {
-		e2.printStackTrace();
+		try {
+		    senha = AuthService.securityPassword(senha);
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e2) {
+		    e2.printStackTrace();
+		}
+
+		Set<String> telefones = new HashSet<String>();
+		if (telefone1 != "")
+		    telefones.add(telefone1);
+		if (telefone2 != "")
+		    telefones.add(telefone2);
+
+		SexoEnum sexoEnum;
+		if (sexo.equals("masculino"))
+		    sexoEnum = SexoEnum.M;
+		else
+		    sexoEnum = SexoEnum.F;
+
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+		    dtNascimento = formato.parse(request.getParameter("dtNascimento"));
+		} catch (ParseException e1) {
+		    e1.printStackTrace();
+		}
+
+		String cep = request.getParameter("cep");
+		String logradouro = request.getParameter("logradouro");
+		String numero = request.getParameter("numero");
+		String complemento = request.getParameter("complemento");
+		String bairro = request.getParameter("bairro");
+		String cidade = request.getParameter("cidade");
+		String estado = request.getParameter("estado");
+		EstadoEnum estadoEnum = EstadoEnum.valueOf(estado);
+		Endereco endereco = new Endereco(logradouro, numero, complemento, bairro, cidade, cep, estadoEnum);
+
+		String matricula = request.getParameter("matricula");
+
+		String contatoNome1 = request.getParameter("contatoNome1");
+		String contatoTelefone1 = request.getParameter("contatoTelefone1");
+		String contatoParentesco1 = request.getParameter("contatoParentesco1");
+		String contatoNome2 = request.getParameter("contatoNome2");
+		String contatoTelefone2 = request.getParameter("contatoTelefone2");
+		String contatoParentesco2 = request.getParameter("contatoParentesco2");
+
+		Set<ContatoDeEmergencia> contatosEmergencia = new HashSet<ContatoDeEmergencia>();
+		if (contatoNome1 != "" && contatoTelefone1 != "" && contatoParentesco1 != "") {
+		    ParentescoEnum par1 = ParentescoEnum.valueOf(contatoParentesco1);
+		    ContatoDeEmergencia contatoEmergencia1 = new ContatoDeEmergencia(contatoNome1, contatoTelefone1,
+			    par1);
+		    contatosEmergencia.add(contatoEmergencia1);
+		}
+		if (contatoNome2 != "" && contatoTelefone2 != "" && contatoParentesco2 != "") {
+		    ParentescoEnum par2 = ParentescoEnum.valueOf(contatoParentesco2);
+		    ContatoDeEmergencia contatoEmergencia2 = new ContatoDeEmergencia(contatoNome2, contatoTelefone2,
+			    par2);
+		    contatosEmergencia.add(contatoEmergencia2);
+		}
+
+		List<AvaliacaoFisica> avaliacoes = new ArrayList<AvaliacaoFisica>();
+
+		List<Treino> treinos = new ArrayList<Treino>();
+
+		try {
+		    ConnectionFactory cf = new ConnectionFactory();
+		    AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
+
+		    Aluno aluno = new Aluno(email, senha, nome, cpf, dtNascimento, telefones, sexoEnum, endereco,
+			    matricula, avaliacoes, treinos, true, contatosEmergencia);
+		    alunoDAO.salvar(aluno);
+		} catch (ClassNotFoundException | IOException | SQLException e) {
+		    e.printStackTrace();
+		}
+
+		return "aluno/listagem";
+	    } else {
+		return "menu";
 	    }
-
-	    Set<String> telefones = new HashSet<String>();
-	    if (telefone1 != "")
-		telefones.add(telefone1);
-	    if (telefone2 != "")
-		telefones.add(telefone2);
-
-	    SexoEnum sexoEnum;
-	    if (sexo.equals("masculino"))
-		sexoEnum = SexoEnum.M;
-	    else
-		sexoEnum = SexoEnum.F;
-
-	    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-	    try {
-		dtNascimento = formato.parse(request.getParameter("dtNascimento"));
-	    } catch (ParseException e1) {
-		e1.printStackTrace();
-	    }
-
-	    String cep = request.getParameter("cep");
-	    String logradouro = request.getParameter("logradouro");
-	    String numero = request.getParameter("numero");
-	    String complemento = request.getParameter("complemento");
-	    String bairro = request.getParameter("bairro");
-	    String cidade = request.getParameter("cidade");
-	    String estado = request.getParameter("estado");
-	    EstadoEnum estadoEnum = EstadoEnum.valueOf(estado);
-	    Endereco endereco = new Endereco(logradouro, numero, complemento, bairro, cidade, cep, estadoEnum);
-
-	    String matricula = request.getParameter("matricula");
-
-	    String contatoNome1 = request.getParameter("contatoNome1");
-	    String contatoTelefone1 = request.getParameter("contatoTelefone1");
-	    String contatoParentesco1 = request.getParameter("contatoParentesco1");
-	    String contatoNome2 = request.getParameter("contatoNome2");
-	    String contatoTelefone2 = request.getParameter("contatoTelefone2");
-	    String contatoParentesco2 = request.getParameter("contatoParentesco2");
-
-	    Set<ContatoDeEmergencia> contatosEmergencia = new HashSet<ContatoDeEmergencia>();
-	    if (contatoNome1 != "" && contatoTelefone1 != "" && contatoParentesco1 != "") {
-		ParentescoEnum par1 = ParentescoEnum.valueOf(contatoParentesco1);
-		ContatoDeEmergencia contatoEmergencia1 = new ContatoDeEmergencia(contatoNome1, contatoTelefone1, par1);
-		contatosEmergencia.add(contatoEmergencia1);
-	    }
-	    if (contatoNome2 != "" && contatoTelefone2 != "" && contatoParentesco2 != "") {
-		ParentescoEnum par2 = ParentescoEnum.valueOf(contatoParentesco2);
-		ContatoDeEmergencia contatoEmergencia2 = new ContatoDeEmergencia(contatoNome2, contatoTelefone2, par2);
-		contatosEmergencia.add(contatoEmergencia2);
-	    }
-
-	    List<AvaliacaoFisica> avaliacoes = new ArrayList<AvaliacaoFisica>();
-
-	    List<Treino> treinos = new ArrayList<Treino>();
-
-	    try {
-		ConnectionFactory cf = new ConnectionFactory();
-		AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
-
-		Aluno aluno = new Aluno(email, senha, nome, cpf, dtNascimento, telefones, sexoEnum, endereco, matricula,
-			avaliacoes, treinos, true, contatosEmergencia);
-		alunoDAO.salvar(aluno);
-	    } catch (ClassNotFoundException | IOException | SQLException e) {
-		e.printStackTrace();
-	    }
-
-	    return "aluno/listagem";
 	} else {
-	    return "menu";
+	    return "index";
 	}
     }
 

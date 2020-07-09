@@ -19,20 +19,24 @@ public class AlunoListAction implements Action {
 
 	AuthService authenticator = new AuthService(request.getSession());
 
-	if (authenticator.isValid() && (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
+	if (authenticator.isValid()) {
+	    if (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO)) {
 
-	    ConnectionFactory cf;
-	    try {
-		cf = new ConnectionFactory();
-		AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
-		List<Aluno> alunos = alunoDAO.listarTodos();
-		request.setAttribute("alunos", alunos);
-	    } catch (ClassNotFoundException | SQLException | IOException e) {
-		e.printStackTrace();
+		ConnectionFactory cf;
+		try {
+		    cf = new ConnectionFactory();
+		    AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
+		    List<Aluno> alunos = alunoDAO.listarTodos();
+		    request.setAttribute("alunos", alunos);
+		} catch (ClassNotFoundException | SQLException | IOException e) {
+		    e.printStackTrace();
+		}
+		return "aluno/listagem";
+	    } else {
+		return "menu";
 	    }
-	    return "aluno/listagem";
 	} else {
-	    return "menu";
+	    return "index";
 	}
 
     }
@@ -41,10 +45,14 @@ public class AlunoListAction implements Action {
 
 	AuthService authenticator = new AuthService(request.getSession());
 
-	if (authenticator.isValid() && (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
-	    return "aluno/listagem";
+	if (authenticator.isValid()) {
+	    if (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO)) {
+		return "aluno/listagem";
+	    } else {
+		return "menu";
+	    }
 	} else {
-	    return "menu";
+	    return "index";
 	}
     }
 

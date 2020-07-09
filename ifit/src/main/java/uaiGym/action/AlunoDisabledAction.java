@@ -7,13 +7,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uaiGym.model.dao.FuncionarioDAO;
+import uaiGym.model.dao.AlunoDAO;
 import uaiGym.model.enuns.PerfilEnum;
-import uaiGym.model.pessoa.Funcionario;
+import uaiGym.model.pessoa.Aluno;
 import uaiGym.service.AuthService;
 import uaiGym.service.DataBase.ConnectionFactory;
 
-public class InstrutorListAction implements Action {
+public class AlunoDisabledAction implements Action {
 
     private String doGet(HttpServletRequest request) {
 
@@ -21,16 +21,19 @@ public class InstrutorListAction implements Action {
 
 	if (authenticator.isValid()) {
 	    if (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO)) {
+		Integer idAluno = Integer.parseInt(request.getParameter("id"));
+
 		ConnectionFactory cf;
 		try {
 		    cf = new ConnectionFactory();
-		    FuncionarioDAO instrutorDAO = new FuncionarioDAO(cf.recuperarConexao());
-		    List<Funcionario> instrutores = instrutorDAO.listarTodosInstrutores();
-		    request.setAttribute("instrutores", instrutores);
+		    AlunoDAO alunoDAO = new AlunoDAO(cf.recuperarConexao());
+		    alunoDAO.excluir(idAluno);
+		    List<Aluno> alunos = alunoDAO.listarTodos();
+		    request.setAttribute("alunos", alunos);
 		} catch (ClassNotFoundException | SQLException | IOException e) {
 		    e.printStackTrace();
 		}
-		return "instrutor/listagem";
+		return "aluno/listagem";
 	    } else {
 		return "menu";
 	    }
@@ -44,14 +47,11 @@ public class InstrutorListAction implements Action {
 
 	AuthService authenticator = new AuthService(request.getSession());
 
-	if (authenticator.isValid()) {
-	    if (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO)) {
-		return "instrutor/listagem";
-	    } else {
-		return "menu";
-	    }
+	if (authenticator.isValid()
+		&& (authenticator.isAllowed(PerfilEnum.GERENTE) || authenticator.isAllowed(PerfilEnum.RECEPCAO))) {
+	    return "aluno/listagem";
 	} else {
-	    return "index";
+	    return "menu";
 	}
     }
 
